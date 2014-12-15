@@ -26,4 +26,3 @@ if __name__ == "__main__":
     print "Success"
 ```
 
-[img](http://pyconcn.qiniudn.com/zoomquiet/stuff14/logo/qiniu-logo.png?imageView2/2/w/300)
