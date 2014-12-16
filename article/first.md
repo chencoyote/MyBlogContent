@@ -1,7 +1,7 @@
 Title: 第一篇博客
 Date: 2014-12-13
-Category: 日记
-Tags: pelican,python,test
+Category: 测试
+Tags: python
 
 经过多次折腾终于完成部署了自己的博客
 
