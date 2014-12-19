@@ -1,7 +1,7 @@
 Title: ZeroMQ学习笔记（一）
 Date: 2014-12-18 11:00:07
 Category: 学习笔记
-Tags: python，zeromq
+Tags: python,zeromq
 
 ## 啥是ZMQ
 官方如是说
