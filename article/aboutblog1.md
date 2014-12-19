@@ -35,9 +35,11 @@ PS：另外还部署了Shadowsocks，目前就几个人用，如果需要的可�
 
 ## 折腾
 Python环境都是Ubuntu里面准备好的，所以不需要再自己安装，如果需要
+
 ```$ apt-get install python```
 ### virtualenvwrapper
 virtualenvwrapper来安装Python的虚拟环境，一开始我是使用virtualenv来建立，但是发现创建的环境可以随便放，这样环境多了不易于自己维护，后来发现了virtualenvwrapper
+
 ```
 # 如果有pip使用
 $ pip install virtualenvwrapper
@@ -45,27 +47,35 @@ $ pip install virtualenvwrapper
 # 没有使用easy_install
 $ easy_install virtualenvwrapper
 ```
+
 安装完成后需要找到 ```virtualenvwrapper.sh```这个脚本，一般默认安装在
 ```/usr/bin/virtualenvwrapper.sh```
 如果没有找到尝试看看
+
 ```
 $ ls /usr/sbin/
 $ ls /usr/local/bin/
 $ ls /usr/local/sbin/
 ```
+
 这个根据系统的环境变量不同可能有所不同
 找到之后用source 添加到当前终端环境中
+
 ```
 source /your/path/virtualenvwrapper.sh
 ```
+
 建议省去每次都需要自己添加的麻烦，把这个命令添加到```.bashrc ```中
+
 ```
 $ vim /home/(User)/.bashrc
 # 如果是root用户
 $ vim /root/.bashrc
 ```
+
 然后重新连接一个SSH终端，这个时候会出现两个新的命令```mkvirtualenv```和```workon```
 这两个命令分别是创建一个Python虚拟环境，和切换到某个Python虚拟环境
+
 ```
 # 创建一个名为blog的python虚拟环境
 $ mkvirtualenv blog
@@ -88,6 +98,7 @@ $ workon blog
 以下工作环境都要先切换到指定的虚拟环境中
 
 #### 使用github源码安装
+
 ```
 $ git clone https://github.com/getpelican/pelican.git
 $ cd pelican
@@ -127,6 +138,7 @@ $ pelican-quickstart
 > Do you want to upload your website using GitHub Pages? (y/N) 
 ```
 然后回答一系列问题之后，你的目录下会生成2个目录和4个文件
+
 ```
 .
 ├── output             // 生成静态html的发布目录
