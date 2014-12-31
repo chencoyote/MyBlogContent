@@ -1,5 +1,5 @@
 Title: PyChina社区 与 Ruby社区的几点对比
-Date: 2014-12-18 11:00:07
+Date: 2014-12-31 16:28:47
 Category: 学习笔记
 Tags: python, PyChina
 
