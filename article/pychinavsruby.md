@@ -1,7 +1,7 @@
 Title: PyChina社区 与 Ruby社区的几点对比
 Date: 2014-12-18 11:00:07
 Category: 学习笔记
-Tags: python，PyChina
+Tags: python, PyChina
 
 ## 前言
 sting 和 ZQ(大妈) 一直在为PyChina 和 PyConChina的事情忙前忙后

@@ -1,7 +1,7 @@
 Title: ZeroMQ学习笔记（一）
 Date: 2014-12-18 11:00:07
 Category: 学习笔记
-Tags: python,zeromq
+Tags: python, zeromq
 
 ## 啥是ZMQ
 官方如是说
@@ -52,7 +52,6 @@ Tags: python,zeromq
 **实例代码太多了，我就不往这里搬了**
 
 ### 发布订阅模式（PUB-SUB）
-
 ![pub-sub](https://github.com/imatix/zguide/raw/master/images/fig4.png)
 这个可以称为ZMQ的经典模型了，是Socket不容易做到的。
 
