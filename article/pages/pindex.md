@@ -47,13 +47,15 @@ Date: 2015-1-20 13:49:15
     + [图解linux下top命令的使用 | 2cto](http://www.2cto.com/os/201209/157960.html)
     + [linux系统df和du命令的区别 | sina blog](http://blog.sina.com.cn/s/blog_45b28bfb010138od.html)
 - SSH相关
-    + [Mosh：MIT 推出的一个不错的 SSH 替代品](http://top.jobbole.com/11310/)
+    + [
+17
+Mosh：MIT 推出的一个不错的 SSH 替代品](http://top.jobbole.com/11310/)
 
 ### JavaScript
 #### 文章
-- [JavaScript Source Map 详解 | 阮一峰的网络日志](http://www.ruanyifeng.com/blog/2013/01/javascript_source_map.html)
-- [Unicode与JavaScript详解 | 阮一峰的网络日志](http://www.ruanyifeng.com/blog/2014/12/unicode.html)
-- [JavaScript 运行机制详解：再谈Event Loop | 阮一峰的网络日志](http://www.ruanyifeng.com/blog/2014/10/event-loop.html)
++ [JavaScript Source Map 详解 | 阮一峰的网络日志](http://www.ruanyifeng.com/blog/2013/01/javascript_source_map.html)
++ [Unicode与JavaScript详解 | 阮一峰的网络日志](http://www.ruanyifeng.com/blog/2014/12/unicode.html)
++ [JavaScript 运行机制详解: 再谈Event Loop | 阮一峰的网络日志](http://www.ruanyifeng.com/blog/2014/10/event-loop.html)
 
 #### 项目
 - js
