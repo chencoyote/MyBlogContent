@@ -1,4 +1,4 @@
-Title: personal awesome
+Title: Personal Awesome
 Date: 2015-1-20 13:49:15
 
 ## 背景
@@ -36,7 +36,7 @@ Date: 2015-1-20 13:49:15
 - js
    + [Select2 3.5.2](http://select2.github.io/select2/)
    + [Select2 4.0.0 beta](https://select2.github.io/)
-   
+
 ### 书籍
 
 
