@@ -67,6 +67,8 @@ Mosh：MIT 推出的一个不错的 SSH 替代品](http://top.jobbole.com/11310/
 - markdown
     + [Markdown 语法说明 (简体中文版) | WowUbuntu.com](http://wowubuntu.com/markdown/)
     + [Markdown: Basics (快速入门) | WowUbuntu.com](http://wowubuntu.com/markdown/basic.html)
+- 算法
+    + [麻省理工算法导论课程笔记](http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-spring-2008/lecture-notes/)
 
 #### 在线工具
 - [iBox在线工具集](http://tool.lu/c/developer)
@@ -76,6 +78,45 @@ Mosh：MIT 推出的一个不错的 SSH 替代品](http://top.jobbole.com/11310/
 - [开放静态文件 CDN](http://staticfile.org/)
 
 ### 书籍
+**声明**
+- 这里的书有的是我看过的, 有的是我想买的, 没有其他
+- 书籍多半都是豆瓣书评的...我没有打广告...我也不是豆瓣员工只是觉得去上面看看书评再买比较理智.不然盲目买完纸质书垫屏幕太亏了
+- 购买的话技术类书籍, china-pub上有的书籍会比当当京东便宜
+
+#### 技术类
+- [TCP/IP详解 卷1：协议](http://book.douban.com/subject/1088054/)
+    + 5块钱入手的**二手**新书
+- [Python核心编程(第二版)](http://book.douban.com/subject/3112503/)
+    + 这里有段关于此书的历史, CPyUG有关, 作为八卦看看就好;)
+    + [图书事件 | Google Code CPyUG](https://code.google.com/p/cpyug/wiki/CpyUg#图书事件)
+- [Python Cookbook](http://book.douban.com/subject/4828875/)
+- [Python自动化运维](http://book.douban.com/subject/26258735/)
+    + 略坑的一本书...
+    + 没必要别买...
+    + 为啥写上了...
+    + 因为我买了...
+    + 弱弱吐槽国书需慎重啊...
+- [Python源码剖析--深度探索动态语言核心技术](http://read.douban.com/ebook/1499455/)
+    + 国书典范!!!
+    + 这个是电子版!!!
+    + 这个已经绝版!!!
+    + 纸质只能某宝盗版!!!
+- [JavaScript DOM编程艺术(第2版)](http://book.douban.com/subject/6038371/)
+- [JavaScript高级程序设计(第3版)](http://book.douban.com/subject/10546125/)
+- [算法(第4版)](http://book.douban.com/subject/19952400/)
+    + 刘鑫老师倡议带领修改原著的JAVA为其他语言
+    + 然后就没然后了
+    + 抽时间自己改一遍Python版本
+- [编程之美](http://book.douban.com/subject/3004255/)
+- [编程珠玑](http://book.douban.com/subject/3227098/)
+- [白帽子讲Web安全](http://book.douban.com/subject/10546925/)
+- [重构--改善既有代码的设计](http://book.douban.com/subject/1229923/)
+
+#### 非技术类
+- 吴军系列
+    + [浪潮之巅](http://book.douban.com/subject/6709783/)
+    + [数学之美](http://book.douban.com/subject/10750155/)
+
 
 ### 社区
 - [PyChina](http://pychina.org)
@@ -86,5 +127,7 @@ Mosh：MIT 推出的一个不错的 SSH 替代品](http://top.jobbole.com/11310/
 - [知乎](http://www.zhihu.com/)
 - [Ruby China](https://ruby-china.org/topics/node51)
 - [Insight-labs](http://insight-labs.org/)
+- [hakkalabs](https://www.hakkalabs.co/tags/python)
+- [北京python | meetup](http://www.meetup.com/Beijing-Python/)
 
 
