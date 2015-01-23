@@ -28,6 +28,7 @@ Date: 2015-1-20 13:49:15
     + [Python几种并发实现方案的性能比较 | Elias的个人主页](http://www.elias.cn/Python/PyConcurrency?from=Develop.PyConcurrency)
     + [Python并行编程之 Parallel Python文档页 | 惊帆之静默](http://gashero.yeax.com/?p=24)
     + [Erlang vs. Stackless python: a first benchmark | Muharem Hrnjadovic](http://muharem.wordpress.com/2007/07/31/erlang-vs-stackless-python-a-first-benchmark/)
+    + [multiprocessing Basics | PyMOTW ](http://pymotw.com/2/multiprocessing/basics.html)
 - Python GUI
     + [WXPYTHON LINUX 教程](http://wxpython.cn/)
 - Telnet
