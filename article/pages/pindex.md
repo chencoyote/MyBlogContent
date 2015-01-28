@@ -29,6 +29,7 @@ Date: 2015-1-20 13:49:15
     + [Python并行编程之 Parallel Python文档页 | 惊帆之静默](http://gashero.yeax.com/?p=24)
     + [Erlang vs. Stackless python: a first benchmark | Muharem Hrnjadovic](http://muharem.wordpress.com/2007/07/31/erlang-vs-stackless-python-a-first-benchmark/)
     + [multiprocessing Basics | PyMOTW ](http://pymotw.com/2/multiprocessing/basics.html)
+    + [gevent程序员指南 | Gevent 中文社区](http://xlambda.com/gevent-tutorial/)
 - Python GUI
     + [WXPYTHON LINUX 教程](http://wxpython.cn/)
 - Telnet
