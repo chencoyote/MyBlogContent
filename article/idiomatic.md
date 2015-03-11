@@ -18,6 +18,7 @@ Tags: pythonnic
 在我看来 idiomatic python == pythonnic
 
 **目录**
+
 - Idioms (风格, 所谓Python方言呗)
 - Data Manipulation (数据操作)
 - Control Flow (控制流)
@@ -25,6 +26,7 @@ Tags: pythonnic
 - Functional Python (python的功能)
 
 **彩蛋**
+
 打开python的CLI, 或者IPython, 输入```import this```
 这就是Python的信仰啦~
 The Zen of Python, by Tim Peters
