@@ -18,46 +18,45 @@ Tags: pythonnic
 
 1. **在解释器中**: 用`_`命名的目的是为了存放在交互式解释器中最后执行的结果, 首先会被标准的CPython解释器解释, 然后才是其他的
 
-```Python
->>> _
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-NameError: name '_' is not defined
->>> 42
->>> _
-42
->>> 'alright!' if _ else ':('
-'alright!'
->>> _
-'alright!'
-```
-
-PS: 仔细观察, `_` 原来的值是42, 但是在`if-else`之后变成了 `alright!`
+    ```
+    >>> _
+    Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+    NameError: name '_' is not defined
+    >>> 42
+    >>> _
+    42
+    >>> 'alright!' if _ else ':('
+    'alright!'
+    >>> _
+    'alright!'
+    ```
+    PS: 仔细观察, `_` 原来的值是42, 但是在`if-else`之后变成了 `alright!`
 
 2. **作为变量名**: 有一些过去的观点认为, `_`被当做_废弃_的变量名. 按照惯例, 这种写法会让之后的人读你代码的时候知道这个变量已经被占用不能被使用.
 比如, 在一个循环中没有价值的循环计数器
 
-```Python
-n = 42
-for _ in range(n):
-    do_something()
-```
+    ```Python
+    n = 42
+    for _ in range(n):
+        do_something()
+    ```
 
-PS: 其实作者想说的意思就是, 这货就是来存放一些没意义的东西, 但是你还在代码中需要使用, 并且后续的代码也不会在去用的这个变量.
+    PS: 其实作者想说的意思就是, 这货就是来存放一些没意义的东西, 但是你还在代码中需要使用, 并且后续的代码也不会在去用的这个变量.
 
 3. **i18n(所谓的国际化)**: 偶尔也可能看到`_`被当做一个函数来用. 实际上这个函数名是用来将国际化的语言和本地语言进行查找. 其实这个创意是也是根据C语言的习惯来的.
 比如你阅读[Django documentation for translation](https://docs.djangoproject.com/en/dev/topics/i18n/translation/), 你可以看到
 
-```Python
-from django.utils.translation import ugettext as _
-from django.http import HttpResponse
-
-def my_view(request):
-    output = _("Welcome to my site.")
-    return HttpResponse(output)
-```
-
-PS: 特地把`gettext` 给 `as` 成 `_` 我也是醉了, 其实就是一些约定俗成, 方便阅读代码的时候一眼就知道在干啥.
+    ```Python
+    from django.utils.translation import ugettext as _
+    from django.http import HttpResponse
+    
+    def my_view(request):
+        output = _("Welcome to my site.")
+        return HttpResponse(output)
+    ```
+    
+    PS: 特地把`gettext` 给 `as` 成 `_` 我也是醉了, 其实就是一些约定俗成, 方便阅读代码的时候一眼就知道在干啥.
 
 ### 变量名前的单下划线(e.g. `_shahriar`)
 
