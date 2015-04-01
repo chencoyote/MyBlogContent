@@ -653,10 +653,11 @@ Out[22]: '01000010 01101001 01100111 01100111 01100101 01110010 00100000 0101010
 哈哈, 是在说逼格儿嘛
 
 ## References
-code like a pythonista: http://python.net/~goodger/projects/pycon/2007/idiomatic/handout.html
-itertools: https://docs.python.org/2/library/itertools.html
-functional python: http://ua.pycon.org/static/talks/kachayev
-functools: https://docs.python.org/2/library/functools.html
-pydash: http://pydash.readthedocs.org/en/latest/
+
+[code like a pythonista](http://python.net/~goodger/projects/pycon/2007/idiomatic/handout.html)
+[itertools](https://docs.python.org/2/library/itertools.html)
+[functional python](http://ua.pycon.org/static/talks/kachayev)
+[functools](https://docs.python.org/2/library/functools.html)
+[pydash](http://pydash.readthedocs.org/en/latest/)
 
 ## 感谢作者!!!
