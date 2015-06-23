@@ -20,7 +20,7 @@ multiprocessing是Python 标准库中的多进程库, 由于Python不建议使�
 这种方式适用于那种单个功能,并且逻辑不复杂的进程
 
 ```Python
-import multiprocessing
+import multiprocessing 
 import time
 
 def add(a, b):

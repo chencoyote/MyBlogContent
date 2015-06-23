@@ -18,6 +18,11 @@ Date: 2015-1-20 13:49:15
     + [Python 语言参考(简体中文版) | 德云社区](http://www.digitser.net/python/2.7.8/zh-CN/reference/index.html#reference-index)
     + [Python 2.7.9 documentation(英文原版) | Python.org](https://docs.python.org/2/)
     + [Python 2.7.8 documentation(英文原版) | Python.org](https://docs.python.org/release/2.7.8/)
+- web开发
+    + [bottle做web开发的物理设计 | Vimer的程序世界](http://www.vimer.cn/2011/12/bottle%E5%81%9Aweb%E5%BC%80%E5%8F%91%E7%9A%84%E7%89%A9%E7%90%86%E8%AE%BE%E8%AE%A1.html)
+    + [chaos2wechat | by ZoomQuiet](http://chaos2wechat.readthedocs.org/en/latest/ch01/try.html)
+    + [Python Web应用框架纵论 | 啄木鸟社区 wiki](http://wiki.woodpecker.org.cn/moin/ObpLovelyPython/PCS304)
+
 - 正则表达式
     + [Python正则表达式指南 | 博客园](http://www.cnblogs.com/huxi/archive/2010/07/04/1771073.html)
 - 并发编程(多进程, 多线程, 协程)
@@ -49,9 +54,13 @@ Date: 2015-1-20 13:49:15
     + [图解linux下top命令的使用 | 2cto](http://www.2cto.com/os/201209/157960.html)
     + [linux系统df和du命令的区别 | sina blog](http://blog.sina.com.cn/s/blog_45b28bfb010138od.html)
 - SSH相关
-    + [
-17
-Mosh：MIT 推出的一个不错的 SSH 替代品](http://top.jobbole.com/11310/)
+    + [17 Mosh：MIT 推出的一个不错的 SSH 替代品](http://top.jobbole.com/11310/)
+- git
+    + [Git Submodule使用完整教程 | by 咖啡兔](http://www.kafeitu.me/git/2012/03/27/git-submodule.html)
+- VIM
+    + [Vim as your IDE | on haridas.in](http://haridas.in/vim-as-your-ide.html)
+    + [Vim as a Python IDE | UNLOGIC' Blog](http://unlogic.co.uk/2013/02/08/vim-as-a-python-ide/)
+    + [打造Python IDE | SamWei @ 博客园](http://www.cnblogs.com/samwei/archive/2011/04/25/2026211.html)
 
 ### JavaScript
 #### 文章
@@ -63,6 +72,8 @@ Mosh：MIT 推出的一个不错的 SSH 替代品](http://top.jobbole.com/11310/
 - js
    + [Select2 3.5.2](http://select2.github.io/select2/)
    + [Select2 4.0.0 beta](https://select2.github.io/)
+- Python Blog
+   + [jekyllrb](http://jekyllrb.com/docs/quickstart/)
 
 ### 其他
 #### 文章
