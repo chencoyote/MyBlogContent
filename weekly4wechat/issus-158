@@ -1,0 +1,211 @@
+## 原文
+http://us4.campaign-archive1.com/?u=9735795484d2e4c204da82a29&id=342d2cd3c5&e=889f3f6a05
+
+##  搜罗Py万物 的周刊
+
+亲,
+
+
+Its that time of year again, time to take a break from your brackets to check out what happened in Python world this week! Enjoy!
+
+大家多分享[文章](http://pycoders.com/submissions/) 
+俺们才折腾的出又一周的美好呢.
+
+喜欢就
+在 [Gratipay](https://www.gratipay.com/PycodersWeekly)
+支持俺们吧!
+当然的,俺们也在[twitter](http://www.twitter.com/pycoders)
+
+
+## 新闻
+
+
+### Django 再发安全版本
+
+又一周, Django 发布了一堆安全升级,适当的情况下, 及时升级吧,亲! Django 1.4.20, 1.6.11, 1.7.7 or 1.8c1.
+
+djangoproject.com
+
+Shared by @mgrouchy
+
+(是也乎: 细思恐极的是, Django 这么热烈的进行安全版本的高速发布, 意味着原先都有多少安全隐患哪)
+
+> 原文: https://www.djangoproject.com/weblog/2015/mar/18/security-releases/
+ 
+
+### Requests 漏洞批露
+
+是时候升级到 Requests 2.6.0 了! 对 cookie 的处理以往有漏洞哪. 详细在链接内.
+
+python-requests.org
+
+Shared by @mgrouchy
+
+> 原文: http://docs.python-requests.org/en/latest/community/updates/#id1
+
+
+## 讨论
+
+### Python 哪个 "独特" 的特性令你深深的爱上了她?
+
+reddit.com
+
+Shared by @myusuf3
+
+(是也乎: reddit 上列出了很多梗, IPython 提及的次数不少, 对于大妈私人而言按动心程度:
+>> 缩进 内置库 动态
+)
+
+> 原文: http://www.reddit.com/r/Python/comments/2zg57n/learning_python_coming_from_many_other_languages/
+
+ 
+
+## 项目
+
+### cerberus
+对 Python 字典数据能进行类型控制的库.
+github.com
+Shared by @mgrouchy
+> 原文: https://github.com/nicolaiarocci/cerberus
+ 
+
+### PyTricks
+这是反复推荐的收集 Py 相关技巧和冷门知识的仓库.
+github.com
+Shared by @mgrouchy
+> 原文: https://github.com/brennerm/PyTricks
+
+
+### AstroBuild
+基于 planets alignments 进行项目部署
+github.com
+Shared by @mgrouchy
+> 原文: https://github.com/lhartikk/AstroBuild
+
+### governor
+针对 etcd 构建的部署模板, 专门支持 PostgreSQL HA!
+github.com
+Shared by @mgrouchy
+> 原文: https://github.com/compose/governor
+ 
+
+### django-db-mailer
+
+得趣的项目, 支持你在管理员界面中创建邮件模板,存储在 DB 中, 并支持各种发送功能.
+github.com
+Shared by @mgrouchy
+
+> 原文: https://github.com/LPgenerator/django-db-mailer 
+
+### holoviews
+自述中曰: holoviews 乃:"可组合的,数据结构声明,用以方便构建复杂的可视化"
+github.com
+Shared by @mgrouchy
+> 原文: https://github.com/ioam/holoviews)
+ 
+
+### equals
+模糊对等测试支持 Mock.Any 的严格版本.
+github.com
+Shared by @mgrouchy
+> 原文: https://github.com/toddsifleet/equals
+
+
+### django-GNU-Terry-Pratchett
+Sir Terry Pratchett 己作古. 这个 reddit 线索中, 追加 X-Clacks-Overhead 标签来纪念 Terry Pratchett 吧.
+github.com
+Shared by @aaronbassett
+> 原文:https://github.com/aaronbassett/django-GNU-Terry-Pratchett
+ 
+
+### aiomysql
+通过 asyncio 来使用 MySQL 的库.
+github.com
+Shared by @isinf
+> 原文: https://github.com/aio-libs/aiomysql
+
+
+## 文章
+
+
+### Finding temp file creators
+笔者注意到项目中有很多临时文件,在测试过程中产生, 于是, 利用 monkeypatch 追加了一个 mkdtmp 事务, 来追踪临时文件的生产. 佷 COOL.
+nedbatchelder.com
+Shared by @mgrouchy
+> 原文: http://nedbatchelder.com//blog/201503/finding_temp_file_creators.html
+ 
+
+### PyMongo And Key Order In Subdocuments
+发源自一个好问题: "为毛查询总是在 shell 中折腾, 而不能在 PyMongo 中!?"
+emptysqua.re
+Shared by @mgrouchy
+ > 原文: http://emptysqua.re/blog/pymongo-key-order/
+
+### Ordering issues when monkey patching in Python.
+An approach to solve ordering issues when monkey patches are applied by the use of post import hooks.
+dscpl.com.au
+Shared by @mgrouchy
+> 原文: http://blog.dscpl.com.au/2015/03/ordering-issues-when-monkey-patching-in.html
+ 
+
+### 在 Django 中使用 gevent-socketio 和 RabbitMQ 实现实时消息
+
+非常完备的教程, 展示了如何在 Django 中组合应用 gevent-socketio 和 RabbitMQ 令实时通知变得如此简单.
+machinalis.com
+Shared by @mgrouchy
+> 原文: http://www.machinalis.com/blog/rt-notifications-gevent-gis/
+ 
+
+### 俺的 Class Based Views
+
+Luke Plant 展示如何自制 approach 来在 Django 中折腾 class based views .
+lukeplant.me.uk
+Shared by @mgrouchy
+> 原文: http://lukeplant.me.uk/blog/posts/my-approach-to-class-based-views/ 
+
+### 映射你的音乐收藏
+
+通过 numpy 和其它工具, 对你收藏的音乐进行可视化映射.
+christianpeccei.com
+Shared by @mgrouchy
+> 原文: http://www.christianpeccei.com/musicmap/
+
+(是也乎:
+
+基于 频谱 分析出音乐情绪的倾向性, 来组织为色谱矩阵.
+
+) 
+
+### Threading 和 Multiprocessing 教程
+
+Very detailed guide for beginners who want to learn about concurrency and parallelism in Python
+toptal.com
+Shared by @mgrouchy
+> 原文: http://www.toptal.com/python/beginners-guide-to-concurrency-and-parallelism-in-python 
+
+### 用 Py 对 Twitter 数据进行分析
+
+这是系列文章中第一部分, 将用三篇文章,展示如何组合使用 Py 相关工具, 对 Twitter 公开数据, 分析出有趣的结论.
+marcobonzanini.com
+Shared by @myusuf3
+> 原文: http://marcobonzanini.com/2015/03/02/mining-twitter-data-with-python-part-1/
+
+
+
+## DAMA
+(`大妈私人无责任播报`)
+
+![PyCon Asia-Pacific 2015](http://zoomq.qiniudn.com/CPyUG/PyCon2015China/pycon-apac2015-logo.png)
+
+### 亚太Py大会 6-5~7 在台北举行!](http://pycontw.blogspot.tw/2015/02/pycon-asia-pacific-2015-in-taiwan-save.html)
+
+[PyCon APAC/Taiwan 2015 - Call for Proposals](https://tw.pycon.org/2015apac/en/call-for-proposals/) 议题召集已经释放,想去宝岛体验社区交流的,可以下手了!
+
+
+# 是也乎
+
+- 150316 [Zoom.Quiet](http://zoomquiet.org/) 用时 42 分钟 完成快译.
+- 150314 [Zoom.Quiet](http://zoomquiet.org/) 用时 7 分钟 完成格式转抄.
+
+    
+ 
