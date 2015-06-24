@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Coyote's Blog</title><link href="http://chencoyote.github.io/" rel="alternate"></link><link href="http://chencoyote.github.io/feeds/ce-shi.atom.xml" rel="self"></link><id>http://chencoyote.github.io/</id><updated>2014-12-13T00:00:00+08:00</updated><entry><title>第一篇博客</title><link href="http://chencoyote.github.io/articles/di-yi-pian-bo-ke.html" rel="alternate"></link><updated>2014-12-13T00:00:00+08:00</updated><author><name>coyote</name></author><id>tag:chencoyote.github.io,2014-12-13:articles/di-yi-pian-bo-ke.html</id><summary type="html">&lt;p&gt;经过多次折腾终于完成部署了自己的博客&lt;/p&gt;
+&lt;p&gt;这篇文章为了纪念第一次部署成功并且测试使用的文章&lt;/p&gt;
+&lt;p&gt;测试markdown&lt;/p&gt;
+&lt;h1&gt;h1&lt;/h1&gt;
+&lt;h2&gt;h2&lt;/h2&gt;
+&lt;h3&gt;h3&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt;
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;test&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+        &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;__main__&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Success&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="python"></category></entry></feed>

@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>linxu个性化 - Coyote's Blog</title>	
+	<meta name="author" content="coyote">
+	
+
+	<link rel="stylesheet" href="http://chencoyote.github.io/theme/css/main.css" type="text/css" />
+		
+
+
+    <link href="http://chencoyote.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Coyote's Blog Atom Feed" />
+</head>
+	
+<body>
+
+    <div class="container">
+	  
+	  <header role="banner">
+	    <div class="feeds">
+	      <a href="http://chencoyote.github.io/feeds/all.atom.xml" rel="alternate"><img src="http://chencoyote.github.io/theme/images/icons/feed-32px.png" alt="atom feed"/></a>
+	    </div>
+	      <nav class="pages">
+			  <a href="http://chencoyote.github.io/archives">Archives</a>
+-			  <a href="http://chencoyote.github.io/tags">Tags</a>
+-			  <a href="http://chencoyote.github.io/pages/personal-awesome.html">Personal Awesome</a>
+-			  <a href="http://chencoyote.github.io/pages/about-me.html">About Me</a>
+	      </nav>
+		<a href="http://chencoyote.github.io" class="title">Coyote's Blog</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+
+<h1>Post tagged: linxu个性化</h1>
+
+<article class="summary">
+<div class="metadata">
+  <time datetime="2015-02-06T10:21:20+08:00" pubdate>Fri 06 February 2015</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://chencoyote.github.io/author/coyote.html">coyote</a>
+    </address>
+  in <a href="http://chencoyote.github.io/category/linux.html">Linux</a>
+<p class="tags">tagged <a href="http://chencoyote.github.io/tag/linxuge-xing-hua.html">linxu个性化</a></p></div>  <div>
+    <h2>
+      <a href="http://chencoyote.github.io/articles/linxuzhong-duan-fan-ren-de-ctrls.html" rel="bookmark" title="Permalink to linxu终端烦人的ctrl+s">linxu终端烦人的ctrl+s</a>
+    </h2>
+    <p><h2>问题</h2>
+<p>最近折腾了一下终端的个性化定制, 以及vim定制, 并且管理了自己的Dotfile</p>
+<p>但是遇到一个烦人的问题, 快捷键里面有个<code>ctrl+a</code>经常被我给按成<code>ctrl+s</code>, 频率还不低</p>
+<p><code>ctrl+s</code>这个键组合在linux里面是<code>锁定屏幕显示</code> 搜了一下很多小白都遇到这个锁定屏幕之后不知所措</p>
+<p>然后只好关掉终端重新打开. 网上也有解决方案就是按下<code>ctrl + q</code> 就能恢复.</p>
+<h2>思考</h2>
+<p>这个<code>ctrl+s</code> 的功能到底谁会用啊....同样的按键<code>ScrollLock</code>完全能用啊, 再按一下又恢复了嘛</p>
+<p>所以考虑关掉这个该死的按键, 但是壮哉我大百度是不会给出解决方案的, 还得问我<strong>大表哥</strong></p>
+<ul>
+<li><code>ctrl+s</code> 会像终端发起一个<code>XOFF</code> 的信号</li>
+<li><code>stty</code> linux是设置终端属性的命令</li>
+</ul>
+<h2>方案</h2>
+<p><code>man stty</code> 查看man手册</p>
+<blockquote>
+<p>[-]ixoff
+   enable sending of ...</p></blockquote></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
+  <time datetime="2014-12-20T09:00:48+08:00" pubdate>Sat 20 December 2014</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://chencoyote.github.io/author/coyote.html">coyote</a>
+    </address>
+  in <a href="http://chencoyote.github.io/category/linux.html">Linux</a>
+<p class="tags">tagged <a href="http://chencoyote.github.io/tag/linxuge-xing-hua.html">linxu个性化</a></p></div>  <div>
+    <h2>
+      <a href="http://chencoyote.github.io/articles/linxuzhong-duan-fan-ren-de-bi-bi-sheng.html" rel="bookmark" title="Permalink to linxu终端烦人的"哔哔"声">linxu终端烦人的"哔哔"声</a>
+    </h2>
+    <p><h3>问题</h3>
+<p>不知道有多少人跟我遇到过同样的问题, 因为本人使用linux非常的懒, 已经习惯性的使用'TAB'来补全路径或者命令
+但是使用TAB就会遇到一个问题, 就是如果你的输入的命令或者路径是错误的, 这个是后你按'TAB' 终端工具就会一直发出
+'哔哔哔哔'的声音, 而我又是一个APM(手速, 玩过RTS类游戏的人都知道)比较多的, 所以经常在使用shell的时候关掉了声音
+最近终于找到了解决方法.</p>
+<p>一般Linux都适用, Mac OS 有待测试</p>
+<h3>解决</h3>
+<h4>.bashrc</h4>
+<p>如果知道这个文件的作用的同学应该都懂, 在这个里面需要添加一行</p>
+<div class="highlight"><pre><span class="nv">$ </span>vim <span class="nv">$HOME</span>/.bashrc
+<span class="c"># 添加</span>
+<span class="nv">INPUTRC</span><span class="o">=</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/.inputrc  
+</pre></div>
+
+
+<h4>.inputrc</h4>
+<p>再来说说这个文件, inputrc是用来做键盘按键映射的, 通过这个文件可以制作自己喜欢的 key-binding
+关于 key-binding这个问题, 感兴趣的可以自己搜索, 因为一般很少用得上, 我们这里用上的是<code>bell-style</code></p>
+<p>之前已经在<code>bashrc</code>中添加了inputrc的环境变量, 接下来只需要在inputrc中添加<code>set ...</code></p></p>
+  </div>
+</article>
+<div class="pagination">
+    Page 1 / 1
+</div>
+
+		  </div>	
+		  
+		  <div class="sidebar">
+		    <div class="sidebar-container" >
+
+
+  	          <nav>
+	            <h2>Categories</h2>
+	            <ul>
+	                <li ><a href="http://chencoyote.github.io/category/ce-shi.html">测试</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/ewen-fan-yi.html">E文翻译</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/ji-zhu.html">技术</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/linux.html">Linux</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/python.html">Python</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/qi-ta.html">其他</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/sublime-text.html">Sublime Text</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/xue-xi-bi-ji.html">学习笔记</a></li>
+	            </ul>
+	          </nav>
+
+	            <aside>
+	            <h2>Social</h2>
+			      <ul class="social">
+				    <li><a href="https://github.com/chencoyote">Github</a><i></i></li>
+				    <li><a href="https://plus.google.com/u/0/104542842241928417898/posts">Google+</a><i></i></li>
+				    <li><a href="https://twitter.com/Coyote_chen">Twitter</a><i></i></li>
+				    <li><a href="http://weibo.com/coytoe">Weibo</a><i></i></li>
+				    <li><a href="http://v2ex.com/member/Coyote">V2EX</a><i></i></li>
+			      </ul>
+			    </aside>
+
+	            <aside>
+	              <h2>Blogroll</h2>
+	              <ul>
+	                  <li><a href="http://python.org/">Python.org</a></li>
+	                  <li><a href="http://pychina.org">PyChina</a></li>
+	                  <li><a href="http://weekly.pychina.org">PyWeekly</a></li>
+	                  <li><a href="http://cn.pycon.org">PyConChina</a></li>
+	              </ul>
+	            </aside>
+	        </div>
+		  </div>
+
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+		  coyote - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-sober">pelican-sober</a>.
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>

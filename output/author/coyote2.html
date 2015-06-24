@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>coyote - Coyote's Blog</title>	
+	<meta name="author" content="coyote">
+	
+
+	<link rel="stylesheet" href="http://chencoyote.github.io/theme/css/main.css" type="text/css" />
+		
+
+
+    <link href="http://chencoyote.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Coyote's Blog Atom Feed" />
+</head>
+	
+<body>
+
+    <div class="container">
+	  
+	  <header role="banner">
+	    <div class="feeds">
+	      <a href="http://chencoyote.github.io/feeds/all.atom.xml" rel="alternate"><img src="http://chencoyote.github.io/theme/images/icons/feed-32px.png" alt="atom feed"/></a>
+	    </div>
+	      <nav class="pages">
+			  <a href="http://chencoyote.github.io/archives">Archives</a>
+-			  <a href="http://chencoyote.github.io/tags">Tags</a>
+-			  <a href="http://chencoyote.github.io/pages/personal-awesome.html">Personal Awesome</a>
+-			  <a href="http://chencoyote.github.io/pages/about-me.html">About Me</a>
+	      </nav>
+		<a href="http://chencoyote.github.io" class="title">Coyote's Blog</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+
+<h1>Posts published by: coyote</h1>
+
+<article class="summary">
+<div class="metadata">
+  <time datetime="2014-12-20T09:00:48+08:00" pubdate>Sat 20 December 2014</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://chencoyote.github.io/author/coyote.html">coyote</a>
+    </address>
+  in <a href="http://chencoyote.github.io/category/linux.html">Linux</a>
+<p class="tags">tagged <a href="http://chencoyote.github.io/tag/linxuge-xing-hua.html">linxu个性化</a></p></div>  <div>
+    <h2>
+      <a href="http://chencoyote.github.io/articles/linxuzhong-duan-fan-ren-de-bi-bi-sheng.html" rel="bookmark" title="Permalink to linxu终端烦人的"哔哔"声">linxu终端烦人的"哔哔"声</a>
+    </h2>
+    <p><h3>问题</h3>
+<p>不知道有多少人跟我遇到过同样的问题, 因为本人使用linux非常的懒, 已经习惯性的使用'TAB'来补全路径或者命令
+但是使用TAB就会遇到一个问题, 就是如果你的输入的命令或者路径是错误的, 这个是后你按'TAB' 终端工具就会一直发出
+'哔哔哔哔'的声音, 而我又是一个APM(手速, 玩过RTS类游戏的人都知道)比较多的, 所以经常在使用shell的时候关掉了声音
+最近终于找到了解决方法.</p>
+<p>一般Linux都适用, Mac OS 有待测试</p>
+<h3>解决</h3>
+<h4>.bashrc</h4>
+<p>如果知道这个文件的作用的同学应该都懂, 在这个里面需要添加一行</p>
+<div class="highlight"><pre><span class="nv">$ </span>vim <span class="nv">$HOME</span>/.bashrc
+<span class="c"># 添加</span>
+<span class="nv">INPUTRC</span><span class="o">=</span><span class="si">${</span><span class="nv">HOME</span><span class="si">}</span>/.inputrc  
+</pre></div>
+
+
+<h4>.inputrc</h4>
+<p>再来说说这个文件, inputrc是用来做键盘按键映射的, 通过这个文件可以制作自己喜欢的 key-binding
+关于 key-binding这个问题, 感兴趣的可以自己搜索, 因为一般很少用得上, 我们这里用上的是<code>bell-style</code></p>
+<p>之前已经在<code>bashrc</code>中添加了inputrc的环境变量, 接下来只需要在inputrc中添加<code>set ...</code></p></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
+  <time datetime="2014-12-19T16:52:53+08:00" pubdate>Fri 19 December 2014</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://chencoyote.github.io/author/coyote.html">coyote</a>
+    </address>
+  in <a href="http://chencoyote.github.io/category/xue-xi-bi-ji.html">学习笔记</a>
+<p class="tags">tagged <a href="http://chencoyote.github.io/tag/python.html">python</a>, <a href="http://chencoyote.github.io/tag/multiprocessing.html">multiprocessing</a></p></div>  <div>
+    <h2>
+      <a href="http://chencoyote.github.io/articles/multiprocessing-shen-du-fen-xi.html" rel="bookmark" title="Permalink to multiprocessing 深度分析">multiprocessing 深度分析</a>
+    </h2>
+    <p><p><a href="http://pymotw.com/2/multiprocessing/basics.html">原文</a>
+Coyote翻译整理</p>
+<h2>正文</h2>
+<h3>multiprocessing 基本用法</h3>
+<p>最简单的在一个进程中启动多个进程的方法就是创建一个Process对象指定一个目标进程
+然后调用start()方法启动.</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
+
+<span class="k">def</span> <span class="nf">worker</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;worker function&quot;&quot;&quot;</span>
+    <span class="k">print</span> <span class="s">&#39;Worker&#39;</span>
+    <span class="k">return</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">jobs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">)</span>
+        <span class="n">jobs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<p>执行代码, print出5个 <code>Worker</code>, 但是从这里是看不出他们的执行顺序的</p>
+<div class="highlight"><pre><span class="nv">$ </span>python multiprocessing_simple.py
+
+Worker
+Worker
+Worker
+Worker
+Worker
+</pre></div>
+
+
+<p>但是很多时候我们使用进程是需要传递一些参数来使进程能够正常工作的. 
+与 ...</p></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
+  <time datetime="2014-12-19T16:52:53+08:00" pubdate>Fri 19 December 2014</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://chencoyote.github.io/author/coyote.html">coyote</a>
+    </address>
+  in <a href="http://chencoyote.github.io/category/xue-xi-bi-ji.html">学习笔记</a>
+<p class="tags">tagged <a href="http://chencoyote.github.io/tag/python.html">python</a>, <a href="http://chencoyote.github.io/tag/multiprocessing.html">multiprocessing</a></p></div>  <div>
+    <h2>
+      <a href="http://chencoyote.github.io/articles/multiprocessingxue-xi-bi-ji.html" rel="bookmark" title="Permalink to multiprocessing学习笔记">multiprocessing学习笔记</a>
+    </h2>
+    <p><h2>multiprocessing</h2>
+<p>multiprocessing是Python 标准库中的多进程库, 由于Python不建议使用线程,所以尽可能的减少使用线程,如果需要建议使用 第三方库 futures来创建线程.</p>
+<h3>使用并发进程的好处</h3>
+<ul>
+<li>进程并发</li>
+<li>充分利用多核优势</li>
+<li>方便管理,可以接收Linux中的kill信号,根据信号进行安全退出<ul>
+<li>之前使用一个python脚本,启动另一个进程的时候,如果想要完全脱离父进程,需要fork..fork..非常复杂</li>
+<li>通过multiprocessing创建的进程很容易就进行各种管理.</li>
+</ul>
+</li>
+</ul>
+<h3>multiprocessing创建并发进程</h3>
+<h4>创建简单并发进程</h4>
+<p>这种方式适用于那种单个功能,并且逻辑不复杂的进程</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span> 
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">print</span> <span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">print ...</span></pre></div></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
+  <time datetime="2014-12-18T11:00:07+08:00" pubdate>Thu 18 December 2014</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://chencoyote.github.io/author/coyote.html">coyote</a>
+    </address>
+  in <a href="http://chencoyote.github.io/category/xue-xi-bi-ji.html">学习笔记</a>
+<p class="tags">tagged <a href="http://chencoyote.github.io/tag/python.html">python</a>, <a href="http://chencoyote.github.io/tag/zeromq.html">zeromq</a></p></div>  <div>
+    <h2>
+      <a href="http://chencoyote.github.io/articles/zeromqxue-xi-bi-ji-yi.html" rel="bookmark" title="Permalink to ZeroMQ学习笔记（一）">ZeroMQ学习笔记（一）</a>
+    </h2>
+    <p><h2>啥是ZMQ</h2>
+<p>官方如是说</p>
+<blockquote>
+<p>ZMQ (以下 ZeroMQ 简称 ZMQ)是一个简单好用的传输层，像框架一样的一个 socket library，他使得 Socket 编程更加简单、简洁和性能更高。是一个消息处理队列库，可在多个线程、内核和主机盒之间弹性伸缩。ZMQ 的明确目标是“成为标准网络协议栈的一部分，之后进入 Linux 内核”。现在还未看到它们的成功。但是，它无疑是极具前景的、并且是人们更加需要的“传统”BSD 套接字之上的一层封装。ZMQ 让编写高性能网络应用程序极为简单和有趣。</p>
+</blockquote>
+<p>传统的socket都是一问一答的模式，就是所谓的端到端通讯，A给B发送了一个消息，B回给A一个消息。</p>
+<p>而ZMQ则定义了多种的通讯方式，既可以同步，也可以异步，比如原来的socket在ZMQ中被定义成“问答模式”</p>
+<h2>为啥用ZMQ</h2>
+<h3>无图无真相</h3>
+<p><img alt="复杂的通讯" src="https://github.com/imatix/zguide/raw/master/images/fig8.png" /></p>
+<p>请问传统socket怎么破 ?</p>
+<h3>哪来的这个需求</h3>
+<p>在一个复杂的系统当中，数据是以数据流的方式来进行处理的，也就是说一个原始数据经过一条流水线之后成为用户真正想要得到的数据，同时过程中这些数据还要被其他的功能所引用 ...</p></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
+  <time datetime="2014-12-15T16:15:03+08:00" pubdate>Mon 15 December 2014</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://chencoyote.github.io/author/coyote.html">coyote</a>
+    </address>
+  in <a href="http://chencoyote.github.io/category/ji-zhu.html">技术</a>
+<p class="tags">tagged <a href="http://chencoyote.github.io/tag/python.html">python</a></p></div>  <div>
+    <h2>
+      <a href="http://chencoyote.github.io/articles/yong-pelicanda-jian-zi-ji-de-bo-ke-er-fa-bu-bo-ke.html" rel="bookmark" title="Permalink to 用Pelican搭建自己的博客（二）发布博客">用Pelican搭建自己的博客（二）发布博客</a>
+    </h2>
+    <p><p>继续上一篇</p>
+<h2>本地发布</h2>
+<p>由于现在没有正式的在浏览器中访问过博客，所以我们需要现在本地测试成功之后再发布到正常使用的服务器上</p>
+<h3>第一篇博客</h3>
+<p>Pelican使用纯静态页面来发布文章, 创建好的目录下其实已经提供了很好的几个工具,我们先来看看都是干嘛的</p>
+<div class="highlight"><pre>.
+├── output             
+├── content            
+├── Makefile           // 生成html的makefile文件
+                       // 可以通过make html来将content中得内容发布到output
+├── develop_server.sh  // 本地测试服务启动脚本
+                       // 通过 ./develop_server.sh start 来生成html和启动本地web服务
+├── fabfile.py         // fabric自动化任务工具
+                       // 可以在这个文件里面定义一些方法来使用 fab 方法名来进行发布任务
+                       // 如可以定义一个publish的方法执行本地命令 fab publish来发布文档
+├── pelicanconf.py     
+└── publishconf.py     
+</pre></div>
+
+
+<p>那么们先来写一篇文档,在content文件中创建<code>first.md</code>并且写一些markdown的内容进去</p>
+<p>之后在content文件夹所在的目录使用 make html来生成静态界面,当生成之后,使用<code>ls ./output</code>查看output目录下看到</p>
+<div class="highlight"><pre>.
+├── archives.html ...</pre></div></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
+  <time datetime="2014-12-15T16:15:03+08:00" pubdate>Mon 15 December 2014</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://chencoyote.github.io/author/coyote.html">coyote</a>
+    </address>
+  in <a href="http://chencoyote.github.io/category/ji-zhu.html">技术</a>
+<p class="tags">tagged <a href="http://chencoyote.github.io/tag/python.html">python</a></p></div>  <div>
+    <h2>
+      <a href="http://chencoyote.github.io/articles/yong-pelicanda-jian-zi-ji-de-bo-ke-yi-huan-jing-de-da-jian.html" rel="bookmark" title="Permalink to 用Pelican搭建自己的博客（一）环境的搭建">用Pelican搭建自己的博客（一）环境的搭建</a>
+    </h2>
+    <p><p>作为一个A Pythoner want to be Pythonic想要搭建一个自己博客，之前想要采取使用Django-CMS来搭建看了很多其他人写的源码之后开始动手自己写，但是发现自己时间不够充足，导致经常跳票写好了后台，又要配置数据库，总不能完全照搬人家的博客源码过来吧。所以经过了Django-CMS写了4个版本后，博客的进度被搁置了，知道有一天查找资料发现博主<a href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html">cold's world</a>的博客，深表感谢。重新燃起搭建的欲望，结果2天共计8小时完成搭建。所以记录下来分享一下。</p>
+<p>有任何疑问可以留言或者邮箱联系我。</p>
+<h2>环境</h2>
+<h3>硬件环境</h3>
+<p>Digitalocean 10刀服务器 Ubuntu 64位</p>
+<p>之前很多人推荐这个还有Linode，两家都是SSD的服务器
+感觉对于普通个人用户Digitalocean的5刀或者10刀还不错。
+Linode没用过也不好评价，但是最低配和Digitalocean价格差不多。
+PS：另外还部署了Shadowsocks，目前就几个人用，如果需要的可以联系我 ;-)</p>
+<h3>软件环境</h3>
+<h4>Python</h4>
+<ul>
+<li>virtualenvwrapper</li>
+<li>Pelican</li>
+<li>MarkDown</li>
+<li>fabric</li>
+</ul>
+<h4>Linux</h4>
+<ul>
+<li>bashshell</li>
+<li>crontab</li>
+<li>git</li>
+</ul>
+<h4>其他</h4>
+<ul>
+<li>disqus ...</li></ul></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
+  <time datetime="2014-12-13T00:00:00+08:00" pubdate>Sat 13 December 2014</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://chencoyote.github.io/author/coyote.html">coyote</a>
+    </address>
+  in <a href="http://chencoyote.github.io/category/ce-shi.html">测试</a>
+<p class="tags">tagged <a href="http://chencoyote.github.io/tag/python.html">python</a></p></div>  <div>
+    <h2>
+      <a href="http://chencoyote.github.io/articles/di-yi-pian-bo-ke.html" rel="bookmark" title="Permalink to 第一篇博客">第一篇博客</a>
+    </h2>
+    <p><p>经过多次折腾终于完成部署了自己的博客</p>
+<p>这篇文章为了纪念第一次部署成功并且测试使用的文章</p>
+<p>测试markdown</p>
+<h1>h1</h1>
+<h2>h2</h2>
+<h3>h3</h3>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="k">class</span> <span class="nc">test</span><span class="p">():</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;Success&quot;</span>
+</pre></div></p>
+  </div>
+</article>
+<div class="pagination">
+            <a href="http://chencoyote.github.io/author/coyote.html">&laquo;</a>
+    Page 2 / 2
+</div>
+
+		  </div>	
+		  
+		  <div class="sidebar">
+		    <div class="sidebar-container" >
+
+
+  	          <nav>
+	            <h2>Categories</h2>
+	            <ul>
+	                <li ><a href="http://chencoyote.github.io/category/ce-shi.html">测试</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/ewen-fan-yi.html">E文翻译</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/ji-zhu.html">技术</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/linux.html">Linux</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/python.html">Python</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/qi-ta.html">其他</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/sublime-text.html">Sublime Text</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/xue-xi-bi-ji.html">学习笔记</a></li>
+	            </ul>
+	          </nav>
+
+	            <aside>
+	            <h2>Social</h2>
+			      <ul class="social">
+				    <li><a href="https://github.com/chencoyote">Github</a><i></i></li>
+				    <li><a href="https://plus.google.com/u/0/104542842241928417898/posts">Google+</a><i></i></li>
+				    <li><a href="https://twitter.com/Coyote_chen">Twitter</a><i></i></li>
+				    <li><a href="http://weibo.com/coytoe">Weibo</a><i></i></li>
+				    <li><a href="http://v2ex.com/member/Coyote">V2EX</a><i></i></li>
+			      </ul>
+			    </aside>
+
+	            <aside>
+	              <h2>Blogroll</h2>
+	              <ul>
+	                  <li><a href="http://python.org/">Python.org</a></li>
+	                  <li><a href="http://pychina.org">PyChina</a></li>
+	                  <li><a href="http://weekly.pychina.org">PyWeekly</a></li>
+	                  <li><a href="http://cn.pycon.org">PyConChina</a></li>
+	              </ul>
+	            </aside>
+	        </div>
+		  </div>
+
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+		  coyote - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-sober">pelican-sober</a>.
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>

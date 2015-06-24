@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>Python中的下划线 - Coyote's Blog</title>	
+	<meta name="author" content="coyote">
+	
+
+  <meta name="description" content="原文 码农周刊推送 个人翻译 原文在 --> Underscores in Python By SHAHRIAR TAJBAKHSH 正文 本文讨论_(下划线) 这个货在Python中的作用, 因为在Python中有很多时候都有使用_的毛病 单个的下划线 最典型的有三种情况: 在解释器中: 用_命名的目的是为了存放在交互式解释器中最后执行的结果, 首先会被标准的CPython解释器解释, 然后才是其他的 ``` Traceback (most recent call last): File "", line 1, in NameError: name '' is not defined 42 42 'alright!' if _ else ':(' 'alright!' 'alright!' `` PS: 仔细观察 ...">
+
+
+
+	<link rel="stylesheet" href="http://chencoyote.github.io/theme/css/main.css" type="text/css" />
+		
+
+
+    <link href="http://chencoyote.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Coyote's Blog Atom Feed" />
+</head>
+	
+<body>
+
+    <div class="container">
+	  
+	  <header role="banner">
+	    <div class="feeds">
+	      <a href="http://chencoyote.github.io/feeds/all.atom.xml" rel="alternate"><img src="http://chencoyote.github.io/theme/images/icons/feed-32px.png" alt="atom feed"/></a>
+	    </div>
+	      <nav class="pages">
+			  <a href="http://chencoyote.github.io/archives">Archives</a>
+-			  <a href="http://chencoyote.github.io/tags">Tags</a>
+-			  <a href="http://chencoyote.github.io/pages/personal-awesome.html">Personal Awesome</a>
+-			  <a href="http://chencoyote.github.io/pages/about-me.html">About Me</a>
+	      </nav>
+		<a href="http://chencoyote.github.io" class="title">Coyote's Blog</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+	<article class="full">
+		
+		<h1>Python中的下划线</h1>
+		
+<div class="metadata">
+  <time datetime="2015-03-19T11:24:39+08:00" pubdate>Thu 19 March 2015</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://chencoyote.github.io/author/coyote.html">coyote</a>
+    </address>
+  in <a href="http://chencoyote.github.io/category/python.html">Python</a>
+<p class="tags">tagged <a href="http://chencoyote.github.io/tag/pythonnic.html">pythonnic</a></p></div>		
+		<h2>原文</h2>
+<p>码农周刊推送 个人翻译
+原文在 --&gt; <a href="http://shahriar.svbtle.com/underscores-in-python">Underscores in Python By SHAHRIAR TAJBAKHSH</a></p>
+<h2>正文</h2>
+<p>本文讨论<code>_</code>(下划线) 这个货在Python中的作用, 因为在Python中有很多时候都有使用<code>_</code>的毛病</p>
+<h3>单个的下划线</h3>
+<p>最典型的有三种情况:</p>
+<ol>
+<li>
+<p><strong>在解释器中</strong>: 用<code>_</code>命名的目的是为了存放在交互式解释器中最后执行的结果, 首先会被标准的CPython解释器解释, 然后才是其他的</p>
+<p>```</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><em>
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name '</em>' is not defined
+42
+<em>
+42
+'alright!' if _ else ':('
+'alright!'
+</em>
+'alright!'
+<code>``
+PS: 仔细观察,</code>_<code>原来的值是42, 但是在</code>if-else<code>之后变成了</code>alright!`</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</li>
+<li>
+<p><strong>作为变量名</strong>: 有一些过去的观点认为, <code>_</code>被当做_废弃_的变量名. 按照惯例, 这种写法会让之后的人读你代码的时候知道这个变量已经被占用不能被使用.
+比如, 在一个循环中没有价值的循环计数器</p>
+<p><code>Python
+n = 42
+for _ in range(n):
+    do_something()</code></p>
+<p>PS: 其实作者想说的意思就是, 这货就是来存放一些没意义的东西, 但是你还在代码中需要使用, 并且后续的代码也不会在去用的这个变量.</p>
+</li>
+<li>
+<p><strong>i18n(所谓的国际化)</strong>: 偶尔也可能看到<code>_</code>被当做一个函数来用. 实际上这个函数名是用来将国际化的语言和本地语言进行查找. 其实这个创意是也是根据C语言的习惯来的.
+比如你阅读<a href="https://docs.djangoproject.com/en/dev/topics/i18n/translation/">Django documentation for translation</a>, 你可以看到</p>
+<p>```Python
+from django.utils.translation import ugettext as _
+from django.http import HttpResponse</p>
+<p>def my_view(request):
+    output = _("Welcome to my site.")
+    return HttpResponse(output)
+```</p>
+<p>PS: 特地把<code>gettext</code> 给 <code>as</code> 成 <code>_</code> 我也是醉了, 其实就是一些约定俗成, 方便阅读代码的时候一眼就知道在干啥.</p>
+</li>
+</ol>
+<h3>变量名前的单下划线(e.g. <code>_shahriar</code>)</h3>
+<p>变量名前面的单下划线一般会被程序猿习惯的理解成"私有". 这也是一种为了方便后人(或者你自己)阅读你的代码的时候知道, 以<code>_</code>开头的变量是为内部所用. 像<a href="https://docs.python.org/3.4/tutorial/classes.html#tut-private">Python文档</a>中有说:</p>
+<blockquote>
+<p>a name prefixed with an underscore (e.g. _spam) should be treated as a non-public part of the API (whether it is a function, a method or a data member). It should be considered an implementation detail and subject to change without notice.</p>
+<p>一个前缀为下划线的变量名, 应该理解为不公有的API (或者一个函数, 一个方法, 一个成员变量). 这应该被认为是一个被履行的细节且在没有任何声明的时候不能改变.</p>
+</blockquote>
+<p>作者的PS: </p>
+<blockquote>
+<p>我这里说的 <em>一种习惯</em> , 是因为在解释器中实际上还有另外的意思.如果 <code>from &lt;module/package&gt; import *</code>, 如果没有以<code>_</code>开始的没用的module's/package也会被<code>__all__</code>这货给全部包含进来. 详情查看<a href="http://shahriar.svbtle.com/importing-star-in-python">importing * in Python</a></p>
+</blockquote>
+<p>PS: 其实作者想说的谁就是, 如果你不把没用的东西用<code>_</code>作为前缀, 当你<code>import *</code>的时候会把这些没用的也给包含进来消耗资源.</p>
+<h3>变量名前的双下划线(e.g. <code>__shahriar</code>)</h3>
+<p>在变量名前用<code>__</code>(通常是在方法前面)这个并不算是一种习俗. 它在解释器中有一些特殊的含义. Python 重编了一些名字(Name mangling 也有叫名字粉碎, 我也不知道该怎么叫, 暂且叫重命名吧)为了避免和子类的名字发生冲突. 比如<a href="https://docs.python.org/3.4/tutorial/classes.html#tut-private">Python文档</a>中提到</p>
+<blockquote>
+<p>Any identifier of the form __spam (at least two leading underscores, at most one trailing underscore) is textually replaced with _classname__spam, where classname is the current class name with leading underscore(s) stripped</p>
+<p>每个类似于<code>__spam</code> (至少两个下划线前缀,至多一个后缀下划线) 都被替换成为了类似 <code>_classname__spam</code> 其中 <code>classname</code>是当前类的名字</p>
+</blockquote>
+<p>例:</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="o">...</span>     <span class="k">def</span> <span class="nf">_internal_use</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="o">...</span>         <span class="k">pass</span>
+<span class="o">...</span>     <span class="k">def</span> <span class="nf">__method_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="o">...</span>         <span class="k">pass</span>
+<span class="o">...</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">dir</span><span class="p">(</span><span class="n">A</span><span class="p">())</span>
+<span class="p">[</span><span class="s">&#39;_A__method_name&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="s">&#39;_internal_use&#39;</span><span class="p">]</span>
+</pre></div>
+
+
+<p>PS: 这里所说的就是等你在类里面 使用双下划线做前缀的时候, 在Python解释器中会默认的把它的原来的类名给加上</p>
+<p>正如所料, <code>_internal_use</code> 没有被替换, 但是 <code>__method_name</code> 被重命名为 <code>_ClassName__method_name</code>. 如果现在你创建一个A的子类B, 你可以很轻松的重写A的 <code>__method_name</code> 方法</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+<span class="o">...</span>     <span class="k">def</span> <span class="nf">__method_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="o">...</span>         <span class="k">pass</span>
+<span class="o">...</span> 
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">dir</span><span class="p">(</span><span class="n">B</span><span class="p">())</span>
+<span class="p">[</span><span class="s">&#39;_A__method_name&#39;</span><span class="p">,</span> <span class="s">&#39;_B__method_name&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="s">&#39;_internal_use&#39;</span><span class="p">]</span>
+</pre></div>
+
+
+<p>其实这样做的目的就相当于 Java 中的 <code>final</code> 关键字或者C++中的正常(非虚)函数</p>
+<h3>前后都有两个下划线的变量名 (e.g. <code>__init__</code>)</h3>
+<p>这是Python中的特殊函数<a href="https://docs.python.org/3.4/reference/datamodel.html#specialnames">Special method names</a>, 这在很久以前就是一个习惯, 这种方法不会和用户定义的发生冲突, 然后你可以对他们进行调用和重写, 比如当你写一个类的时候, 你就经常会重写<code>__init__</code> 方法</p>
+<p>没人会阻止你自己去写这种命名方式的方法(但是, 尽量别这么做):</p>
+<div class="highlight"><pre><span class="o">&gt;&gt;&gt;</span> <span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="o">...</span>     <span class="k">def</span> <span class="nf">__mine__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="o">...</span>         <span class="k">pass</span>
+<span class="o">...</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">dir</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+<span class="o">...</span> <span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="s">&#39;__mine__&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+</pre></div>
+
+
+<p>最好的方法避免这种命名方式, 就是不用!</p>	
+
+	</article>
+
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
+
+
+		  </div>	
+		  
+		  <div class="sidebar">
+		    <div class="sidebar-container" >
+
+
+  	          <nav>
+	            <h2>Categories</h2>
+	            <ul>
+	                <li ><a href="http://chencoyote.github.io/category/ce-shi.html">测试</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/ewen-fan-yi.html">E文翻译</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/ji-zhu.html">技术</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/linux.html">Linux</a></li>
+	                <li class="active"><a href="http://chencoyote.github.io/category/python.html">Python</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/qi-ta.html">其他</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/sublime-text.html">Sublime Text</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/xue-xi-bi-ji.html">学习笔记</a></li>
+	            </ul>
+	          </nav>
+
+	            <aside>
+	            <h2>Social</h2>
+			      <ul class="social">
+				    <li><a href="https://github.com/chencoyote">Github</a><i></i></li>
+				    <li><a href="https://plus.google.com/u/0/104542842241928417898/posts">Google+</a><i></i></li>
+				    <li><a href="https://twitter.com/Coyote_chen">Twitter</a><i></i></li>
+				    <li><a href="http://weibo.com/coytoe">Weibo</a><i></i></li>
+				    <li><a href="http://v2ex.com/member/Coyote">V2EX</a><i></i></li>
+			      </ul>
+			    </aside>
+
+	            <aside>
+	              <h2>Blogroll</h2>
+	              <ul>
+	                  <li><a href="http://python.org/">Python.org</a></li>
+	                  <li><a href="http://pychina.org">PyChina</a></li>
+	                  <li><a href="http://weekly.pychina.org">PyWeekly</a></li>
+	                  <li><a href="http://cn.pycon.org">PyConChina</a></li>
+	              </ul>
+	            </aside>
+	        </div>
+		  </div>
+
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+		  coyote - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-sober">pelican-sober</a>.
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>

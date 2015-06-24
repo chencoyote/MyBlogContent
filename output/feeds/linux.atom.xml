@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Coyote's Blog</title><link href="http://chencoyote.github.io/" rel="alternate"></link><link href="http://chencoyote.github.io/feeds/linux.atom.xml" rel="self"></link><id>http://chencoyote.github.io/</id><updated>2015-02-06T10:21:20+08:00</updated><entry><title>linxu终端烦人的ctrl+s</title><link href="http://chencoyote.github.io/articles/linxuzhong-duan-fan-ren-de-ctrls.html" rel="alternate"></link><updated>2015-02-06T10:21:20+08:00</updated><author><name>coyote</name></author><id>tag:chencoyote.github.io,2015-02-06:articles/linxuzhong-duan-fan-ren-de-ctrls.html</id><summary type="html">&lt;h2&gt;问题&lt;/h2&gt;
+&lt;p&gt;最近折腾了一下终端的个性化定制, 以及vim定制, 并且管理了自己的Dotfile&lt;/p&gt;
+&lt;p&gt;但是遇到一个烦人的问题, 快捷键里面有个&lt;code&gt;ctrl+a&lt;/code&gt;经常被我给按成&lt;code&gt;ctrl+s&lt;/code&gt;, 频率还不低&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;ctrl+s&lt;/code&gt;这个键组合在linux里面是&lt;code&gt;锁定屏幕显示&lt;/code&gt; 搜了一下很多小白都遇到这个锁定屏幕之后不知所措&lt;/p&gt;
+&lt;p&gt;然后只好关掉终端重新打开. 网上也有解决方案就是按下&lt;code&gt;ctrl + q&lt;/code&gt; 就能恢复.&lt;/p&gt;
+&lt;h2&gt;思考&lt;/h2&gt;
+&lt;p&gt;这个&lt;code&gt;ctrl+s&lt;/code&gt; 的功能到底谁会用啊....同样的按键&lt;code&gt;ScrollLock&lt;/code&gt;完全能用啊, 再按一下又恢复了嘛&lt;/p&gt;
+&lt;p&gt;所以考虑关掉这个该死的按键, 但是壮哉我大百度是不会给出解决方案的, 还得问我&lt;strong&gt;大表哥&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ctrl+s&lt;/code&gt; 会像终端发起一个&lt;code&gt;XOFF&lt;/code&gt; 的信号&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;stty&lt;/code&gt; linux是设置终端属性的命令&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;方案&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;man stty&lt;/code&gt; 查看man手册&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[-]ixoff
+   enable sending of start/stop characters
+[-]ixon
+   enable XON/XOFF flow control&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;所以只需要输入&lt;code&gt;stty ixoff -ixon&lt;/code&gt;&lt;strong&gt;'-'代表禁用&lt;/strong&gt; &lt;/p&gt;
+&lt;p&gt;再按下&lt;code&gt;ctrl+s&lt;/code&gt; 是不是不会假死了;-)&lt;/p&gt;
+&lt;p&gt;当然会转换成&lt;code&gt;(i-search)':&lt;/code&gt; 这个玩意目前还没有很好的解决方法...欢迎告诉我..&lt;/p&gt;</summary><category term="linxu个性化"></category></entry><entry><title>linxu终端烦人的"哔哔"声</title><link href="http://chencoyote.github.io/articles/linxuzhong-duan-fan-ren-de-bi-bi-sheng.html" rel="alternate"></link><updated>2014-12-20T09:00:48+08:00</updated><author><name>coyote</name></author><id>tag:chencoyote.github.io,2014-12-20:articles/linxuzhong-duan-fan-ren-de-bi-bi-sheng.html</id><summary type="html">&lt;h3&gt;问题&lt;/h3&gt;
+&lt;p&gt;不知道有多少人跟我遇到过同样的问题, 因为本人使用linux非常的懒, 已经习惯性的使用'TAB'来补全路径或者命令
+但是使用TAB就会遇到一个问题, 就是如果你的输入的命令或者路径是错误的, 这个是后你按'TAB' 终端工具就会一直发出
+'哔哔哔哔'的声音, 而我又是一个APM(手速, 玩过RTS类游戏的人都知道)比较多的, 所以经常在使用shell的时候关掉了声音
+最近终于找到了解决方法.&lt;/p&gt;
+&lt;p&gt;一般Linux都适用, Mac OS 有待测试&lt;/p&gt;
+&lt;h3&gt;解决&lt;/h3&gt;
+&lt;h4&gt;.bashrc&lt;/h4&gt;
+&lt;p&gt;如果知道这个文件的作用的同学应该都懂, 在这个里面需要添加一行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;vim &lt;span class="nv"&gt;$HOME&lt;/span&gt;/.bashrc
+&lt;span class="c"&gt;# 添加&lt;/span&gt;
+&lt;span class="nv"&gt;INPUTRC&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;HOME&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;/.inputrc  
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;.inputrc&lt;/h4&gt;
+&lt;p&gt;再来说说这个文件, inputrc是用来做键盘按键映射的, 通过这个文件可以制作自己喜欢的 key-binding
+关于 key-binding这个问题, 感兴趣的可以自己搜索, 因为一般很少用得上, 我们这里用上的是&lt;code&gt;bell-style&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;之前已经在&lt;code&gt;bashrc&lt;/code&gt;中添加了inputrc的环境变量, 接下来只需要在inputrc中添加&lt;code&gt;set bell-style none&lt;/code&gt;就可以关掉声音了&lt;/p&gt;
+&lt;p&gt;最后只需要重新连接终端, 世界就安静了!~&lt;/p&gt;
+&lt;p&gt;bell-style的可取值是: &lt;strong&gt;none&lt;/strong&gt;, &lt;strong&gt;visible&lt;/strong&gt;, &lt;strong&gt;audible&lt;/strong&gt;, 每个值的意义感兴趣可以深入研究一下.&lt;/p&gt;</summary><category term="linxu个性化"></category></entry></feed>

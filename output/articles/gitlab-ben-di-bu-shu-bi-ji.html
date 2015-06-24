@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>Gitlab 本地部署笔记 - Coyote's Blog</title>	
+	<meta name="author" content="coyote">
+	
+
+  <meta name="description" content="下载地址 # 地址被墙, 不过有种解决方法就是去改https为http可以下载, 但是速度很慢 https://downloads-packages.s3.amazonaws.com/centos-6.6/gitlab-ce-7.10.0~omnibus.2-1.x86_64.rpm 安装环境 CentOS 6.5 虚拟机 需要外网 方法 源码编译安装 rpm安装 源码编译安装 好处: 就是可以根据自己需要来定制一些实用的软件呢, 如数据库/Nginx之类的 坏处: 就是安装过程太复杂, 调试起来非常复杂 rpm安装 好处: 啥都内置了, 4部就可以部署完成 (实测没有几个可以4部就能完美运行的) 坏处: 定制性差, 数据库等都只能靠配置, 而且如果修改为别的配置修改起来非常麻烦, 而且还有可能不成功 过程 本人用的rpm安装的方式 官方文档和别人的教程都写的非常详细, 没必要拿来从新写, 过程都是一样的 ...">
+
+
+
+	<link rel="stylesheet" href="http://chencoyote.github.io/theme/css/main.css" type="text/css" />
+		
+
+
+    <link href="http://chencoyote.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Coyote's Blog Atom Feed" />
+</head>
+	
+<body>
+
+    <div class="container">
+	  
+	  <header role="banner">
+	    <div class="feeds">
+	      <a href="http://chencoyote.github.io/feeds/all.atom.xml" rel="alternate"><img src="http://chencoyote.github.io/theme/images/icons/feed-32px.png" alt="atom feed"/></a>
+	    </div>
+	      <nav class="pages">
+			  <a href="http://chencoyote.github.io/archives">Archives</a>
+-			  <a href="http://chencoyote.github.io/tags">Tags</a>
+-			  <a href="http://chencoyote.github.io/pages/personal-awesome.html">Personal Awesome</a>
+-			  <a href="http://chencoyote.github.io/pages/about-me.html">About Me</a>
+	      </nav>
+		<a href="http://chencoyote.github.io" class="title">Coyote's Blog</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+	<article class="full">
+		
+		<h1>Gitlab 本地部署笔记</h1>
+		
+<div class="metadata">
+  <time datetime="2015-05-11T10:09:11+08:00" pubdate>Mon 11 May 2015</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://chencoyote.github.io/author/coyote.html">coyote</a>
+    </address>
+  in <a href="http://chencoyote.github.io/category/xue-xi-bi-ji.html">学习笔记</a>
+<p class="tags">tagged <a href="http://chencoyote.github.io/tag/git.html">git</a></p></div>		
+		<h2>下载地址</h2>
+<div class="highlight"><pre># 地址被墙, 不过有种解决方法就是去改https为http可以下载, 但是速度很慢
+https://downloads-packages.s3.amazonaws.com/centos-6.6/gitlab-ce-7.10.0~omnibus.2-1.x86_64.rpm
+</pre></div>
+
+
+<h2>安装环境</h2>
+<ul>
+<li>CentOS 6.5</li>
+<li>虚拟机</li>
+<li>需要外网</li>
+</ul>
+<h2>方法</h2>
+<ul>
+<li>源码编译安装</li>
+<li>rpm安装</li>
+</ul>
+<h3>源码编译安装</h3>
+<ul>
+<li>好处: 就是可以根据自己需要来定制一些实用的软件呢, 如数据库/Nginx之类的</li>
+<li>坏处: 就是安装过程太复杂, 调试起来非常复杂</li>
+</ul>
+<h3>rpm安装</h3>
+<ul>
+<li>好处: 啥都内置了, 4部就可以部署完成 (实测没有几个可以4部就能完美运行的)</li>
+<li>坏处: 定制性差, 数据库等都只能靠配置, 而且如果修改为别的配置修改起来非常麻烦, 而且还有可能不成功</li>
+</ul>
+<h2>过程</h2>
+<p><strong>本人用的rpm安装的方式</strong></p>
+<p>官方文档和别人的教程都写的非常详细, 没必要拿来从新写, 过程都是一样的</p>
+<p><a href="https://about.gitlab.com/downloads/">官方文档 | gitlab.com</a>
+<a href="http://segmentfault.com/a/1190000002722631">Hiufan | segmentfault.com</a></p>
+<h2>遇到的问题</h2>
+<p>这个才是重要的, 每个人遇到的问题几乎都不同, 所以查找问题原因很麻烦
+不如把遇到的问题贴出来, 可以之后参考</p>
+<ol>
+<li><code>gitlab-rake</code>: 这个玩意在我了解, 可能是用来初始数据库的, 我用到的如下</li>
+<li><code>gitlab-rake gitlab:setup</code> 第一次没跑起来, 查看官方文档, 看到数据库要初始化, 尝试之后可以正常使用了</li>
+<li>
+<p><code>gitlab-rake clear</code> 故名意思, 直接清干净数据库信息, 但是服务器上的repo是不会一起清除的, 需要手动清除</p>
+</li>
+<li>
+<p>页面显示500错误: 查看日志, 使用先使用<code>gitlab-ctl status</code>查看状态, 如果进程出现问题是会一直重启的,所以可以使用 <code>gitlab-ctl tail 进程名</code> 来查看单个进程的日志, 如果tail后面没有进程名, 则显示全部进程的名称</p>
+</li>
+<li>
+<p>nginx配置: nginx配置起来非常麻烦, 所以索性我就关掉了, 找到对应的配置文件修改一下就可以了</p>
+</li>
+<li>
+<p><code>gitlab-ctl reconfigure</code>: 每次修改了 <code>/etc/gitlab/gitlab.rb</code> 这个配置文件之后都需要执行这个命令才可以生效, 他会自动重启服务的. 但是同样有个问题, 就是如果修改过nginx或者其他的内置的程序的配置文件, 执行这个就会被还原, 很麻烦.</p>
+</li>
+<li>
+<p>500错误 postgresql SSL off 错误</p>
+</li>
+</ol>
+<div class="highlight"><pre>==&gt; /var/log/gitlab/postgresql/current &lt;==
+2015-05-08_12:04:03.93789 FATAL:  no pg_hba.conf entry for host &quot;127.0.0.1&quot;, user &quot;gitlab&quot;, database &quot;gitlabhq_production&quot;, SSL off
+2015-05-08_12:04:03.94352 FATAL:  no pg_hba.conf entry for host &quot;127.0.0.1&quot;, user &quot;gitlab&quot;, database &quot;gitlabhq_production&quot;, SSL off
+</pre></div>
+
+
+<p>找到该配置文件<code>/var/opt/gitlab/postgresql/data/pg_hba.conf</code> 最下面一行</p>
+<div class="highlight"><pre># TYPE  DATABASE    USER        CIDR-ADDRESS          METHOD
+
+# &quot;local&quot; is for Unix domain socket connections only
+local   all         all                               peer map=gitlab
+</pre></div>
+
+
+<p>修改最后一行为</p>
+<div class="highlight"><pre>host   all         all          0.0.0.0/0            trust
+</pre></div>
+
+
+<p>问题解决, 但是具体为啥, 请查看postgresql文档</p>
+<p><strong>注意: 每次reconfigure之后, 该文件被还原, 需要重新修改</strong></p>	
+
+	</article>
+
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
+
+
+		  </div>	
+		  
+		  <div class="sidebar">
+		    <div class="sidebar-container" >
+
+
+  	          <nav>
+	            <h2>Categories</h2>
+	            <ul>
+	                <li ><a href="http://chencoyote.github.io/category/ce-shi.html">测试</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/ewen-fan-yi.html">E文翻译</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/ji-zhu.html">技术</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/linux.html">Linux</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/python.html">Python</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/qi-ta.html">其他</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/sublime-text.html">Sublime Text</a></li>
+	                <li class="active"><a href="http://chencoyote.github.io/category/xue-xi-bi-ji.html">学习笔记</a></li>
+	            </ul>
+	          </nav>
+
+	            <aside>
+	            <h2>Social</h2>
+			      <ul class="social">
+				    <li><a href="https://github.com/chencoyote">Github</a><i></i></li>
+				    <li><a href="https://plus.google.com/u/0/104542842241928417898/posts">Google+</a><i></i></li>
+				    <li><a href="https://twitter.com/Coyote_chen">Twitter</a><i></i></li>
+				    <li><a href="http://weibo.com/coytoe">Weibo</a><i></i></li>
+				    <li><a href="http://v2ex.com/member/Coyote">V2EX</a><i></i></li>
+			      </ul>
+			    </aside>
+
+	            <aside>
+	              <h2>Blogroll</h2>
+	              <ul>
+	                  <li><a href="http://python.org/">Python.org</a></li>
+	                  <li><a href="http://pychina.org">PyChina</a></li>
+	                  <li><a href="http://weekly.pychina.org">PyWeekly</a></li>
+	                  <li><a href="http://cn.pycon.org">PyConChina</a></li>
+	              </ul>
+	            </aside>
+	        </div>
+		  </div>
+
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+		  coyote - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-sober">pelican-sober</a>.
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>

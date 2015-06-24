@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Coyote's Blog</title><link href="http://chencoyote.github.io/" rel="alternate"></link><link href="http://chencoyote.github.io/feeds/qi-ta.atom.xml" rel="self"></link><id>http://chencoyote.github.io/</id><updated>2015-03-18T10:57:03+08:00</updated><entry><title>杂念--工作两年的心路总结</title><link href="http://chencoyote.github.io/articles/za-nian-gong-zuo-liang-nian-de-xin-lu-zong-jie.html" rel="alternate"></link><updated>2015-03-18T10:57:03+08:00</updated><author><name>coyote</name></author><id>tag:chencoyote.github.io,2015-03-18:articles/za-nian-gong-zuo-liang-nian-de-xin-lu-zong-jie.html</id><summary type="html">&lt;h2&gt;背景&lt;/h2&gt;
+&lt;p&gt;2013年3月到公司实习 至 2015年3月工作满两年&lt;/p&gt;
+&lt;p&gt;写这个文章的时候, 是因为期间进行了两次面试, 对于我来说影响过大&lt;/p&gt;
+&lt;h2&gt;从面试说起&lt;/h2&gt;
+&lt;p&gt;这次面试是一次很突发奇想的面试, 突然看到朋友圈有人发了相关的介绍
+我又无意注册了拉勾网, 正好这个公司也是在上面发了消息, 我又恰好投了
+结果还被约去面试, 我就迷迷糊糊的去了.&lt;/p&gt;
+&lt;p&gt;这个公司是一个创业公司, 15年开始创业的, 目标是做O2O的企业.&lt;/p&gt;
+&lt;p&gt;面试的过程对我来说可能是打击相当大的, 一开始, 轻松加愉快的介绍了自己的工作
+经历, 以及技能熟练程度&lt;/p&gt;
+&lt;p&gt;后来, 技术小哥问我, 你知道MVC嘛? 面向对象呢? 设计模式? 数据结构?
+算法? 我这个时候只能含糊其次, 这些都听说过么, 听说过, 都知道干嘛的么
+也知道, 但是你详细说说你的理解呢? WTF 我特么什么都不知道!&lt;/p&gt;
+&lt;h2&gt;反思&lt;/h2&gt;
+&lt;p&gt;经过这件事, 让我开始对自己反思, 我这两年学了什么了?&lt;/p&gt;
+&lt;p&gt;熟悉Python, 是这两年最大的收获, 也是提升最快的&lt;/p&gt;
+&lt;p&gt;然后呢?&lt;/p&gt;
+&lt;p&gt;Javascript, 也是在压力所迫之下开始渐渐数字, JQuery基本能熟练使用&lt;/p&gt;
+&lt;p&gt;然后呢?&lt;/p&gt;
+&lt;p&gt;C语言, 借着工作机会可以看看别人写的代码, 跟别人请教请教问题&lt;/p&gt;
+&lt;p&gt;还有么?&lt;/p&gt;
+&lt;p&gt;没了!&lt;/p&gt;
+&lt;p&gt;那么, 也就是说, 这两年, 我只是学会了如何使用语言去编码&lt;/p&gt;
+&lt;p&gt;设计一个东西, 如何去设计, 如何提高代码的质量?&lt;/p&gt;
+&lt;p&gt;不能说一点不会, 肯定会根据自己总结和网上学习到的多少会一点.&lt;/p&gt;
+&lt;p&gt;但是! 关键在于这个&lt;code&gt;但是!&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;我并没有系统的接触到一个开发流程是什么样子&lt;/li&gt;
+&lt;li&gt;我并没有体会到一个详细的开发文档该怎么去写&lt;/li&gt;
+&lt;li&gt;我更不能独立的设计一个合理的高质量的代码&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;怪公司, 也怪自己&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;公司体制问题, 导致开发流程被弱化, 代码管理被弱化, 考核机制仅仅用一个remind, 填报工时
+一年总结一次用来考核年终奖. 导致我在体制之下, 随意的按照自己的意愿去发展自己&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;怪自己, 自己不够重视软件开发的重要性, 一切不是以代码优先, 而是需求优先, 
+至今为止自己不能够设计中型, 大型的开源项目, 最多自己搞一把小的工具&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;如何&lt;/h2&gt;
+&lt;p&gt;如果想要改变, 必须寻求合理的方法. &lt;/p&gt;
+&lt;p&gt;改变公司的体制? 我做不到.&lt;/p&gt;
+&lt;p&gt;改变自己工作氛围? 做得到. 但是牵扯个人感情&lt;/p&gt;
+&lt;p&gt;改变自己工作方式? 做得到&lt;/p&gt;
+&lt;h2&gt;第二次面试&lt;/h2&gt;
+&lt;p&gt;这次面试的企业是我, 到现在还在喜欢着的公司, knownsec inc. 公司文化非常自由, 风格很Geek,&lt;/p&gt;
+&lt;p&gt;很向往, 但是心理没底的是, 总是听说, 真的没有体会到, 不过从他们的安全研究团队来说, 还是有&lt;/p&gt;
+&lt;p&gt;一定的影响力的. 恰好里面有一些我熟悉的人, 还有另外一个朋友想要去, 所以.....&lt;/p&gt;
+&lt;h1&gt;To Be Continue...&lt;/h1&gt;</summary><category term="Chaos"></category></entry></feed>

@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>技术 - Coyote's Blog</title>	
+	<meta name="author" content="coyote">
+	
+
+	<link rel="stylesheet" href="http://chencoyote.github.io/theme/css/main.css" type="text/css" />
+		
+
+
+    <link href="http://chencoyote.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Coyote's Blog Atom Feed" />
+</head>
+	
+<body>
+
+    <div class="container">
+	  
+	  <header role="banner">
+	    <div class="feeds">
+	      <a href="http://chencoyote.github.io/feeds/all.atom.xml" rel="alternate"><img src="http://chencoyote.github.io/theme/images/icons/feed-32px.png" alt="atom feed"/></a>
+	    </div>
+	      <nav class="pages">
+			  <a href="http://chencoyote.github.io/archives">Archives</a>
+-			  <a href="http://chencoyote.github.io/tags">Tags</a>
+-			  <a href="http://chencoyote.github.io/pages/personal-awesome.html">Personal Awesome</a>
+-			  <a href="http://chencoyote.github.io/pages/about-me.html">About Me</a>
+	      </nav>
+		<a href="http://chencoyote.github.io" class="title">Coyote's Blog</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+
+<h1>Posts categorized under: 技术</h1>
+
+<article class="summary">
+<div class="metadata">
+  <time datetime="2014-12-15T16:15:03+08:00" pubdate>Mon 15 December 2014</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://chencoyote.github.io/author/coyote.html">coyote</a>
+    </address>
+  in <a href="http://chencoyote.github.io/category/ji-zhu.html">技术</a>
+<p class="tags">tagged <a href="http://chencoyote.github.io/tag/python.html">python</a></p></div>  <div>
+    <h2>
+      <a href="http://chencoyote.github.io/articles/yong-pelicanda-jian-zi-ji-de-bo-ke-er-fa-bu-bo-ke.html" rel="bookmark" title="Permalink to 用Pelican搭建自己的博客（二）发布博客">用Pelican搭建自己的博客（二）发布博客</a>
+    </h2>
+    <p><p>继续上一篇</p>
+<h2>本地发布</h2>
+<p>由于现在没有正式的在浏览器中访问过博客，所以我们需要现在本地测试成功之后再发布到正常使用的服务器上</p>
+<h3>第一篇博客</h3>
+<p>Pelican使用纯静态页面来发布文章, 创建好的目录下其实已经提供了很好的几个工具,我们先来看看都是干嘛的</p>
+<div class="highlight"><pre>.
+├── output             
+├── content            
+├── Makefile           // 生成html的makefile文件
+                       // 可以通过make html来将content中得内容发布到output
+├── develop_server.sh  // 本地测试服务启动脚本
+                       // 通过 ./develop_server.sh start 来生成html和启动本地web服务
+├── fabfile.py         // fabric自动化任务工具
+                       // 可以在这个文件里面定义一些方法来使用 fab 方法名来进行发布任务
+                       // 如可以定义一个publish的方法执行本地命令 fab publish来发布文档
+├── pelicanconf.py     
+└── publishconf.py     
+</pre></div>
+
+
+<p>那么们先来写一篇文档,在content文件中创建<code>first.md</code>并且写一些markdown的内容进去</p>
+<p>之后在content文件夹所在的目录使用 make html来生成静态界面,当生成之后,使用<code>ls ./output</code>查看output目录下看到</p>
+<div class="highlight"><pre>.
+├── archives.html ...</pre></div></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
+  <time datetime="2014-12-15T16:15:03+08:00" pubdate>Mon 15 December 2014</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://chencoyote.github.io/author/coyote.html">coyote</a>
+    </address>
+  in <a href="http://chencoyote.github.io/category/ji-zhu.html">技术</a>
+<p class="tags">tagged <a href="http://chencoyote.github.io/tag/python.html">python</a></p></div>  <div>
+    <h2>
+      <a href="http://chencoyote.github.io/articles/yong-pelicanda-jian-zi-ji-de-bo-ke-yi-huan-jing-de-da-jian.html" rel="bookmark" title="Permalink to 用Pelican搭建自己的博客（一）环境的搭建">用Pelican搭建自己的博客（一）环境的搭建</a>
+    </h2>
+    <p><p>作为一个A Pythoner want to be Pythonic想要搭建一个自己博客，之前想要采取使用Django-CMS来搭建看了很多其他人写的源码之后开始动手自己写，但是发现自己时间不够充足，导致经常跳票写好了后台，又要配置数据库，总不能完全照搬人家的博客源码过来吧。所以经过了Django-CMS写了4个版本后，博客的进度被搁置了，知道有一天查找资料发现博主<a href="http://www.linuxzen.com/shi-yong-pelicanda-zao-jing-tai-bo-ke.html">cold's world</a>的博客，深表感谢。重新燃起搭建的欲望，结果2天共计8小时完成搭建。所以记录下来分享一下。</p>
+<p>有任何疑问可以留言或者邮箱联系我。</p>
+<h2>环境</h2>
+<h3>硬件环境</h3>
+<p>Digitalocean 10刀服务器 Ubuntu 64位</p>
+<p>之前很多人推荐这个还有Linode，两家都是SSD的服务器
+感觉对于普通个人用户Digitalocean的5刀或者10刀还不错。
+Linode没用过也不好评价，但是最低配和Digitalocean价格差不多。
+PS：另外还部署了Shadowsocks，目前就几个人用，如果需要的可以联系我 ;-)</p>
+<h3>软件环境</h3>
+<h4>Python</h4>
+<ul>
+<li>virtualenvwrapper</li>
+<li>Pelican</li>
+<li>MarkDown</li>
+<li>fabric</li>
+</ul>
+<h4>Linux</h4>
+<ul>
+<li>bashshell</li>
+<li>crontab</li>
+<li>git</li>
+</ul>
+<h4>其他</h4>
+<ul>
+<li>disqus ...</li></ul></p>
+  </div>
+</article>
+<div class="pagination">
+    Page 1 / 1
+</div>
+
+		  </div>	
+		  
+		  <div class="sidebar">
+		    <div class="sidebar-container" >
+
+
+  	          <nav>
+	            <h2>Categories</h2>
+	            <ul>
+	                <li ><a href="http://chencoyote.github.io/category/ce-shi.html">测试</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/ewen-fan-yi.html">E文翻译</a></li>
+	                <li class="active"><a href="http://chencoyote.github.io/category/ji-zhu.html">技术</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/linux.html">Linux</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/python.html">Python</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/qi-ta.html">其他</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/sublime-text.html">Sublime Text</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/xue-xi-bi-ji.html">学习笔记</a></li>
+	            </ul>
+	          </nav>
+
+	            <aside>
+	            <h2>Social</h2>
+			      <ul class="social">
+				    <li><a href="https://github.com/chencoyote">Github</a><i></i></li>
+				    <li><a href="https://plus.google.com/u/0/104542842241928417898/posts">Google+</a><i></i></li>
+				    <li><a href="https://twitter.com/Coyote_chen">Twitter</a><i></i></li>
+				    <li><a href="http://weibo.com/coytoe">Weibo</a><i></i></li>
+				    <li><a href="http://v2ex.com/member/Coyote">V2EX</a><i></i></li>
+			      </ul>
+			    </aside>
+
+	            <aside>
+	              <h2>Blogroll</h2>
+	              <ul>
+	                  <li><a href="http://python.org/">Python.org</a></li>
+	                  <li><a href="http://pychina.org">PyChina</a></li>
+	                  <li><a href="http://weekly.pychina.org">PyWeekly</a></li>
+	                  <li><a href="http://cn.pycon.org">PyConChina</a></li>
+	              </ul>
+	            </aside>
+	        </div>
+		  </div>
+
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+		  coyote - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-sober">pelican-sober</a>.
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>

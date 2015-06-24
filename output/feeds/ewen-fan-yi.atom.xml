@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Coyote's Blog</title><link href="http://chencoyote.github.io/" rel="alternate"></link><link href="http://chencoyote.github.io/feeds/ewen-fan-yi.atom.xml" rel="self"></link><id>http://chencoyote.github.io/</id><updated>2015-04-13T15:14:14+08:00</updated><entry><title>Application performance management（APM）</title><link href="http://chencoyote.github.io/articles/application-performance-managementapm.html" rel="alternate"></link><updated>2015-04-13T15:14:14+08:00</updated><author><name>coyote</name></author><id>tag:chencoyote.github.io,2015-04-13:articles/application-performance-managementapm.html</id><summary type="html">&lt;p&gt;翻译自维基百科 —————— 版权属左&lt;/p&gt;
+&lt;h2&gt;Application performance management（APM）&lt;/h2&gt;
+&lt;p&gt;在信息技术和系统管理领域中，应用性能管理（APM）用来管理和监控应用程序的性能和可用性。APM的目标是探测和诊断应用程序的性能问题，使其保持在一个稳定的水平的服务。APM是“将IT指标翻译为业务含义”的系统&lt;/p&gt;
+&lt;h2&gt;目录&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;1 测量应用程序性能
+2 存在的问题
+3 APM的概念框架
+    3.1 终端用户体验监控 End User Experience – (Primary)
+    3.2 运行时应用结构 Runtime Application Architecture (Secondary)
+    3.3 业务处理 Business Transaction (Primary)
+    3.4 应用组件深度挖掘 Deep Dive Component Monitoring (Secondary)
+    3.5 分析/报告 Analytics/Reporting (Primary)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;测量应用程序性能&lt;/h2&gt;
+&lt;p&gt;有两套性能指标紧密的监控。第一套性能指标定义最终用户应用的性能体验。例如：最大负荷下的平均响应时间，那么设置的组件就应该包括响应时间和负载。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;负载就是应用处理的事务，例如：每秒的事务数（tps），每秒的请求数，页面请求。除了基本的计算机需求的搜索、计算、传输等，大多数应用程序是够快的，这就是为什么开发人员找不到开发过程中性能问题。&lt;/li&gt;
+&lt;li&gt;相应时间是应用程序在一定负载程度上响应用户所需要的时间&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;第二套性能指标就是测量应用程序使用的计算资源负载。指示是否有足够的容量来支持负载，以及定位可能的性能瓶颈。这些测量值能够支撑为应用程序建立合理的基线。这些基线可以用来探测性能的变化。从这些变化中可以找到外部事件和将要发生的性能变化之间的联系。&lt;/p&gt;
+&lt;p&gt;APM通常用更详细的监测技术用来做web的性能监控。除了用户相应时间和web应用组件的响应时间，还能够检测出延迟的原因。还包括一些基于HTTP的web服务层的一些特别功能的响应时间。&lt;/p&gt;
+&lt;p&gt;在APM概念框架中， Gartner描述了五个维度&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;终端用户体验监控 （主动和被动）&lt;/li&gt;
+&lt;li&gt;应用拓扑的发现和可视化&lt;/li&gt;
+&lt;li&gt;用户自定义的事务分析&lt;/li&gt;
+&lt;li&gt;应用组件深度挖掘&lt;/li&gt;
+&lt;li&gt;IT运营分析&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;(PS: infoq 中Gartner团队的Jonah Kowall对这五个维度进行了解释&lt;/p&gt;
+&lt;p&gt;Jonah：Gartner使用一个五维模型来定义APM，因为购买者的需求不同，可能用不着所有的维度。（对他们而言）解决方案满足这些维度的子集要比满足全部的维度更好。而在APM魔力象限中所列的产品，必须满足全部五个维度。具体维度如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;最终用户体验监控（EUM）—— 获取以下方面的数据：展示在最终用户面前的应用端到端可用性、延迟、执行正确性以及质量。&lt;/li&gt;
+&lt;li&gt;应用拓扑的发现和可视化—— 发现应用执行过程中涉及的软硬件基础架构组件，以及它们之间可能的交互路径矩阵，上述内容实现了应用的交付。&lt;/li&gt;
+&lt;li&gt;用户自定义的事务分析 —— 跟踪组成事务的用户分组事件，它们发生在应用内部，并与第二个维度中发现的组件交互；（事务）是为了响应用户对应用的请求而生成的。&lt;/li&gt;
+&lt;li&gt;应用组件深度挖掘 —— 对第二个维度中所发现的组件（运行时应用架构发现）消耗的资源和其中发生的事件进行细粒度监控。这可能包括服务器端组件和客户端设备及接口。&lt;/li&gt;
+&lt;li&gt;IT运营分析 —— 结合或使用不同技术，在APM的前个四维度生成的典型大数据集里，发现有价值的、可行的模式，这些技术包括复杂的运营事件处理、统计模型发现和识别、非结构化文本索引、搜索和推断、拓扑分析，以及多维数据库搜索和分析。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;存在的问题&lt;/h2&gt;
+&lt;p&gt;从2013年上半年, APM已经进入了一个供应商在技术和战略上有各种各样的观点的时期. 这导致了一些变化,不相关的厂商(包括: 网络监控, 系统管理, 应用监测, 和web性能监控)也开始广泛关注APM. 因此, APM的概念开始被淡化, 逐渐演变成为一个在不同平台下应用性能管理的概念, 而不是一个单一的市场.&lt;/p&gt;
+&lt;p&gt;APM面临着两大挑战&lt;/p&gt;
+&lt;p&gt;1 APM很难成为一个监控应用的工具, 尤其是在应用组件的方面.
+2 虚拟化的应用测量标准经常会发生变化. &lt;/p&gt;
+&lt;p&gt;为了缓解第一个问题, 出现了应用服务管理(Application Service Management, ASM), 它提供了一种以应用为中心的方案, 这种方案主要以业务服务的性能可视化为关键点.
+第二个方面的问题提出了分布式, 虚拟化和基础云应用造成由于大多数的关键系统不再是部署在单独的设备上, 这也给APM造成了独一无二的挑战. 每个功能在看在看来更像是在互联网服务和多个虚拟系统时间设计的. 应用程序本身则更像是从一个系统向另一个服务级对象和处理短暂中断.&lt;/p&gt;
+&lt;h2&gt;APM概念框架&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;翻译的非常渣....但是我尽力了....&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;应用程序本身由于向高度虚拟化, 多层次, 多结构的方向发展这些多依赖于应用的开发框架, 比如.NET 或者JAVA 使其在管理上变得越来越困难. APM概念框架被设计用来帮助优先处理那些需要快速实现并且整体认识五维度APM模型. 框架比起其他维度更偏向于其中的3个维度来描述其潜在的好处. 这些维度被称之为_"主要"&lt;em&gt;, 其他的次之的维度被称为&lt;/em&gt;"次要"_.&lt;/p&gt;
+&lt;h3&gt;最终用户体验 (主要)&lt;/h3&gt;
+&lt;p&gt;测量用户请求传输数据的过程和返回的过程这部分就叫做捕捉最终用户体验(EUE). 分的测量值主要参考实时的应用程序监控值(即自顶向下监控), 它主要分为两部分, 主动和被动.&lt;strong&gt;被动监控&lt;/strong&gt;通常用在无客户端类应用通过网络镜像端口部署. 考虑这种解决方法的一个主要的特点就是能够支持多协议分析(如: XML, SQL, PHP), 因为大多数公司已经不仅仅只支持基于web应用程序. &lt;strong&gt;主动监控&lt;/strong&gt;则从另一个方面入手, 由合成探针以及web自动化预定义系统可用性分析和业务处理. 主动监控和被动监控可以很好的进行互补; 同时使用这两部分可以在应用使用峰值或者传输效率低时提高可用性.&lt;/p&gt;
+&lt;p&gt;用户体验管理(UEM) 是 EUE(终端用户体验)维度的一个子类, 它一般用来监控用户的一系列行为环境. UEM如今已经非常成熟, 已经超越了捕获延迟和人为造成的应用和其他服务的冲突. UEM通常基于代理模式, 更有可能包括JaveScripte注入去监控那些终端设备. UEM已经考虑从其他方面进行实时的应用监控.&lt;/p&gt;
+&lt;h3&gt;运行时应用程序结构 (次要)&lt;/h3&gt;
+&lt;p&gt;应用程序发现和依赖关系映射解决方案已经能够自动化进行映射到底层应用基础组件的处理. 当准备实施一个实时的应用框架, 就必须要确定是在所有节点之上/之下监控以及服务器的环境变量(即, 自底向上监控方式). 这有助于为做事件关联, 并且在了解网络拓扑和应用程序交互框架提供了通用的基础理论支撑.&lt;/p&gt;
+&lt;h3&gt;业务处理 (主要)&lt;/h3&gt;
+&lt;p&gt;主要关注用户自定义的事务分析, 或者URL指向的页面, 这些其实就是业务. 例如: 如果一个应用有200到300的独立页面, 给他们分为8到12个高级类. 这就意味着遵从SLA报告, 并且从业务层面提供了应用程序性能趋势: 从大的分类开始及时的完善他们. 这可以深入理解事务处理的管理方式.&lt;/p&gt;
+&lt;h3&gt;应用组件深度挖掘(次要)&lt;/h3&gt;
+&lt;p&gt;应用组件深度挖掘(DDCM) 需要安装客户端, 通常的指向是web, 应用程序, 消息服务器的中间件. 这样可以提供一个关于J2EE和.NET堆栈的实时视图, 并且尝试回溯到用户自定义的事务处理. 一个完善的解决方案可以清晰的看出代码执行的流程(例如, Spring, Struts 等)和对用户请求的url渲染.
+由于DDCM和APM模型的第二维度有些关系, 大多数产品在这方面则提供了一个较为广泛的定义: 应用发现依赖映射(application discovery dependency mapping  ADDM).&lt;/p&gt;
+&lt;h3&gt;分析/报告 (主要)&lt;/h3&gt;
+&lt;p&gt;这对每个应用程序的通用测量值的收集和报告来说非常重要, 通过这些来从通用的角度来提出应用性能数据的标准. 从不同的工具集收集来的数据, 通过APM模型提供一种适用性的应用程序报告. 这种方法可以解释各种性能的问题发生, 尽管在不同平台上的不同应用程序中. 太多的信息难以处理. 这就是为什么简单的报告但是没有人用了.&lt;/p&gt;</summary><category term="apm"></category></entry></feed>

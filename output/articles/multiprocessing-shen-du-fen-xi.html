@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>multiprocessing 深度分析 - Coyote's Blog</title>	
+	<meta name="author" content="coyote">
+	
+
+  <meta name="description" content="原文 Coyote翻译整理 正文 multiprocessing 基本用法 最简单的在一个进程中启动多个进程的方法就是创建一个Process对象指定一个目标进程 然后调用start()方法启动. import multiprocessing def worker(): """worker function""" print 'Worker' return if __name__ == '__main__': jobs = [] for i in range(5): p = multiprocessing.Process(target=worker) jobs.append(p) p.start() 执行代码, print出5个 Worker, 但是从这里是看不出他们的执行顺序的 $ python multiprocessing_simple.py Worker Worker Worker Worker Worker 但是很多时候我们使用进程是需要传递一些参数来使进程能够正常工作的. 与 ...">
+
+
+
+	<link rel="stylesheet" href="http://chencoyote.github.io/theme/css/main.css" type="text/css" />
+		
+
+
+    <link href="http://chencoyote.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Coyote's Blog Atom Feed" />
+</head>
+	
+<body>
+
+    <div class="container">
+	  
+	  <header role="banner">
+	    <div class="feeds">
+	      <a href="http://chencoyote.github.io/feeds/all.atom.xml" rel="alternate"><img src="http://chencoyote.github.io/theme/images/icons/feed-32px.png" alt="atom feed"/></a>
+	    </div>
+	      <nav class="pages">
+			  <a href="http://chencoyote.github.io/archives">Archives</a>
+-			  <a href="http://chencoyote.github.io/tags">Tags</a>
+-			  <a href="http://chencoyote.github.io/pages/personal-awesome.html">Personal Awesome</a>
+-			  <a href="http://chencoyote.github.io/pages/about-me.html">About Me</a>
+	      </nav>
+		<a href="http://chencoyote.github.io" class="title">Coyote's Blog</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+	<article class="full">
+		
+		<h1>multiprocessing 深度分析</h1>
+		
+<div class="metadata">
+  <time datetime="2014-12-19T16:52:53+08:00" pubdate>Fri 19 December 2014</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://chencoyote.github.io/author/coyote.html">coyote</a>
+    </address>
+  in <a href="http://chencoyote.github.io/category/xue-xi-bi-ji.html">学习笔记</a>
+<p class="tags">tagged <a href="http://chencoyote.github.io/tag/python.html">python</a>, <a href="http://chencoyote.github.io/tag/multiprocessing.html">multiprocessing</a></p></div>		
+		<p><a href="http://pymotw.com/2/multiprocessing/basics.html">原文</a>
+Coyote翻译整理</p>
+<h2>正文</h2>
+<h3>multiprocessing 基本用法</h3>
+<p>最简单的在一个进程中启动多个进程的方法就是创建一个Process对象指定一个目标进程
+然后调用start()方法启动.</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
+
+<span class="k">def</span> <span class="nf">worker</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;worker function&quot;&quot;&quot;</span>
+    <span class="k">print</span> <span class="s">&#39;Worker&#39;</span>
+    <span class="k">return</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">jobs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">)</span>
+        <span class="n">jobs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<p>执行代码, print出5个 <code>Worker</code>, 但是从这里是看不出他们的执行顺序的</p>
+<div class="highlight"><pre><span class="nv">$ </span>python multiprocessing_simple.py
+
+Worker
+Worker
+Worker
+Worker
+Worker
+</pre></div>
+
+
+<p>但是很多时候我们使用进程是需要传递一些参数来使进程能够正常工作的. 
+与<code>threading</code>不同, 给<code>multiprocessing</code>的<code>Process</code>传递参数必须是能够用<code>pickle</code>序列化的.
+下面这个例子也许能看出些有趣的东西</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
+
+<span class="k">def</span> <span class="nf">worker</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;thread worker function&quot;&quot;&quot;</span>
+    <span class="k">print</span> <span class="s">&#39;Worker:&#39;</span><span class="p">,</span> <span class="n">num</span>
+    <span class="k">return</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">jobs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">i</span><span class="p">,))</span>
+        <span class="n">jobs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<p>每个进程都print了传递的整形参数</p>
+<div class="highlight"><pre><span class="nv">$ </span>python multiprocessing_simpleargs.py
+
+Worker: 0
+Worker: 1
+Worker: 2
+Worker: 3
+Worker: 4
+</pre></div>
+
+
+<h3>import目标功能(importable target function)</h3>
+<p><code>threading</code>和<code>mutilprocessing</code>的一个不同就是<code>multiprocessing</code>可以在<code>__main__</code>的命名空间中执行.
+如果使用这种新颖的方法来启动的话, 则子进程的功能需要从别的地方来import需要执行的功能. 
+封装在<code>__main__</code>的核心代码部分如果在子进程运行,并不确定是否能够递归地运行在每个子进程的。
+另一种方法是,从一个单独的脚本导入目标函数。</p>
+<p>比如下面这个例子:</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">multiprocessing_import_worker</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">jobs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">multiprocessing_import_worker</span><span class="o">.</span><span class="n">worker</span><span class="p">)</span>
+        <span class="n">jobs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<p>这里使用的核心代码在其他的模块中定义的:</p>
+<div class="highlight"><pre><span class="nx">def</span> <span class="nx">worker</span><span class="p">()</span><span class="o">:</span>
+    <span class="s2">&quot;&quot;&quot;worker function&quot;&quot;&quot;</span>
+    <span class="nx">print</span> <span class="s1">&#39;Worker&#39;</span>
+    <span class="k">return</span>
+</pre></div>
+
+
+<p>执行结果和第一个例子的结果相同</p>
+<h3>确定当前进程(Determining the Current Process)</h3>
+<p>单独传递一个参数给一个进程命名是不合理, 没必要的. 其实每个<code>Process</code>实例都有一个默认的名字, 而且这个名字在进程创建的时候是可以进行修改的. 给一个进程命名还是非常有用的, 可以很容易的找到你需要的进程, 尤其是在同时启动多个进程的时候.</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">worker</span><span class="p">():</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">print</span> <span class="n">name</span><span class="p">,</span> <span class="s">&#39;Starting&#39;</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">name</span><span class="p">,</span> <span class="s">&#39;Exiting&#39;</span>
+
+<span class="k">def</span> <span class="nf">my_service</span><span class="p">():</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">print</span> <span class="n">name</span><span class="p">,</span> <span class="s">&#39;Starting&#39;</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">name</span><span class="p">,</span> <span class="s">&#39;Exiting&#39;</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">service</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;my_service&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">my_service</span><span class="p">)</span>
+    <span class="n">worker_1</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;worker 1&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">)</span>
+    <span class="n">worker_2</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">)</span> <span class="c"># use default name</span>
+
+    <span class="n">worker_1</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">worker_2</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">service</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<p>调试信息中每一行都输出了该进程的进程名称, 在进程名的输出那一列里面<code>Process-3</code>使用的是默认的进程名称, 虽然没有定义但是还是和<code>worker_1</code>一样有进程名称.</p>
+<div class="highlight"><pre><span class="nv">$ </span>python multiprocessing_names.py
+
+worker <span class="m">1</span> Starting
+worker <span class="m">1</span> Exiting
+Process-3 Starting
+Process-3 Exiting
+my_service Starting
+my_service Exiting1
+</pre></div>
+
+
+<h3>守护进程(Daemon Processes)</h3>
+<p>默认情况下子进程未退出的时候主进程是不会退出的. 但是很多时候我们需要在后台运行一个非阻塞模式的进程.
+比如创建一个服务的时候就不能轻易的被其他进程打断, 或者在运行过程中业务中断但是数据不能丢失或者腐化(比如:给一个给服务端发送"心跳"的任务)</p>
+<p>为了给一个进程标记成守护进程, 需要给<code>daemon</code>属性赋值为<code>True</code>或者<code>False</code>. 默认的创建进程的时候是非守护进程状态.所以修改<code>daemon</code>属性的值为<code>True</code>来开启守护进程模式.</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">def</span> <span class="nf">daemon</span><span class="p">():</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;Starting:&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">pid</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Exiting :&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">pid</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">non_daemon</span><span class="p">():</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;Starting:&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">pid</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;Exiting :&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">pid</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;daemon&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">daemon</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;non-daemon&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">non_daemon</span><span class="p">)</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="bp">False</span>
+
+    <span class="n">d</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<p>输出结果中没有包含守护进程print的<code>Exiting</code>消息. 从所有的非守护进程(包括主进程)退出之前开始计时, deamon进程sleep 2秒之后被唤醒.</p>
+<div class="highlight"><pre><span class="nv">$ </span>python multiprocessing_daemon.py
+
+Starting: daemon 13866
+Starting: non-daemon 13867
+Exiting : non-daemon 13867
+</pre></div>
+
+
+<p>守护进程应该在主进程退出之前自动退出, 否则会造成主进程退出, 守护进程一直运行. 你可以通过使用 <code>ps</code>命令来查看进程id 来确认那些程序是否都正常的运行.</p>
+<h2>等待进程结束(Waiting for Process)</h2>
+<p>使用 <code>join()</code> 方法来等待进程运行结束</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">def</span> <span class="nf">daemon</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&#39;Starting:&#39;</span><span class="p">,</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Exiting :&#39;</span><span class="p">,</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+
+<span class="k">def</span> <span class="nf">non_daemon</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&#39;Starting:&#39;</span><span class="p">,</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">print</span> <span class="s">&#39;Exiting :&#39;</span><span class="p">,</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;daemon&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">daemon</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;non-daemon&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">non_daemon</span><span class="p">)</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="bp">False</span>
+
+    <span class="n">d</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="n">d</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</pre></div>
+
+
+<p>执行了<code>join()</code> 方法之后, 主进程会等到守护进程运行结束再退出, 这次可以看到显示守护进程print的<code>Exiting</code>.</p>
+<div class="highlight"><pre><span class="nv">$ </span>python multiprocessing_daemon_join.py
+
+Starting: non-daemon
+Exiting : non-daemon
+Starting: daemon
+Exiting : daemon
+</pre></div>
+
+
+<p>默认情况下, <code>join()</code>等待的时间是不定的. 所以可以给它传递一个超时时间的参数(可以直接传递一个表示等待多少秒的浮点型数字来启动超时时间). 如果子进程在超时时间内没有完成工作, 则直接退出.</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">def</span> <span class="nf">daemon</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&#39;Starting:&#39;</span><span class="p">,</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Exiting :&#39;</span><span class="p">,</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+
+<span class="k">def</span> <span class="nf">non_daemon</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&#39;Starting:&#39;</span><span class="p">,</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">print</span> <span class="s">&#39;Exiting :&#39;</span><span class="p">,</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;daemon&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">daemon</span><span class="p">)</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;non-daemon&#39;</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">non_daemon</span><span class="p">)</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="bp">False</span>
+
+    <span class="n">d</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="n">d</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;d.is_alive()&#39;</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">is_alive</span><span class="p">()</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</pre></div>
+
+
+<p>如果daemon程序内部的运行时间超出了设置的超时时间, 在<code>join()</code>之后程序会一直保持"alive"状态.</p>
+<div class="highlight"><pre><span class="nv">$ </span>python multiprocessing_daemon_join_timeout.py
+
+Starting: non-daemon
+Exiting : non-daemon
+d.is_alive<span class="o">()</span> True
+</pre></div>
+
+
+<h2>结束进程(Terminating Processes)</h2>
+<p>虽然正常情况下应该通过<code>signal</code>来结束进程, 如果一个进程挂起或者进入死锁状态, 就需要强制来杀死进程了. 调用进程对象的 <code>terminate()</code> 方法来结束所有的子进程.</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">slow_worker</span><span class="p">():</span>
+    <span class="k">print</span> <span class="s">&#39;Starting worker&#39;</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;Finished worker&#39;</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">slow_worker</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&#39;BEFORE:&#39;</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">is_alive</span><span class="p">()</span>
+
+    <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;DURING:&#39;</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">is_alive</span><span class="p">()</span>
+
+    <span class="n">p</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;TERMINATED:&#39;</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">is_alive</span><span class="p">()</span>
+
+    <span class="n">p</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&#39;JOINED:&#39;</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">is_alive</span><span class="p">()</span>
+</pre></div>
+
+
+<blockquote>
+<p><strong>注意</strong> 在结束进程之后需要调用<code>join()</code> 给后台一些反应时间来使进程结束, 而不是立即结束进程.</p>
+</blockquote>
+<div class="highlight"><pre><span class="nv">$ </span>python multiprocessing_terminate.py
+
+BEFORE: &lt;Process<span class="o">(</span>Process-1, initial<span class="o">)</span>&gt; False
+DURING: &lt;Process<span class="o">(</span>Process-1, started<span class="o">)</span>&gt; True
+TERMINATED: &lt;Process<span class="o">(</span>Process-1, started<span class="o">)</span>&gt; True
+JOINED: &lt;Process<span class="o">(</span>Process-1, stopped<span class="o">[</span>SIGTERM<span class="o">])</span>&gt; False
+</pre></div>
+
+
+<h2>进程退出状态(Process Exit Status)</h2>
+<p>可以通过<code>exitcode</code> 来获取进程退出的退出状态
+- <code>==0</code> 正常退出
+- <code>&gt; 0</code> 进程报错, 并且以该exitcode退出
+- <code>&lt; 0</code> 进程被使用结束信号杀掉, 该结束信号是 <code>-1 * exitcode</code></p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">exit_error</span><span class="p">():</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">exit_ok</span><span class="p">():</span>
+    <span class="k">return</span>
+
+<span class="k">def</span> <span class="nf">return_value</span><span class="p">():</span>
+    <span class="k">return</span> <span class="mi">1</span>
+
+<span class="k">def</span> <span class="nf">raises</span><span class="p">():</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&#39;There was an error!&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">terminated</span><span class="p">():</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">jobs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="p">[</span><span class="n">exit_error</span><span class="p">,</span> <span class="n">exit_ok</span><span class="p">,</span> <span class="n">return_value</span><span class="p">,</span> <span class="n">raises</span><span class="p">,</span> <span class="n">terminated</span><span class="p">]:</span>
+        <span class="k">print</span> <span class="s">&#39;Starting process for&#39;</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">func_name</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">f</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">f</span><span class="o">.</span><span class="n">func_name</span><span class="p">)</span>
+        <span class="n">jobs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+        <span class="n">j</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="n">jobs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">jobs</span><span class="p">:</span>
+        <span class="n">j</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+        <span class="k">print</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">.exitcode = </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">j</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">j</span><span class="o">.</span><span class="n">exitcode</span><span class="p">)</span>
+</pre></div>
+
+
+<p>进程抛出异常自动获取到<code>exitcode</code>为1</p>
+<div class="highlight"><pre><span class="nv">$ </span>python multiprocessing_exitcode.py
+
+Starting process <span class="k">for</span> exit_error
+Starting process <span class="k">for</span> exit_ok
+Starting process <span class="k">for</span> return_value
+Starting process <span class="k">for</span> raises
+Starting process <span class="k">for</span> terminated
+Process raises:
+Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
+  File <span class="s2">&quot;/Library/Frameworks/Python.framework/Versions/2.7/lib/python</span>
+<span class="s2">2.7/multiprocessing/process.py&quot;</span>, line 258, in _bootstrap
+    self.run<span class="o">()</span>
+  File <span class="s2">&quot;/Library/Frameworks/Python.framework/Versions/2.7/lib/python</span>
+<span class="s2">2.7/multiprocessing/process.py&quot;</span>, line 114, in run
+    self._target<span class="o">(</span>*self._args, **self._kwargs<span class="o">)</span>
+  File <span class="s2">&quot;multiprocessing_exitcode.py&quot;</span>, line 24, in raises
+    raise RuntimeError<span class="o">(</span><span class="s1">&#39;There was an error!&#39;</span><span class="o">)</span>
+RuntimeError: There was an error!
+exit_error.exitcode <span class="o">=</span> 1
+exit_ok.exitcode <span class="o">=</span> 0
+return_value.exitcode <span class="o">=</span> 0
+raises.exitcode <span class="o">=</span> 1
+terminated.exitcode <span class="o">=</span> -15
+</pre></div>
+
+
+<h2>子类进程(Subclassing Process)</h2>
+<p>最简单的方法启动一个进程就是使用target的方法来启动一个<code>Process</code>, 但是也可以通过子类的方式自定义进程子类.</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
+
+<span class="k">class</span> <span class="nc">Worker</span><span class="p">(</span><span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&#39;In </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">return</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">jobs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">Worker</span><span class="p">()</span>
+        <span class="n">jobs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">jobs</span><span class="p">:</span>
+        <span class="n">j</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</pre></div>
+
+
+<p>继承出的子类, 应该重写<code>run()</code>方法来工作</p>
+<div class="highlight"><pre><span class="nv">$ </span>python multiprocessing_subclass.py
+
+In Worker-1
+In Worker-2
+In Worker-3
+In Worker-4
+In Worker-5
+</pre></div>
+
+
+<h2>PS</h2>
+<p><a href="http://pymotw.com/2/multiprocessing/basics.html">原文链接</a>
+由<strong>@Coyote</strong>翻译, 转载需注明原文和翻译者</p>	
+
+	</article>
+
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
+
+
+		  </div>	
+		  
+		  <div class="sidebar">
+		    <div class="sidebar-container" >
+
+
+  	          <nav>
+	            <h2>Categories</h2>
+	            <ul>
+	                <li ><a href="http://chencoyote.github.io/category/ce-shi.html">测试</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/ewen-fan-yi.html">E文翻译</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/ji-zhu.html">技术</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/linux.html">Linux</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/python.html">Python</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/qi-ta.html">其他</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/sublime-text.html">Sublime Text</a></li>
+	                <li class="active"><a href="http://chencoyote.github.io/category/xue-xi-bi-ji.html">学习笔记</a></li>
+	            </ul>
+	          </nav>
+
+	            <aside>
+	            <h2>Social</h2>
+			      <ul class="social">
+				    <li><a href="https://github.com/chencoyote">Github</a><i></i></li>
+				    <li><a href="https://plus.google.com/u/0/104542842241928417898/posts">Google+</a><i></i></li>
+				    <li><a href="https://twitter.com/Coyote_chen">Twitter</a><i></i></li>
+				    <li><a href="http://weibo.com/coytoe">Weibo</a><i></i></li>
+				    <li><a href="http://v2ex.com/member/Coyote">V2EX</a><i></i></li>
+			      </ul>
+			    </aside>
+
+	            <aside>
+	              <h2>Blogroll</h2>
+	              <ul>
+	                  <li><a href="http://python.org/">Python.org</a></li>
+	                  <li><a href="http://pychina.org">PyChina</a></li>
+	                  <li><a href="http://weekly.pychina.org">PyWeekly</a></li>
+	                  <li><a href="http://cn.pycon.org">PyConChina</a></li>
+	              </ul>
+	            </aside>
+	        </div>
+		  </div>
+
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+		  coyote - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-sober">pelican-sober</a>.
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>

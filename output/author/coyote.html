@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>coyote - Coyote's Blog</title>	
+	<meta name="author" content="coyote">
+	
+
+	<link rel="stylesheet" href="http://chencoyote.github.io/theme/css/main.css" type="text/css" />
+		
+
+
+    <link href="http://chencoyote.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Coyote's Blog Atom Feed" />
+</head>
+	
+<body>
+
+    <div class="container">
+	  
+	  <header role="banner">
+	    <div class="feeds">
+	      <a href="http://chencoyote.github.io/feeds/all.atom.xml" rel="alternate"><img src="http://chencoyote.github.io/theme/images/icons/feed-32px.png" alt="atom feed"/></a>
+	    </div>
+	      <nav class="pages">
+			  <a href="http://chencoyote.github.io/archives">Archives</a>
+-			  <a href="http://chencoyote.github.io/tags">Tags</a>
+-			  <a href="http://chencoyote.github.io/pages/personal-awesome.html">Personal Awesome</a>
+-			  <a href="http://chencoyote.github.io/pages/about-me.html">About Me</a>
+	      </nav>
+		<a href="http://chencoyote.github.io" class="title">Coyote's Blog</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+
+<h1>Posts published by: coyote</h1>
+
+<article class="summary">
+<div class="metadata">
+  <time datetime="2015-05-11T10:09:11+08:00" pubdate>Mon 11 May 2015</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://chencoyote.github.io/author/coyote.html">coyote</a>
+    </address>
+  in <a href="http://chencoyote.github.io/category/xue-xi-bi-ji.html">学习笔记</a>
+<p class="tags">tagged <a href="http://chencoyote.github.io/tag/git.html">git</a></p></div>  <div>
+    <h2>
+      <a href="http://chencoyote.github.io/articles/gitlab-ben-di-bu-shu-bi-ji.html" rel="bookmark" title="Permalink to Gitlab 本地部署笔记">Gitlab 本地部署笔记</a>
+    </h2>
+    <p><h2>下载地址</h2>
+<div class="highlight"><pre># 地址被墙, 不过有种解决方法就是去改https为http可以下载, 但是速度很慢
+https://downloads-packages.s3.amazonaws.com/centos-6.6/gitlab-ce-7.10.0~omnibus.2-1.x86_64.rpm
+</pre></div>
+
+
+<h2>安装环境</h2>
+<ul>
+<li>CentOS 6.5</li>
+<li>虚拟机</li>
+<li>需要外网</li>
+</ul>
+<h2>方法</h2>
+<ul>
+<li>源码编译安装</li>
+<li>rpm安装</li>
+</ul>
+<h3>源码编译安装</h3>
+<ul>
+<li>好处: 就是可以根据自己需要来定制一些实用的软件呢, 如数据库/Nginx之类的</li>
+<li>坏处: 就是安装过程太复杂, 调试起来非常复杂</li>
+</ul>
+<h3>rpm安装</h3>
+<ul>
+<li>好处: 啥都内置了, 4部就可以部署完成 (实测没有几个可以4部就能完美运行的)</li>
+<li>坏处: 定制性差, 数据库等都只能靠配置, 而且如果修改为别的配置修改起来非常麻烦, 而且还有可能不成功</li>
+</ul>
+<h2>过程</h2>
+<p><strong>本人用的rpm安装的方式</strong></p>
+<p>官方文档和别人的教程都写的非常详细, 没必要拿来从新写, 过程都是一样的 ...</p></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
+  <time datetime="2015-04-13T15:14:14+08:00" pubdate>Mon 13 April 2015</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://chencoyote.github.io/author/coyote.html">coyote</a>
+    </address>
+  in <a href="http://chencoyote.github.io/category/ewen-fan-yi.html">E文翻译</a>
+<p class="tags">tagged <a href="http://chencoyote.github.io/tag/apm.html">apm</a></p></div>  <div>
+    <h2>
+      <a href="http://chencoyote.github.io/articles/application-performance-managementapm.html" rel="bookmark" title="Permalink to Application performance management（APM）">Application performance management（APM）</a>
+    </h2>
+    <p><p>翻译自维基百科 —————— 版权属左</p>
+<h2>Application performance management（APM）</h2>
+<p>在信息技术和系统管理领域中，应用性能管理（APM）用来管理和监控应用程序的性能和可用性。APM的目标是探测和诊断应用程序的性能问题，使其保持在一个稳定的水平的服务。APM是“将IT指标翻译为业务含义”的系统</p>
+<h2>目录</h2>
+<div class="highlight"><pre>1 测量应用程序性能
+2 存在的问题
+3 APM的概念框架
+    3.1 终端用户体验监控 End User Experience – (Primary)
+    3.2 运行时应用结构 Runtime Application Architecture (Secondary)
+    3.3 业务处理 Business Transaction (Primary)
+    3.4 应用组件深度挖掘 Deep Dive Component Monitoring (Secondary ...</pre></div></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
+  <time datetime="2015-03-24T15:34:36+08:00" pubdate>Tue 24 March 2015</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://chencoyote.github.io/author/coyote.html">coyote</a>
+    </address>
+  in <a href="http://chencoyote.github.io/category/xue-xi-bi-ji.html">学习笔记</a>
+<p class="tags">tagged <a href="http://chencoyote.github.io/tag/python.html">python</a>, <a href="http://chencoyote.github.io/tag/algorithms.html">algorithms</a></p></div>  <div>
+    <h2>
+      <a href="http://chencoyote.github.io/articles/leetcodeshua-suan-fa-kai-keng.html" rel="bookmark" title="Permalink to leetcode刷算法开坑">leetcode刷算法开坑</a>
+    </h2>
+    <p><h2>前言</h2>
+<p><a href="https://leetcode.com/problemset/algorithms/">LeetCode OJ</a></p>
+<p><a href="https://github.com/chencoyote/pyleetcode">我的git库</a></p>
+<h2>背景</h2>
+<p>由于最近被鄙视竟然不会算法就敢写代码, 算法-数据结构-面向对象全都不懂, 你敢说你是程序员?</p>
+<p>被打倒终究要爬起来!</p>
+<p>通过学习,  来刷LeetCode的算法</p>
+<h2>正文</h2>
+<p>PS: 我是倒序做的.... 内容有参考网络, 但是自己是经过思考的</p>
+<h3>No. 191 Number of 1 Bits</h3>
+<p>数出<code>1 bits</code> 有多少个</p>
+<blockquote>
+<p>Write a function that takes an unsigned integer and returns the number of ’1' bits it has (also known as the <a href="http://en.wikipedia.org/wiki/Hamming_weight">Hamming weight</a>).</p>
+</blockquote>
+<p>For ...</p></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
+  <time datetime="2015-03-19T11:24:39+08:00" pubdate>Thu 19 March 2015</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://chencoyote.github.io/author/coyote.html">coyote</a>
+    </address>
+  in <a href="http://chencoyote.github.io/category/python.html">Python</a>
+<p class="tags">tagged <a href="http://chencoyote.github.io/tag/pythonnic.html">pythonnic</a></p></div>  <div>
+    <h2>
+      <a href="http://chencoyote.github.io/articles/pythonzhong-de-xia-hua-xian.html" rel="bookmark" title="Permalink to Python中的下划线">Python中的下划线</a>
+    </h2>
+    <p><h2>原文</h2>
+<p>码农周刊推送 个人翻译
+原文在 --&gt; <a href="http://shahriar.svbtle.com/underscores-in-python">Underscores in Python By SHAHRIAR TAJBAKHSH</a></p>
+<h2>正文</h2>
+<p>本文讨论<code>_</code>(下划线) 这个货在Python中的作用, 因为在Python中有很多时候都有使用<code>_</code>的毛病</p>
+<h3>单个的下划线</h3>
+<p>最典型的有三种情况:</p>
+<ol>
+<li>
+<p><strong>在解释器中</strong>: 用<code>_</code>命名的目的是为了存放在交互式解释器中最后执行的结果, 首先会被标准的CPython解释器解释, 然后才是其他的</p>
+<p>```</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><em>
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name '</em>' is not defined
+42
+<em>
+42
+'alright!' if _ else ':('
+'alright!'
+</em>
+'alright!'
+<code>``
+PS: 仔细观察 ...</code></p></blockquote></blockquote></blockquote></li></ol></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
+  <time datetime="2015-03-18T10:57:03+08:00" pubdate>Wed 18 March 2015</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://chencoyote.github.io/author/coyote.html">coyote</a>
+    </address>
+  in <a href="http://chencoyote.github.io/category/qi-ta.html">其他</a>
+<p class="tags">tagged <a href="http://chencoyote.github.io/tag/chaos.html">Chaos</a></p></div>  <div>
+    <h2>
+      <a href="http://chencoyote.github.io/articles/za-nian-gong-zuo-liang-nian-de-xin-lu-zong-jie.html" rel="bookmark" title="Permalink to 杂念--工作两年的心路总结">杂念--工作两年的心路总结</a>
+    </h2>
+    <p><h2>背景</h2>
+<p>2013年3月到公司实习 至 2015年3月工作满两年</p>
+<p>写这个文章的时候, 是因为期间进行了两次面试, 对于我来说影响过大</p>
+<h2>从面试说起</h2>
+<p>这次面试是一次很突发奇想的面试, 突然看到朋友圈有人发了相关的介绍
+我又无意注册了拉勾网, 正好这个公司也是在上面发了消息, 我又恰好投了
+结果还被约去面试, 我就迷迷糊糊的去了.</p>
+<p>这个公司是一个创业公司, 15年开始创业的, 目标是做O2O的企业.</p>
+<p>面试的过程对我来说可能是打击相当大的, 一开始, 轻松加愉快的介绍了自己的工作
+经历, 以及技能熟练程度</p>
+<p>后来, 技术小哥问我, 你知道MVC嘛? 面向对象呢? 设计模式? 数据结构?
+算法? 我这个时候只能含糊其次, 这些都听说过么, 听说过, 都知道干嘛的么
+也知道, 但是你详细说说你的理解呢? WTF 我特么什么都不知道!</p>
+<h2>反思</h2>
+<p>经过这件事, 让我开始对自己反思, 我这两年学了什么了?</p>
+<p>熟悉Python, 是这两年最大的收获, 也是提升最快的</p>
+<p>然后呢?</p>
+<p>Javascript, 也是在压力所迫之下开始渐渐数字, JQuery基本能熟练使用</p>
+<p>然后呢 ...</p></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
+  <time datetime="2015-03-05T10:54:30+08:00" pubdate>Thu 05 March 2015</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://chencoyote.github.io/author/coyote.html">coyote</a>
+    </address>
+  in <a href="http://chencoyote.github.io/category/python.html">Python</a>
+<p class="tags">tagged <a href="http://chencoyote.github.io/tag/pythonnic.html">pythonnic</a></p></div>  <div>
+    <h2>
+      <a href="http://chencoyote.github.io/articles/zhuan-zai-idiomaticpy.html" rel="bookmark" title="Permalink to 转载: idiomatic.py">转载: idiomatic.py</a>
+    </h2>
+    <p><h2>背景</h2>
+<ul>
+<li>新年第一篇~ 写在正月十五元宵节! 新年快乐, 过了十五就过了年, 开始进入状态工作啦~</li>
+<li>PyConChina2014在北京没看到干货, 但是杭州 @施远敏 分享了一个适合于有些基础, 但是觉得不够Pythonnic的学者</li>
+<li><a href="https://docs.google.com/presentation/d/1Mer-SFLtELLtmS_QxLWbW1aEDX997JSN6eD3mCyV81k/edit?pli=1#slide=id.g475844c86_0369">原文PPT</a> 在google doc上</li>
+<li>自己把这个PPT转成文章,记录下来</li>
+<li>最后像作者致敬!</li>
+</ul>
+<h2>Let's Go</h2>
+<h3>idiomatic python</h3>
+<p>顾名思义, 符合语言使用习惯的python代码
+在我看来 idiomatic python == pythonnic</p>
+<p><strong>目录</strong></p>
+<ul>
+<li>Idioms (风格, 所谓Python方言呗)</li>
+<li>Data Manipulation (数据操作)</li>
+<li>Control Flow (控制流)</li>
+<li>‘itertools’ (python中的迭代器)</li>
+<li>Functional Python (python的功能)</li>
+</ul>
+<p><strong>彩蛋</strong></p>
+<p>打开python的CLI, 或者IPython, 输入<code>import this</code>
+这就是Python的信仰啦 ...</p></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
+  <time datetime="2015-02-06T10:21:20+08:00" pubdate>Fri 06 February 2015</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://chencoyote.github.io/author/coyote.html">coyote</a>
+    </address>
+  in <a href="http://chencoyote.github.io/category/linux.html">Linux</a>
+<p class="tags">tagged <a href="http://chencoyote.github.io/tag/linxuge-xing-hua.html">linxu个性化</a></p></div>  <div>
+    <h2>
+      <a href="http://chencoyote.github.io/articles/linxuzhong-duan-fan-ren-de-ctrls.html" rel="bookmark" title="Permalink to linxu终端烦人的ctrl+s">linxu终端烦人的ctrl+s</a>
+    </h2>
+    <p><h2>问题</h2>
+<p>最近折腾了一下终端的个性化定制, 以及vim定制, 并且管理了自己的Dotfile</p>
+<p>但是遇到一个烦人的问题, 快捷键里面有个<code>ctrl+a</code>经常被我给按成<code>ctrl+s</code>, 频率还不低</p>
+<p><code>ctrl+s</code>这个键组合在linux里面是<code>锁定屏幕显示</code> 搜了一下很多小白都遇到这个锁定屏幕之后不知所措</p>
+<p>然后只好关掉终端重新打开. 网上也有解决方案就是按下<code>ctrl + q</code> 就能恢复.</p>
+<h2>思考</h2>
+<p>这个<code>ctrl+s</code> 的功能到底谁会用啊....同样的按键<code>ScrollLock</code>完全能用啊, 再按一下又恢复了嘛</p>
+<p>所以考虑关掉这个该死的按键, 但是壮哉我大百度是不会给出解决方案的, 还得问我<strong>大表哥</strong></p>
+<ul>
+<li><code>ctrl+s</code> 会像终端发起一个<code>XOFF</code> 的信号</li>
+<li><code>stty</code> linux是设置终端属性的命令</li>
+</ul>
+<h2>方案</h2>
+<p><code>man stty</code> 查看man手册</p>
+<blockquote>
+<p>[-]ixoff
+   enable sending of ...</p></blockquote></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
+  <time datetime="2015-01-12T12:10:26+08:00" pubdate>Mon 12 January 2015</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://chencoyote.github.io/author/coyote.html">coyote</a>
+    </address>
+  in <a href="http://chencoyote.github.io/category/sublime-text.html">Sublime Text</a>
+<p class="tags">tagged <a href="http://chencoyote.github.io/tag/python.html">python</a>, <a href="http://chencoyote.github.io/tag/po-jie.html">破解</a></p></div>  <div>
+    <h2>
+      <a href="http://chencoyote.github.io/articles/sublime-text-3-zhu-ce-ma.html" rel="bookmark" title="Permalink to Sublime Text 3 注册码">Sublime Text 3 注册码</a>
+    </h2>
+    <p><h2>注册码</h2>
+<p>版本: Build 3065</p>
+<div class="highlight"><pre>—– BEGIN LICENSE —–
+Andrew Weber
+Single User License
+EA7E-855605
+813A03DD 5E4AD9E6 6C0EEB94 BC99798F
+942194A6 02396E98 E62C9979 4BB979FE
+91424C9D A45400BF F6747D88 2FB88078
+90F5CC94 1CDC92DC 8457107A F151657B
+1D22E383 A997F016 42397640 33F41CFC
+E1D0AE85 A0BBD039 0E9C8D55 E1B89D5D
+5CDB7036 E56DE1C0 EFCC0840 650CD3A6
+B98FC99C 8FAC73EE D2B95564 DF450523
+—— END LICENSE ——
+</pre></div>
+
+
+<h2>PS</h2>
+<p>70刀的购买对于现在穷逼的我真心是没有闲钱买, 所以只好从网上搜注册机, 注册码 ...</p></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
+  <time datetime="2015-01-07T12:42:55+08:00" pubdate>Wed 07 January 2015</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://chencoyote.github.io/author/coyote.html">coyote</a>
+    </address>
+  in <a href="http://chencoyote.github.io/category/python.html">Python</a>
+<p class="tags">tagged <a href="http://chencoyote.github.io/tag/python.html">python</a>, <a href="http://chencoyote.github.io/tag/pep8.html">PEP8</a></p></div>  <div>
+    <h2>
+      <a href="http://chencoyote.github.io/articles/zhuan-zai-pocoofeng-ge-zhi-yin-zhi-yin-zi-ji-qiang-zhi-zun-shou.html" rel="bookmark" title="Permalink to 转载:Pocoo风格指引--指引自己强制遵守">转载:Pocoo风格指引--指引自己强制遵守</a>
+    </h2>
+    <p><h2>警醒自己</h2>
+<p>良好的项目团队就有良好的编码风格, 成为一个Pythonic的Pythoner
+必须有好的学习精神. 如何写出Pythonic的代码, 个人参考考本文中Pocoo的风格
+推荐阅读本文的初学者, 一起使用! Be Pythonic~</p>
+<h2>正文</h2>
+<p>Pocoo 风格指引是所有 Pocoo 项目的风格指引，包括 Flask 。这份风格指引
+在 Flask 补丁中是必须的，并且推荐在 Flask 扩展中使用。</p>
+<p>一般而言， Pocoo 风格指引遵循 <code>pep8</code> ，有一些小差异和扩充。</p>
+<h2>总体布局</h2>
+<h3>缩进</h3>
+<p>4个空格。没有制表符，没有例外。</p>
+<h3>最大行长</h3>
+<p>79字符，软限制是 84 ，如果绝对必要。尝试合理放置 <code>break</code> 、 <code>continue</code>
+  和 <code>return</code> 声明来避免代码过度嵌套。</p>
+<h3>可续长语句</h3>
+<p>你可以使用反斜线来继续一个语句，在这种情况下，你应该对齐下一行到最后一个
+  点或等号或缩进四个空格 ...</p></p>
+  </div>
+</article><article class="summary">
+<div class="metadata">
+  <time datetime="2014-12-31T16:28:47+08:00" pubdate>Wed 31 December 2014</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://chencoyote.github.io/author/coyote.html">coyote</a>
+    </address>
+  in <a href="http://chencoyote.github.io/category/xue-xi-bi-ji.html">学习笔记</a>
+<p class="tags">tagged <a href="http://chencoyote.github.io/tag/python.html">python</a>, <a href="http://chencoyote.github.io/tag/pychina.html">PyChina</a></p></div>  <div>
+    <h2>
+      <a href="http://chencoyote.github.io/articles/pychinashe-qu-yu-rubyshe-qu-de-ji-dian-dui-bi.html" rel="bookmark" title="Permalink to PyChina社区 与 Ruby社区的几点对比">PyChina社区 与 Ruby社区的几点对比</a>
+    </h2>
+    <p><h2>前言</h2>
+<p>sting 和 ZQ(大妈) 一直在为PyChina 和 PyConChina的事情忙前忙后
+制定方案, 提供资源, 但是碍于时间精力, 而且仅靠二人之力无法完成
+如此庞大的社区建设, 而且很多事情不能通过一个人的思想去发展, 
+我们应当发挥志愿者的能力, 集思广益, 为我们Pythoner 做一些 Pythonic的事情</p>
+<h2>故</h2>
+<p>倡议志愿者们拿出自己的想法</p>
+<h2>我的想法</h2>
+<p>隔壁家老王(Ruby-China),好评度一致很高, 最起码四星半</p>
+<h3>WHY!!!</h3>
+<h4>线上社区 ruby-china.org 10月份上线, 目前已经是中国最活跃的Ruby线上社区</h4>
+<ul>
+<li>原因<ul>
+<li>作为权威社区召集散落在中国的Ruby fans, 提供高质量交流平台.</li>
+<li>无论干活软文, 小白求救在该平台都能够得到应有的结果, 所以活跃度很高.</li>
+<li>得到忠实粉丝用户, 各处宣传Ruby社区是好的, 所以好评度上升.</li>
+</ul>
+</li>
+<li>借鉴<ul>
+<li>以PyChina的名义, 建立线上社区, 召集属于Python的Pythoner</li>
+<li>提供Pythoner讨论的平台, BBS? CMS? MailList ...</li></ul></li></ul></p>
+  </div>
+</article>
+<div class="pagination">
+    Page 1 / 2
+        <a href="http://chencoyote.github.io/author/coyote2.html">&raquo;</a>
+</div>
+
+		  </div>	
+		  
+		  <div class="sidebar">
+		    <div class="sidebar-container" >
+
+
+  	          <nav>
+	            <h2>Categories</h2>
+	            <ul>
+	                <li ><a href="http://chencoyote.github.io/category/ce-shi.html">测试</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/ewen-fan-yi.html">E文翻译</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/ji-zhu.html">技术</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/linux.html">Linux</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/python.html">Python</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/qi-ta.html">其他</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/sublime-text.html">Sublime Text</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/xue-xi-bi-ji.html">学习笔记</a></li>
+	            </ul>
+	          </nav>
+
+	            <aside>
+	            <h2>Social</h2>
+			      <ul class="social">
+				    <li><a href="https://github.com/chencoyote">Github</a><i></i></li>
+				    <li><a href="https://plus.google.com/u/0/104542842241928417898/posts">Google+</a><i></i></li>
+				    <li><a href="https://twitter.com/Coyote_chen">Twitter</a><i></i></li>
+				    <li><a href="http://weibo.com/coytoe">Weibo</a><i></i></li>
+				    <li><a href="http://v2ex.com/member/Coyote">V2EX</a><i></i></li>
+			      </ul>
+			    </aside>
+
+	            <aside>
+	              <h2>Blogroll</h2>
+	              <ul>
+	                  <li><a href="http://python.org/">Python.org</a></li>
+	                  <li><a href="http://pychina.org">PyChina</a></li>
+	                  <li><a href="http://weekly.pychina.org">PyWeekly</a></li>
+	                  <li><a href="http://cn.pycon.org">PyConChina</a></li>
+	              </ul>
+	            </aside>
+	        </div>
+		  </div>
+
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+		  coyote - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-sober">pelican-sober</a>.
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>

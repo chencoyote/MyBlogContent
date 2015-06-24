@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>multiprocessing学习笔记 - Coyote's Blog</title>	
+	<meta name="author" content="coyote">
+	
+
+  <meta name="description" content="multiprocessing multiprocessing是Python 标准库中的多进程库, 由于Python不建议使用线程,所以尽可能的减少使用线程,如果需要建议使用 第三方库 futures来创建线程. 使用并发进程的好处 进程并发 充分利用多核优势 方便管理,可以接收Linux中的kill信号,根据信号进行安全退出 之前使用一个python脚本,启动另一个进程的时候,如果想要完全脱离父进程,需要fork..fork..非常复杂 通过multiprocessing创建的进程很容易就进行各种管理. multiprocessing创建并发进程 创建简单并发进程 这种方式适用于那种单个功能,并且逻辑不复杂的进程 import multiprocessing import time def add(a, b): while 1: print int(a) + int(b) time.sleep(1) def pop(a, b): while 1: print ...">
+
+
+
+	<link rel="stylesheet" href="http://chencoyote.github.io/theme/css/main.css" type="text/css" />
+		
+
+
+    <link href="http://chencoyote.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Coyote's Blog Atom Feed" />
+</head>
+	
+<body>
+
+    <div class="container">
+	  
+	  <header role="banner">
+	    <div class="feeds">
+	      <a href="http://chencoyote.github.io/feeds/all.atom.xml" rel="alternate"><img src="http://chencoyote.github.io/theme/images/icons/feed-32px.png" alt="atom feed"/></a>
+	    </div>
+	      <nav class="pages">
+			  <a href="http://chencoyote.github.io/archives">Archives</a>
+-			  <a href="http://chencoyote.github.io/tags">Tags</a>
+-			  <a href="http://chencoyote.github.io/pages/personal-awesome.html">Personal Awesome</a>
+-			  <a href="http://chencoyote.github.io/pages/about-me.html">About Me</a>
+	      </nav>
+		<a href="http://chencoyote.github.io" class="title">Coyote's Blog</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+	<article class="full">
+		
+		<h1>multiprocessing学习笔记</h1>
+		
+<div class="metadata">
+  <time datetime="2014-12-19T16:52:53+08:00" pubdate>Fri 19 December 2014</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://chencoyote.github.io/author/coyote.html">coyote</a>
+    </address>
+  in <a href="http://chencoyote.github.io/category/xue-xi-bi-ji.html">学习笔记</a>
+<p class="tags">tagged <a href="http://chencoyote.github.io/tag/python.html">python</a>, <a href="http://chencoyote.github.io/tag/multiprocessing.html">multiprocessing</a></p></div>		
+		<h2>multiprocessing</h2>
+<p>multiprocessing是Python 标准库中的多进程库, 由于Python不建议使用线程,所以尽可能的减少使用线程,如果需要建议使用 第三方库 futures来创建线程.</p>
+<h3>使用并发进程的好处</h3>
+<ul>
+<li>进程并发</li>
+<li>充分利用多核优势</li>
+<li>方便管理,可以接收Linux中的kill信号,根据信号进行安全退出<ul>
+<li>之前使用一个python脚本,启动另一个进程的时候,如果想要完全脱离父进程,需要fork..fork..非常复杂</li>
+<li>通过multiprocessing创建的进程很容易就进行各种管理.</li>
+</ul>
+</li>
+</ul>
+<h3>multiprocessing创建并发进程</h3>
+<h4>创建简单并发进程</h4>
+<p>这种方式适用于那种单个功能,并且逻辑不复杂的进程</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span> 
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">print</span> <span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">add</span><span class="p">,</span><span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]);</span>
+    <span class="n">p2</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">pop</span><span class="p">,</span><span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]);</span>
+    <span class="n">p1</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">p2</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&quot;p1 pid is </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">p1</span><span class="o">.</span><span class="n">pid</span>
+    <span class="k">print</span> <span class="s">&quot;p2 pid is </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">p2</span><span class="o">.</span><span class="n">pid</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+   <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+
+<p>PS: 代码完全是为了实例实际谁计算会用并发进程</p>
+<h3>并发进程加队列实现进程通讯</h3>
+<p>这种方式可以使同一件事情拆分给多个进程去做,然后将结果返回到一个队列当中其他进程可以读取</p>
+<p>这种方式可以应用到大量网络扫描时单进程扫描效率低的情况</p>
+<div class="highlight"><pre><span class="c"># 这段代码米有测试过....直接写的...</span>
+<span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">scan</span><span class="p">(</span><span class="n">iplist</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+    <span class="c">#  此处应为核心的扫描代码</span>
+    <span class="k">for</span> <span class="n">ip</span> <span class="ow">in</span> <span class="n">lplist</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;scanning </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">ip</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">do_some_scan</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_res</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
+    <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">q</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">iplist</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;192.168.0.1&quot;</span><span class="p">,</span><span class="s">&quot;192.168.0.2&quot;</span><span class="p">,</span><span class="s">&quot;192.168.0.3&quot;</span><span class="p">,</span><span class="s">&quot;192.168.0.4&quot;</span><span class="p">,</span><span class="o">......</span><span class="p">]</span>  <span class="c"># 这里可以自己处理</span>
+    <span class="n">proc_num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">iplist</span><span class="p">)</span><span class="o">/</span><span class="mi">10</span>  <span class="c"># 假设ip 有50个一个进程扫10个,创建5个进程</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">proc_num</span><span class="p">:</span>
+        <span class="n">p1</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">scan</span><span class="p">,</span><span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">iplist</span><span class="p">[</span><span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="o">+</span><span class="mi">10</span><span class="p">],</span> <span class="n">q</span><span class="p">),);</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">t</span> <span class="o">+</span> <span class="mi">10</span>
+        <span class="n">p1</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="n">q1</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">get_res</span><span class="p">,</span><span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">q</span><span class="p">),);</span>
+    <span class="n">q1</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<h3>通过继承Process类来定义进程</h3>
+<p>这种高级使用方法可以更加对象化的来定义一个Process对象,将一个Class作为一个进程类来使用</p>
+<p>更好的是可以在里面定义一些接收信号退出的方法来优雅的退出进程.</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">signal</span>
+
+<span class="k">class</span> <span class="nc">Master</span><span class="p">(</span><span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="c"># 在这个方法里面可以初始化一些变量</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Master</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">needstop</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="c"># 也可以对信号处理进行绑定</span>
+        <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGTERM</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">handler_sigterm</span><span class="p">)</span> <span class="c"># 处理终止信号</span>
+        <span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGQUIT</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">handler_sigquit</span><span class="p">)</span> <span class="c"># 处理退出信号</span>
+
+    <span class="k">def</span> <span class="nf">handler_sigterm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">needstop</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="nf">handler_sigquit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># do someting</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">needstop</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="c"># 这个方法就是写核心功能的地方</span>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">pid</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">needstop</span><span class="p">:</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="c"># do someting</span>
+            <span class="k">print</span> <span class="s">&quot;im working&quot;</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">master</span>  <span class="o">=</span> <span class="n">Master</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">master</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<p>PS: 这里<code>run()</code>用到了while循环,突然想起之前遇到的一个问题,希望贴出来可以让大家借鉴</p>
+<div class="highlight"><pre><span class="o">.....</span>
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">continue</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">a</span> <span class="o">+=</span> <span class="n">a</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="o">.....</span>
+</pre></div>
+
+
+<p>源代码记不清了,但是这个代码存在的问题就是其中第一个continue是没有sleep的,如果a到某一个时刻一直大于零,则会进入无挂起的死循环,CPU会被占满,这样就是无意间写出了一个bug, 示例代码可能比较短,不容易发现,如果代码比较长就会不容易发现这个bug,所以最好的方法就是,如果对于时间精度没有严格要求的代码的话,建议进入while循环先sleep, 这样避免了无意的资源浪费的.</p>	
+
+	</article>
+
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
+
+
+		  </div>	
+		  
+		  <div class="sidebar">
+		    <div class="sidebar-container" >
+
+
+  	          <nav>
+	            <h2>Categories</h2>
+	            <ul>
+	                <li ><a href="http://chencoyote.github.io/category/ce-shi.html">测试</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/ewen-fan-yi.html">E文翻译</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/ji-zhu.html">技术</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/linux.html">Linux</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/python.html">Python</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/qi-ta.html">其他</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/sublime-text.html">Sublime Text</a></li>
+	                <li class="active"><a href="http://chencoyote.github.io/category/xue-xi-bi-ji.html">学习笔记</a></li>
+	            </ul>
+	          </nav>
+
+	            <aside>
+	            <h2>Social</h2>
+			      <ul class="social">
+				    <li><a href="https://github.com/chencoyote">Github</a><i></i></li>
+				    <li><a href="https://plus.google.com/u/0/104542842241928417898/posts">Google+</a><i></i></li>
+				    <li><a href="https://twitter.com/Coyote_chen">Twitter</a><i></i></li>
+				    <li><a href="http://weibo.com/coytoe">Weibo</a><i></i></li>
+				    <li><a href="http://v2ex.com/member/Coyote">V2EX</a><i></i></li>
+			      </ul>
+			    </aside>
+
+	            <aside>
+	              <h2>Blogroll</h2>
+	              <ul>
+	                  <li><a href="http://python.org/">Python.org</a></li>
+	                  <li><a href="http://pychina.org">PyChina</a></li>
+	                  <li><a href="http://weekly.pychina.org">PyWeekly</a></li>
+	                  <li><a href="http://cn.pycon.org">PyConChina</a></li>
+	              </ul>
+	            </aside>
+	        </div>
+		  </div>
+
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+		  coyote - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-sober">pelican-sober</a>.
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>

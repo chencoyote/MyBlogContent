@@ -1,0 +1,868 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Coyote's Blog</title><link href="http://chencoyote.github.io/" rel="alternate"></link><link href="http://chencoyote.github.io/feeds/python.atom.xml" rel="self"></link><id>http://chencoyote.github.io/</id><updated>2015-03-19T11:24:39+08:00</updated><entry><title>Python中的下划线</title><link href="http://chencoyote.github.io/articles/pythonzhong-de-xia-hua-xian.html" rel="alternate"></link><updated>2015-03-19T11:24:39+08:00</updated><author><name>coyote</name></author><id>tag:chencoyote.github.io,2015-03-19:articles/pythonzhong-de-xia-hua-xian.html</id><summary type="html">&lt;h2&gt;原文&lt;/h2&gt;
+&lt;p&gt;码农周刊推送 个人翻译
+原文在 --&amp;gt; &lt;a href="http://shahriar.svbtle.com/underscores-in-python"&gt;Underscores in Python By SHAHRIAR TAJBAKHSH&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;正文&lt;/h2&gt;
+&lt;p&gt;本文讨论&lt;code&gt;_&lt;/code&gt;(下划线) 这个货在Python中的作用, 因为在Python中有很多时候都有使用&lt;code&gt;_&lt;/code&gt;的毛病&lt;/p&gt;
+&lt;h3&gt;单个的下划线&lt;/h3&gt;
+&lt;p&gt;最典型的有三种情况:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;在解释器中&lt;/strong&gt;: 用&lt;code&gt;_&lt;/code&gt;命名的目的是为了存放在交互式解释器中最后执行的结果, 首先会被标准的CPython解释器解释, 然后才是其他的&lt;/p&gt;
+&lt;p&gt;```&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+NameError: name '&lt;/em&gt;' is not defined
+42
+&lt;em&gt;
+42
+'alright!' if _ else ':('
+'alright!'
+&lt;/em&gt;
+'alright!'
+&lt;code&gt;``
+PS: 仔细观察,&lt;/code&gt;_&lt;code&gt;原来的值是42, 但是在&lt;/code&gt;if-else&lt;code&gt;之后变成了&lt;/code&gt;alright!`&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;作为变量名&lt;/strong&gt;: 有一些过去的观点认为, &lt;code&gt;_&lt;/code&gt;被当做_废弃_的变量名. 按照惯例, 这种写法会让之后的人读你代码的时候知道这个变量已经被占用不能被使用.
+比如, 在一个循环中没有价值的循环计数器&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Python
+n = 42
+for _ in range(n):
+    do_something()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;PS: 其实作者想说的意思就是, 这货就是来存放一些没意义的东西, 但是你还在代码中需要使用, 并且后续的代码也不会在去用的这个变量.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;i18n(所谓的国际化)&lt;/strong&gt;: 偶尔也可能看到&lt;code&gt;_&lt;/code&gt;被当做一个函数来用. 实际上这个函数名是用来将国际化的语言和本地语言进行查找. 其实这个创意是也是根据C语言的习惯来的.
+比如你阅读&lt;a href="https://docs.djangoproject.com/en/dev/topics/i18n/translation/"&gt;Django documentation for translation&lt;/a&gt;, 你可以看到&lt;/p&gt;
+&lt;p&gt;```Python
+from django.utils.translation import ugettext as _
+from django.http import HttpResponse&lt;/p&gt;
+&lt;p&gt;def my_view(request):
+    output = _("Welcome to my site.")
+    return HttpResponse(output)
+```&lt;/p&gt;
+&lt;p&gt;PS: 特地把&lt;code&gt;gettext&lt;/code&gt; 给 &lt;code&gt;as&lt;/code&gt; 成 &lt;code&gt;_&lt;/code&gt; 我也是醉了, 其实就是一些约定俗成, 方便阅读代码的时候一眼就知道在干啥.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;变量名前的单下划线(e.g. &lt;code&gt;_shahriar&lt;/code&gt;)&lt;/h3&gt;
+&lt;p&gt;变量名前面的单下划线一般会被程序猿习惯的理解成"私有". 这也是一种为了方便后人(或者你自己)阅读你的代码的时候知道, 以&lt;code&gt;_&lt;/code&gt;开头的变量是为内部所用. 像&lt;a href="https://docs.python.org/3.4/tutorial/classes.html#tut-private"&gt;Python文档&lt;/a&gt;中有说:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;a name prefixed with an underscore (e.g. _spam) should be treated as a non-public part of the API (whether it is a function, a method or a data member). It should be considered an implementation detail and subject to change without notice.&lt;/p&gt;
+&lt;p&gt;一个前缀为下划线的变量名, 应该理解为不公有的API (或者一个函数, 一个方法, 一个成员变量). 这应该被认为是一个被履行的细节且在没有任何声明的时候不能改变.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;作者的PS: &lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;我这里说的 &lt;em&gt;一种习惯&lt;/em&gt; , 是因为在解释器中实际上还有另外的意思.如果 &lt;code&gt;from &amp;lt;module/package&amp;gt; import *&lt;/code&gt;, 如果没有以&lt;code&gt;_&lt;/code&gt;开始的没用的module's/package也会被&lt;code&gt;__all__&lt;/code&gt;这货给全部包含进来. 详情查看&lt;a href="http://shahriar.svbtle.com/importing-star-in-python"&gt;importing * in Python&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;PS: 其实作者想说的谁就是, 如果你不把没用的东西用&lt;code&gt;_&lt;/code&gt;作为前缀, 当你&lt;code&gt;import *&lt;/code&gt;的时候会把这些没用的也给包含进来消耗资源.&lt;/p&gt;
+&lt;h3&gt;变量名前的双下划线(e.g. &lt;code&gt;__shahriar&lt;/code&gt;)&lt;/h3&gt;
+&lt;p&gt;在变量名前用&lt;code&gt;__&lt;/code&gt;(通常是在方法前面)这个并不算是一种习俗. 它在解释器中有一些特殊的含义. Python 重编了一些名字(Name mangling 也有叫名字粉碎, 我也不知道该怎么叫, 暂且叫重命名吧)为了避免和子类的名字发生冲突. 比如&lt;a href="https://docs.python.org/3.4/tutorial/classes.html#tut-private"&gt;Python文档&lt;/a&gt;中提到&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Any identifier of the form __spam (at least two leading underscores, at most one trailing underscore) is textually replaced with _classname__spam, where classname is the current class name with leading underscore(s) stripped&lt;/p&gt;
+&lt;p&gt;每个类似于&lt;code&gt;__spam&lt;/code&gt; (至少两个下划线前缀,至多一个后缀下划线) 都被替换成为了类似 &lt;code&gt;_classname__spam&lt;/code&gt; 其中 &lt;code&gt;classname&lt;/code&gt;是当前类的名字&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;例:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;A&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt;     &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;_internal_use&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt;         &lt;span class="k"&gt;pass&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt;     &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__method_name&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt;         &lt;span class="k"&gt;pass&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt; 
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;dir&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;_A__method_name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;_internal_use&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;PS: 这里所说的就是等你在类里面 使用双下划线做前缀的时候, 在Python解释器中会默认的把它的原来的类名给加上&lt;/p&gt;
+&lt;p&gt;正如所料, &lt;code&gt;_internal_use&lt;/code&gt; 没有被替换, 但是 &lt;code&gt;__method_name&lt;/code&gt; 被重命名为 &lt;code&gt;_ClassName__method_name&lt;/code&gt;. 如果现在你创建一个A的子类B, 你可以很轻松的重写A的 &lt;code&gt;__method_name&lt;/code&gt; 方法&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;B&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt;     &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__method_name&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt;         &lt;span class="k"&gt;pass&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt; 
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;dir&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;B&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;_A__method_name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;_B__method_name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;_internal_use&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;其实这样做的目的就相当于 Java 中的 &lt;code&gt;final&lt;/code&gt; 关键字或者C++中的正常(非虚)函数&lt;/p&gt;
+&lt;h3&gt;前后都有两个下划线的变量名 (e.g. &lt;code&gt;__init__&lt;/code&gt;)&lt;/h3&gt;
+&lt;p&gt;这是Python中的特殊函数&lt;a href="https://docs.python.org/3.4/reference/datamodel.html#specialnames"&gt;Special method names&lt;/a&gt;, 这在很久以前就是一个习惯, 这种方法不会和用户定义的发生冲突, 然后你可以对他们进行调用和重写, 比如当你写一个类的时候, 你就经常会重写&lt;code&gt;__init__&lt;/code&gt; 方法&lt;/p&gt;
+&lt;p&gt;没人会阻止你自己去写这种命名方式的方法(但是, 尽量别这么做):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;C&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt;     &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__mine__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt;         &lt;span class="k"&gt;pass&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;dir&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;C&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;...&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;__mine__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;最好的方法避免这种命名方式, 就是不用!&lt;/p&gt;</summary><category term="pythonnic"></category></entry><entry><title>转载: idiomatic.py</title><link href="http://chencoyote.github.io/articles/zhuan-zai-idiomaticpy.html" rel="alternate"></link><updated>2015-03-05T10:54:30+08:00</updated><author><name>coyote</name></author><id>tag:chencoyote.github.io,2015-03-05:articles/zhuan-zai-idiomaticpy.html</id><summary type="html">&lt;h2&gt;背景&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;新年第一篇~ 写在正月十五元宵节! 新年快乐, 过了十五就过了年, 开始进入状态工作啦~&lt;/li&gt;
+&lt;li&gt;PyConChina2014在北京没看到干货, 但是杭州 @施远敏 分享了一个适合于有些基础, 但是觉得不够Pythonnic的学者&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://docs.google.com/presentation/d/1Mer-SFLtELLtmS_QxLWbW1aEDX997JSN6eD3mCyV81k/edit?pli=1#slide=id.g475844c86_0369"&gt;原文PPT&lt;/a&gt; 在google doc上&lt;/li&gt;
+&lt;li&gt;自己把这个PPT转成文章,记录下来&lt;/li&gt;
+&lt;li&gt;最后像作者致敬!&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Let's Go&lt;/h2&gt;
+&lt;h3&gt;idiomatic python&lt;/h3&gt;
+&lt;p&gt;顾名思义, 符合语言使用习惯的python代码
+在我看来 idiomatic python == pythonnic&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;目录&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Idioms (风格, 所谓Python方言呗)&lt;/li&gt;
+&lt;li&gt;Data Manipulation (数据操作)&lt;/li&gt;
+&lt;li&gt;Control Flow (控制流)&lt;/li&gt;
+&lt;li&gt;‘itertools’ (python中的迭代器)&lt;/li&gt;
+&lt;li&gt;Functional Python (python的功能)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;彩蛋&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;打开python的CLI, 或者IPython, 输入&lt;code&gt;import this&lt;/code&gt;
+这就是Python的信仰啦~
+The Zen of Python, by Tim Peters&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# python&lt;/span&gt;
+&lt;span class="n"&gt;Python&lt;/span&gt; &lt;span class="mf"&gt;2.7&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;6&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;default&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Nov&lt;/span&gt; &lt;span class="mi"&gt;21&lt;/span&gt; &lt;span class="mi"&gt;2013&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;15&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;55&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;38&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;GCC&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt; &lt;span class="n"&gt;linux2&lt;/span&gt;
+&lt;span class="n"&gt;Type&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;help&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;copyright&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;credits&amp;quot;&lt;/span&gt; &lt;span class="ow"&gt;or&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;license&amp;quot;&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;more&lt;/span&gt; &lt;span class="n"&gt;information&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;this&lt;/span&gt;
+&lt;span class="n"&gt;The&lt;/span&gt; &lt;span class="n"&gt;Zen&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;Python&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;by&lt;/span&gt; &lt;span class="n"&gt;Tim&lt;/span&gt; &lt;span class="n"&gt;Peters&lt;/span&gt;
+
+&lt;span class="n"&gt;Beautiful&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;better&lt;/span&gt; &lt;span class="n"&gt;than&lt;/span&gt; &lt;span class="n"&gt;ugly&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Explicit&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;better&lt;/span&gt; &lt;span class="n"&gt;than&lt;/span&gt; &lt;span class="n"&gt;implicit&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Simple&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;better&lt;/span&gt; &lt;span class="n"&gt;than&lt;/span&gt; &lt;span class="nb"&gt;complex&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Complex&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;better&lt;/span&gt; &lt;span class="n"&gt;than&lt;/span&gt; &lt;span class="n"&gt;complicated&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Flat&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;better&lt;/span&gt; &lt;span class="n"&gt;than&lt;/span&gt; &lt;span class="n"&gt;nested&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Sparse&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;better&lt;/span&gt; &lt;span class="n"&gt;than&lt;/span&gt; &lt;span class="n"&gt;dense&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Readability&lt;/span&gt; &lt;span class="n"&gt;counts&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Special&lt;/span&gt; &lt;span class="n"&gt;cases&lt;/span&gt; &lt;span class="n"&gt;aren&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;t special enough to break the rules.&lt;/span&gt;
+&lt;span class="n"&gt;Although&lt;/span&gt; &lt;span class="n"&gt;practicality&lt;/span&gt; &lt;span class="n"&gt;beats&lt;/span&gt; &lt;span class="n"&gt;purity&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Errors&lt;/span&gt; &lt;span class="n"&gt;should&lt;/span&gt; &lt;span class="n"&gt;never&lt;/span&gt; &lt;span class="k"&gt;pass&lt;/span&gt; &lt;span class="n"&gt;silently&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Unless&lt;/span&gt; &lt;span class="n"&gt;explicitly&lt;/span&gt; &lt;span class="n"&gt;silenced&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;face&lt;/span&gt; &lt;span class="n"&gt;of&lt;/span&gt; &lt;span class="n"&gt;ambiguity&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;refuse&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;temptation&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;guess&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;There&lt;/span&gt; &lt;span class="n"&gt;should&lt;/span&gt; &lt;span class="n"&gt;be&lt;/span&gt; &lt;span class="n"&gt;one&lt;/span&gt;&lt;span class="o"&gt;--&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="n"&gt;preferably&lt;/span&gt; &lt;span class="n"&gt;only&lt;/span&gt; &lt;span class="n"&gt;one&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;obvious&lt;/span&gt; &lt;span class="n"&gt;way&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;do&lt;/span&gt; &lt;span class="n"&gt;it&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Although&lt;/span&gt; &lt;span class="n"&gt;that&lt;/span&gt; &lt;span class="n"&gt;way&lt;/span&gt; &lt;span class="n"&gt;may&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;be&lt;/span&gt; &lt;span class="n"&gt;obvious&lt;/span&gt; &lt;span class="n"&gt;at&lt;/span&gt; &lt;span class="n"&gt;first&lt;/span&gt; &lt;span class="n"&gt;unless&lt;/span&gt; &lt;span class="n"&gt;you&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;re Dutch.&lt;/span&gt;
+&lt;span class="n"&gt;Now&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;better&lt;/span&gt; &lt;span class="n"&gt;than&lt;/span&gt; &lt;span class="n"&gt;never&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Although&lt;/span&gt; &lt;span class="n"&gt;never&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;often&lt;/span&gt; &lt;span class="n"&gt;better&lt;/span&gt; &lt;span class="n"&gt;than&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;right&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;now&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;If&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;implementation&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;hard&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;explain&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;it&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;s a bad idea.&lt;/span&gt;
+&lt;span class="n"&gt;If&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;implementation&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;easy&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;explain&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;it&lt;/span&gt; &lt;span class="n"&gt;may&lt;/span&gt; &lt;span class="n"&gt;be&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;good&lt;/span&gt; &lt;span class="n"&gt;idea&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="n"&gt;Namespaces&lt;/span&gt; &lt;span class="n"&gt;are&lt;/span&gt; &lt;span class="n"&gt;one&lt;/span&gt; &lt;span class="n"&gt;honking&lt;/span&gt; &lt;span class="n"&gt;great&lt;/span&gt; &lt;span class="n"&gt;idea&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt; &lt;span class="n"&gt;let&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;s do more of those!&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; 
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;No.1 Idioms&lt;/h2&gt;
+&lt;p&gt;不在杭州现场....不知道speaker share了什么...粗略翻译了一下...orz&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;An unwritten rule (不成文的约定)&lt;/li&gt;
+&lt;li&gt;A common use-case (常见的用例)&lt;/li&gt;
+&lt;li&gt;Usually make the code better in: (优化代码在以下方面)&lt;/li&gt;
+&lt;li&gt;Readability (可读性)&lt;/li&gt;
+&lt;li&gt;Speed (运行速度)&lt;/li&gt;
+&lt;li&gt;Resource usage (资源利用率)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;数据操作&lt;/h2&gt;
+&lt;h3&gt;Unpacking&lt;/h3&gt;
+&lt;p&gt;可以理解为把多个值付给一个变量, 在用这个变量赋给多个变量&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;s = (&amp;#39;simon&amp;#39;, &amp;#39;shi&amp;#39;, 066, &amp;#39;simonshi@gmail.com&amp;#39;)
+
+# 一般青年
+firstname = s[0]
+lastname = s[1]
+weight = s[2]
+email = s[3]
+
+# Python青年
+firstname, lastname, weight, email = s
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;swap value&lt;/h3&gt;
+&lt;p&gt;记得谭浩强的C语言书上有这样一道题, 将a和b的值进行互换&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;# 一般青年
+temp = a
+a = b 
+b = temp
+
+# python青年
+a,b = b,a
+
+# 可能有些C青年看着不爽, 所以
+a,b = (a,b)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Don’t Underestimate&lt;/h3&gt;
+&lt;p&gt;没看懂啥意思.....略....&lt;/p&gt;
+&lt;h3&gt;Concatenating Strings&lt;/h3&gt;
+&lt;p&gt;初学的时候经常会选择笨的办法实现需求, 但是有时候有更好的写法, 看起来更简单&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;fruits = [&amp;#39;cherry&amp;#39;, &amp;#39;coconut&amp;#39;, &amp;#39;blueberry&amp;#39;, &amp;#39;kiwi&amp;#39;]
+
+# 普通青年
+# PS: 尼玛我一开始学习的时候经常这样做啊....
+s = fruits[0]
+for i in fruits[1:]:
+    s += &amp;#39;, &amp;#39; + f
+
+# Python青年
+print &amp;#39;, &amp;#39;.join(fruits)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Looping over a collection&lt;/h3&gt;
+&lt;p&gt;遍历的时候, 由于C语言的思想, for循环的时候经常使用数字标明当前元素是第几个&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;colors = [&amp;#39;red&amp;#39;, &amp;#39;green&amp;#39;, &amp;#39;blue&amp;#39;, &amp;#39;yellow&amp;#39;]
+
+# 一般青年
+for i in range(len(colors)):
+    print colors[i]
+
+# Python青年
+for color in colors:
+    print color
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Looping backwards&lt;/h3&gt;
+&lt;p&gt;反向遍历的时候, 初学会非常痛苦.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# 一般青年&lt;/span&gt;
+&lt;span class="s-Atom"&gt;for&lt;/span&gt; &lt;span class="s-Atom"&gt;color&lt;/span&gt; &lt;span class="s-Atom"&gt;in&lt;/span&gt; &lt;span class="nf"&gt;reversed&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s-Atom"&gt;colors&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="s-Atom"&gt;:&lt;/span&gt;
+    &lt;span class="s-Atom"&gt;print&lt;/span&gt; &lt;span class="s-Atom"&gt;color&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Python青年&lt;/span&gt;
+&lt;span class="s-Atom"&gt;for&lt;/span&gt; &lt;span class="s-Atom"&gt;color&lt;/span&gt; &lt;span class="s-Atom"&gt;in&lt;/span&gt; &lt;span class="s-Atom"&gt;colors&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s-Atom"&gt;::-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="s-Atom"&gt;:&lt;/span&gt;
+    &lt;span class="s-Atom"&gt;print&lt;/span&gt; &lt;span class="s-Atom"&gt;color&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Looping with indices&lt;/h3&gt;
+&lt;p&gt;遍历列表的索引&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;colors = [&amp;#39;red&amp;#39;, &amp;#39;green&amp;#39;, &amp;#39;blue&amp;#39;, &amp;#39;yellow&amp;#39;]
+
+# 一般青年
+for i in range(len(colors)):
+    print i, &amp;#39;--&amp;gt;&amp;#39;, colors[i]
+
+# python青年
+for i, color in enumerate(colors):
+    print i, &amp;#39;--&amp;gt;&amp;#39;, color
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;looping over a dictionary&lt;/h3&gt;
+&lt;p&gt;遍历字典的key, value&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;codes = {&amp;#39;Xian&amp;#39;: &amp;#39;29&amp;#39;, &amp;#39;Beijing&amp;#39;:&amp;#39;10&amp;#39;, &amp;#39;Shanghai&amp;#39;:&amp;#39;21&amp;#39;}
+# 一般青年
+for k in codes:
+    print k, &amp;#39;--&amp;gt;&amp;#39;, codes[k]
+
+# Python 青年
+for k, v in codes.items():
+    print k, &amp;#39;--&amp;gt;&amp;#39;, v
+
+for k, v in codes.iteritems():
+    print k, &amp;#39;--&amp;gt;&amp;#39;, v
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;‘defaultdict’&lt;/h3&gt;
+&lt;p&gt;如何使用 'defaultdict'&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;names = [&amp;#39;james&amp;#39;, &amp;#39;peter&amp;#39;, &amp;#39;simon&amp;#39;, &amp;#39;jack&amp;#39;, &amp;#39;john&amp;#39;, &amp;#39;lawrence&amp;#39;]
+# 期望得到
+{8: [&amp;#39;lawrence&amp;#39;], 4: [&amp;#39;jack&amp;#39;, &amp;#39;john&amp;#39;], 5: [&amp;#39;james&amp;#39;, &amp;#39;peter&amp;#39;, &amp;#39;simon&amp;#39;]}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;一般青年&lt;/strong&gt;
+思考了很久写出了&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;groups = {}
+for name in names:
+    key = len(name)
+    if key not in groups:
+        groups[key] = []
+    groups[key].append(name)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Python 青年&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 先用 ‘setdefault’ 来给字典赋默认值&lt;/span&gt;
+&lt;span class="n"&gt;groups&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;names&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;groups&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setdefault&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;[])&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="c"&gt;# 用‘defaultdict’生成结果&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;collections&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;defaultdict&lt;/span&gt;
+&lt;span class="n"&gt;groups&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;defaultdict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;names&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;groups&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Comprehensions&lt;/h3&gt;
+&lt;p&gt;列表解析&lt;/p&gt;
+&lt;p&gt;题目:&lt;em&gt;判断一个列表中的所有数字是否为奇数, 并且生成一个新的列表用True或False来标明&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一般青年&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;A, odd_or_even = [1, 1, 2, 3, 5, 8, 13, 21], []
+for number in A:
+    odd_or_even.append(isOdd(number))
+
+# 结果
+[True, True, False, True, True, False, True, True]
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Python 青年&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;A = [1, 1, 2, 3, 5, 8, 13, 21]
+
+[isOdd(a) for a in A]
+[True, True, False, True, True, False, True, True]
+
+# Or
+
+[a for a in A if a%2 != 0]
+[1, 1, 3, 5, 13, 21]
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;扩充理解&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;List: [a**2 for a in A]
+[1, 1, 4, 9, 25, 64, 169, 441]
+
+Set: {int(sqrt(a)) for a in A}
+set([1, 2, 3, 4])
+
+Dict: {a:a%3 for a in A if a%3}
+{8: 2, 1: 1, 2: 2, 5: 2, 13: 1}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;控制流&lt;/h2&gt;
+&lt;h3&gt;Truthiness&lt;/h3&gt;
+&lt;p&gt;判断真假, 也就是True 或 False&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;# 一般青年
+if names != []:
+…
+if foo == True:
+…
+
+# Python 青年
+if names:
+…
+if foo:
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这里作者列了一些判断的时候都是False的常见形式
+也就是说 用 &lt;code&gt;if ... : ....&lt;/code&gt; 的时候判断都是False&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;None&lt;/li&gt;
+&lt;li&gt;False&lt;/li&gt;
+&lt;li&gt;zero for numeric types  &lt;em&gt;数字0&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;empty sequence, e.g. [], tuple() &lt;em&gt;空序列,如:&lt;code&gt;[]&lt;/code&gt;和&lt;code&gt;()&lt;/code&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;empty dictionaries  &lt;em&gt;空字典&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;a value of 0 or False returned when either &lt;code&gt;__len__&lt;/code&gt; or &lt;code&gt;__non_zero__&lt;/code&gt; is called &lt;em&gt;当一些返回值为0或者False的方法或者类&lt;/em&gt;
+这里&lt;code&gt;__len__&lt;/code&gt; 返回0 应该很好理解
+不好理解的是&lt;code&gt;_non_zero__&lt;/code&gt;
+举个栗子:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="n"&gt;A:&lt;/span&gt;
+  &lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="n"&gt;__non_zero__&lt;/span&gt;(&lt;span class="k"&gt;self&lt;/span&gt;):  &lt;span class="c-Singleline"&gt;# 这里有一点是错误, 不知道是Py3还是啥, 我在py2.7版本中叫__nonzero__&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;False&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;A&lt;/span&gt;():
+   &lt;span class="nb"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;A is True&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;else:&lt;/span&gt;
+   &lt;span class="nb"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;A is False&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这里的意思是说, 判断A的这个类的布尔值, 可以通过&lt;code&gt;__nonzero__&lt;/code&gt; 这个方法来改变&lt;/p&gt;
+&lt;h3&gt;if-in&lt;/h3&gt;
+&lt;p&gt;判断某个值是否在某个集合当中&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;# 一般青年
+is_generic_color = False
+if color == &amp;#39;red&amp;#39; or color == &amp;#39;green&amp;#39; or color == &amp;#39;blue&amp;#39;:
+    is_generic_color = True
+
+
+
+# Python青年
+is_generic_color = color in (&amp;#39;red&amp;#39;, &amp;#39;green&amp;#39;, &amp;#39;blue&amp;#39;)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;for-else&lt;/h3&gt;
+&lt;p&gt;谁也没想到还有 &lt;code&gt;for-else&lt;/code&gt; 的用法吧&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;ages = [42, 21, 18, 33, 19]
+
+# 一般青年
+are_all_adult = True
+for age in ages:
+    if age &amp;lt; 18:
+        are_all_adult = False
+        break
+
+if are_all_adult:
+    print &amp;#39;All are adults!&amp;#39;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Python青年要来喽&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;ages = [42, 21, 18, 33, 19]
+
+# Python青年
+for age in ages:
+    if age &amp;lt; 18:
+        break
+else: # 如果循环没有跳出则执行
+    print &amp;#39;All are adults!&amp;#39;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Context Manager&lt;/h3&gt;
+&lt;p&gt;上下文管理器&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;# 一般青年
+f = open(&amp;#39;data.csv&amp;#39;)
+try:
+    data = f.read()
+finally:
+    f.close()
+
+# Python 青年
+with open(&amp;#39;data.csv&amp;#39;) as f:
+    data = f.read()
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;import itertools&lt;/h2&gt;
+&lt;p&gt;这章讲的都是itertools的库中的方法, 所以默认前提是&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;itertools&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Looping with two collections&lt;/h3&gt;
+&lt;p&gt;遍历两个集合
+示例中想要吧两个列表中的元素进行一一对应, 但是长度不同, 需要进行处理&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;colors&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;red&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;blue&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;green&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;yellow&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;fruits&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;cherry&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;blueberry&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;kiwi&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="c"&gt;# 一般青年&lt;/span&gt;
+&lt;span class="n"&gt;min_len&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;min&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;colors&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fruits&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;min_len&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;fruits&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;--&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;colors&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="c"&gt;# Python 青年&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;fruit&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;color&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;izip&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fruits&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;colors&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;  &lt;span class="c"&gt;# 此处的izip 是from itertools import izip&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;fruit&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;--&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;color&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Building Dictionaries&lt;/h3&gt;
+&lt;p&gt;合并成为字典&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;# 要求
+fruits = [&amp;#39;cherry&amp;#39;, &amp;#39;blueberry&amp;#39;, &amp;#39;kiwi&amp;#39;, &amp;#39;mango&amp;#39;]
+colors = [&amp;#39;red&amp;#39;, &amp;#39;blue&amp;#39;, &amp;#39;green&amp;#39;, &amp;#39;yellow&amp;#39;]
+
+# 合并成为
+{&amp;#39;kiwi&amp;#39;: &amp;#39;green&amp;#39;, &amp;#39;cherry&amp;#39;: &amp;#39;red&amp;#39;, &amp;#39;mango&amp;#39;: &amp;#39;yellow&amp;#39;, &amp;#39;blueberry&amp;#39;: &amp;#39;blue&amp;#39;}
+
+# 一般青年
+pairs = {}
+for fruit, color in izip(fruits, colors):
+    pairs[fruit] = color
+
+# PS:尼玛明明是刚才就是这么教的! 怎么变成一般青年了
+
+# Python青年
+pairs = dict(izip(fruits, colors))
+# 草泥马奔腾....Python 就是总能用极简方式做事
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;groupby&lt;/h3&gt;
+&lt;p&gt;根据字母的多少进行分类&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;# 要求
+names = [&amp;#39;james&amp;#39;, &amp;#39;peter&amp;#39;, &amp;#39;simon&amp;#39;, &amp;#39;jack&amp;#39;, &amp;#39;john&amp;#39;, &amp;#39;lawrence&amp;#39;]
+# 实现
+{8: [&amp;#39;lawrence&amp;#39;], 4: [&amp;#39;jack&amp;#39;, &amp;#39;john&amp;#39;], 5: [&amp;#39;james&amp;#39;, &amp;#39;peter&amp;#39;, &amp;#39;simon&amp;#39;]}
+
+# 使用 itertools
+{k:list(v) for k, v in groupby(names, len)}
+
+# PS: 尼玛上面说的方法又被简化了....
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;More&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;chain([1,2,3], ['a','b'], [4]) ==&amp;gt; 1,2,3,'a','b',4&lt;/li&gt;
+&lt;li&gt;repeat('A', 3) ==&amp;gt; 'A' 'A' 'A'&lt;/li&gt;
+&lt;li&gt;cycle('ABCD') ==&amp;gt; A B C D A B C D ...&lt;/li&gt;
+&lt;li&gt;compress('ABCDEF', [1,0,1,0,1,1]) ==&amp;gt; A C E F&lt;/li&gt;
+&lt;li&gt;combinations/permutations/product
+...&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Functional Python&lt;/h2&gt;
+&lt;p&gt;说到这里就有些高大上了, 前面目录翻译的时候,没有想到那么多, 就翻译成了Python的功能,
+到这里为止就看明白了, 原来是代表函数式编程的Python, 前面的也就不改了.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Imperative programming (命令式编程: C/C++, Java)&lt;/li&gt;
+&lt;li&gt;Declarative programming (声明式编程)&lt;/li&gt;
+&lt;li&gt;Functional programming (函数式编程: Lisp, Haskell, OCaml)&lt;/li&gt;
+&lt;li&gt;Logic programming (逻辑式编程: Prolog, Clojure)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Functions are data, too. Can be passed through and manipulated like data.
+函数也是数据. 它也可以像数据一样被传递和操纵&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;partial&lt;/h3&gt;
+&lt;p&gt;偏函数?! 这玩意是啥啊....&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 一般青年&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;level&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;[{level}]: {msg}&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;level&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;level&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;msg&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;log_debug&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;debug&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;log_warn&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;warn&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;create_log_with_level&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;level&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;log_with_level&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;level&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;message&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;log_with_level&lt;/span&gt;
+
+&lt;span class="c"&gt;# construct functions like data&lt;/span&gt;
+&lt;span class="n"&gt;log_debug&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;create_log_with_level&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;debug&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;log_warn&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;create_log_with_level&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;warn&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="c"&gt;# 意思就是说&lt;/span&gt;
+&lt;span class="c"&gt;# 函数在执行时，要带上所有必要的参数进行调用。但是，有时参数可以在函数被调用之前提前获知。这种情况下，一个函数有一个或多个参数预先就能用上，以便函数能用更少的参数进行调用。&lt;/span&gt;
+
+&lt;span class="c"&gt;# Python青年&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;functools&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;partial&lt;/span&gt;
+&lt;span class="c"&gt;# log 为上面定义过的那个函数&lt;/span&gt;
+&lt;span class="n"&gt;log_debug&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;partial&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;debug&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;log_warn&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;partial&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;warn&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Decorator&lt;/h3&gt;
+&lt;p&gt;装饰器, 个人认为装饰器是Python中一个比较华丽的东西了, 如果用好了事半功倍, 如果用不好事倍功半&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 混合了业务逻辑和管理逻辑&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;web_lookup&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cache&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;{}):&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;cache&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;cache&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;urllib&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;urlopen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;cache&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="c"&gt;# 使用装饰器&lt;/span&gt;
+
+&lt;span class="nd"&gt;@cache&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;web_lookup&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;urllib&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;urlopen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;functools&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;wraps&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;cache&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;saved&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt;
+    &lt;span class="nd"&gt;@wraps&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;new_func&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;saved&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;saved&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;saved&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;new_func&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Combine&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="nx"&gt;imperative&lt;/span&gt; &lt;span class="nx"&gt;way&lt;/span&gt;
+&lt;span class="nx"&gt;expr&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;res&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;28++32+++32+39&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nx"&gt;token&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;expr&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;+&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nx"&gt;token&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+        &lt;span class="nx"&gt;res&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="kr"&gt;int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;token&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="nx"&gt;result&lt;/span&gt; &lt;span class="nx"&gt;of&lt;/span&gt; &lt;span class="nx"&gt;split&lt;/span&gt;
+&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;28&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;32&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;32&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;39&amp;quot;&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;
+
+&lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="nx"&gt;functional&lt;/span&gt; &lt;span class="nx"&gt;way&lt;/span&gt;
+&lt;span class="nx"&gt;res&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;sum&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kr"&gt;int&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;filter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;bool&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;expr&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;+&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))))&lt;/span&gt;
+
+&lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="nx"&gt;step&lt;/span&gt; &lt;span class="nx"&gt;by&lt;/span&gt; &lt;span class="nx"&gt;step&lt;/span&gt;
+&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;28&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;32&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;32&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;39&amp;quot;&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;
+
+&lt;span class="nx"&gt;filter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;pred&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;seq&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;t&lt;/span&gt; &lt;span class="nx"&gt;for&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;seq&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nx"&gt;pred&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;t&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;
+&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;28&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;32&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;32&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;39&amp;quot;&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;
+
+&lt;span class="nx"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;func&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;seq&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;func&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;t&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nx"&gt;for&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="nx"&gt;seq&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;
+&lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;28&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;32&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;32&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;39&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这一节大概意思能看懂, 但是不能理解的非常透彻. 望请高手指点
+主要核心思想体现在&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;res = sum(map(int, filter(bool, expr.split(&amp;#39;+&amp;#39;))))
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Map&lt;/h3&gt;
+&lt;p&gt;呐呐呐...这里开始解释上面用到的map啦&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;B = map(func, A)
+┌───────┐     ┌─────────┐
+│  a1   │ --&amp;gt; │ func(a1)│
+│  a2   │ --&amp;gt; │ func(a2)│
+│  a3   │ --&amp;gt; │ func(a3)│
+│  an   │ --&amp;gt; │ func(an)│
+└───────┘     └─────────┘
+    A             B
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;也就是说 map的功能就是将A当做参数, 把A中的a1,a2,a3....an传递给func
+结果集返回给B&lt;/p&gt;
+&lt;h3&gt;all&lt;/h3&gt;
+&lt;p&gt;比for-else更加的传神, 23333&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;ages = [42, 21, 18, 33, 19]
+
+# more expressive than using ‘for-else’
+if all(map(lambda a:a&amp;gt;=18, ages)):
+    print &amp;#39;All are adults!&amp;#39;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Fluent Interface&lt;/h3&gt;
+&lt;p&gt;啥意思捏? O.O  上码&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;expr = &amp;#39;28++32+++32+39&amp;#39;
+IterHelper(expr.split(&amp;#39;+&amp;#39;)).filter(bool).map(int).sum()
+ages = [42, 21, 18, 33, 19]
+IterHelper(ages).map(lambda x:x&amp;gt;=18).all()
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;还是不懂啊.....&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="n"&gt;IterHelper&lt;/span&gt;(&lt;span class="n"&gt;object&lt;/span&gt;):
+    &lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="n"&gt;__init__&lt;/span&gt;(&lt;span class="k"&gt;self&lt;/span&gt;, &lt;span class="n"&gt;iterable&lt;/span&gt; = []):
+        &lt;span class="k"&gt;self&lt;/span&gt;.&lt;span class="n"&gt;iterable&lt;/span&gt; = &lt;span class="n"&gt;iterable&lt;/span&gt;
+
+    &lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="n"&gt;dump&lt;/span&gt;(&lt;span class="k"&gt;self&lt;/span&gt;):
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;list&lt;/span&gt;(&lt;span class="k"&gt;self&lt;/span&gt;.&lt;span class="n"&gt;iterable&lt;/span&gt;)
+
+    &lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="nb"&gt;map&lt;/span&gt;(&lt;span class="k"&gt;self&lt;/span&gt;, &lt;span class="n"&gt;func&lt;/span&gt;):
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;IterHelper&lt;/span&gt;(&lt;span class="n"&gt;itertools&lt;/span&gt;.&lt;span class="n"&gt;imap&lt;/span&gt;(&lt;span class="n"&gt;func&lt;/span&gt;, &lt;span class="k"&gt;self&lt;/span&gt;.&lt;span class="n"&gt;iterable&lt;/span&gt;))
+
+    &lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="n"&gt;filter&lt;/span&gt;(&lt;span class="k"&gt;self&lt;/span&gt;, &lt;span class="n"&gt;predicate&lt;/span&gt;):
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;IterHelper&lt;/span&gt;(&lt;span class="n"&gt;itertools&lt;/span&gt;.&lt;span class="n"&gt;ifilter&lt;/span&gt;(&lt;span class="n"&gt;predicate&lt;/span&gt;, &lt;span class="k"&gt;self&lt;/span&gt;.&lt;span class="n"&gt;iterable&lt;/span&gt;))
+
+    &lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="nb"&gt;sum&lt;/span&gt;(&lt;span class="k"&gt;self&lt;/span&gt;):
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;sum&lt;/span&gt;(&lt;span class="k"&gt;self&lt;/span&gt;.&lt;span class="n"&gt;iterable&lt;/span&gt;)
+
+    &lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="nb"&gt;all&lt;/span&gt;(&lt;span class="k"&gt;self&lt;/span&gt;):
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;all&lt;/span&gt;(&lt;span class="k"&gt;self&lt;/span&gt;.&lt;span class="n"&gt;iterable&lt;/span&gt;)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;哦哦, 原来如此, 作者是说可以写成&lt;code&gt;IterHelper(expr.split('+')).filter(bool).map(int).sum()&lt;/code&gt;
+这种形式的接口应该怎么写&lt;/p&gt;
+&lt;h2&gt;结束语&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;I have made this longer than usual because I have not had time to make it shorter.
+-- Blaise Pascal (1623-1662)&lt;/p&gt;
+&lt;p&gt;之所以写了这么长, 是因为我没有时间简化他
+-- 布莱士.帕斯卡&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;Bigger than Bigger&lt;/h2&gt;
+&lt;p&gt;把作者的这个玩意扔进ipython里&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;In [22]: &amp;#39; &amp;#39;.join(&amp;#39;{0:08b}&amp;#39;.format(ord(x)) for x in &amp;#39;Bigger Than Bigger!&amp;#39;)
+Out[22]: &amp;#39;01000010 01101001 01100111 01100111 01100101 01110010 00100000 01010100 01101000 01100001 01101110 00100000 01000010 01101001 01100111 01100111 01100101 01110010 00100001&amp;#39;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;哈哈, 是在说逼格儿嘛&lt;/p&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://python.net/~goodger/projects/pycon/2007/idiomatic/handout.html"&gt;code like a pythonista&lt;/a&gt;
+&lt;a href="https://docs.python.org/2/library/itertools.html"&gt;itertools&lt;/a&gt;
+&lt;a href="http://ua.pycon.org/static/talks/kachayev"&gt;functional python&lt;/a&gt;
+&lt;a href="https://docs.python.org/2/library/functools.html"&gt;functools&lt;/a&gt;
+&lt;a href="http://pydash.readthedocs.org/en/latest/"&gt;pydash&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;感谢作者!!!&lt;/h2&gt;</summary><category term="pythonnic"></category></entry><entry><title>转载:Pocoo风格指引--指引自己强制遵守</title><link href="http://chencoyote.github.io/articles/zhuan-zai-pocoofeng-ge-zhi-yin-zhi-yin-zi-ji-qiang-zhi-zun-shou.html" rel="alternate"></link><updated>2015-01-07T12:42:55+08:00</updated><author><name>coyote</name></author><id>tag:chencoyote.github.io,2015-01-07:articles/zhuan-zai-pocoofeng-ge-zhi-yin-zhi-yin-zi-ji-qiang-zhi-zun-shou.html</id><summary type="html">&lt;h2&gt;警醒自己&lt;/h2&gt;
+&lt;p&gt;良好的项目团队就有良好的编码风格, 成为一个Pythonic的Pythoner
+必须有好的学习精神. 如何写出Pythonic的代码, 个人参考考本文中Pocoo的风格
+推荐阅读本文的初学者, 一起使用! Be Pythonic~&lt;/p&gt;
+&lt;h2&gt;正文&lt;/h2&gt;
+&lt;p&gt;Pocoo 风格指引是所有 Pocoo 项目的风格指引，包括 Flask 。这份风格指引
+在 Flask 补丁中是必须的，并且推荐在 Flask 扩展中使用。&lt;/p&gt;
+&lt;p&gt;一般而言， Pocoo 风格指引遵循 &lt;code&gt;pep8&lt;/code&gt; ，有一些小差异和扩充。&lt;/p&gt;
+&lt;h2&gt;总体布局&lt;/h2&gt;
+&lt;h3&gt;缩进&lt;/h3&gt;
+&lt;p&gt;4个空格。没有制表符，没有例外。&lt;/p&gt;
+&lt;h3&gt;最大行长&lt;/h3&gt;
+&lt;p&gt;79字符，软限制是 84 ，如果绝对必要。尝试合理放置 &lt;code&gt;break&lt;/code&gt; 、 &lt;code&gt;continue&lt;/code&gt;
+  和 &lt;code&gt;return&lt;/code&gt; 声明来避免代码过度嵌套。&lt;/p&gt;
+&lt;h3&gt;可续长语句&lt;/h3&gt;
+&lt;p&gt;你可以使用反斜线来继续一个语句，在这种情况下，你应该对齐下一行到最后一个
+  点或等号或缩进四个空格&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="sx"&gt;this_is_a_very_long(function_call,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;with many parameters&amp;#39;&lt;/span&gt;&lt;span class="sx"&gt;)&lt;/span&gt; &lt;span class="sx"&gt;\&lt;/span&gt;
+        &lt;span class="sx"&gt;.that_returns_an_object_with_an_attribute&lt;/span&gt;
+
+    &lt;span class="sx"&gt;MyModel.query.filter(MyModel.scalar&lt;/span&gt; &lt;span class="sx"&gt;&amp;gt;&lt;/span&gt; &lt;span class="sx"&gt;120)&lt;/span&gt; &lt;span class="sx"&gt;\&lt;/span&gt;
+                 &lt;span class="sx"&gt;.order_by(MyModel.name.desc())&lt;/span&gt; &lt;span class="sx"&gt;\&lt;/span&gt;
+                 &lt;span class="sx"&gt;.limit(10)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果你在一个带括号的语句中换行，对齐到括号&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="nx"&gt;this_is_a_very_long&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;function_call&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;with many parameters&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                        &lt;span class="mi"&gt;23&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;42&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;and even more&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;对于有许多元素的元组或列表，在起始括号后立即换行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    items = [
+        &amp;#39;this is the first&amp;#39;, &amp;#39;set of items&amp;#39;, &amp;#39;with more items&amp;#39;,
+        &amp;#39;to come in this line&amp;#39;, &amp;#39;like this&amp;#39;
+    ]
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;空行&lt;/h3&gt;
+&lt;p&gt;顶层函数和类由两个空行分隔，其它的东西由一行。不要使用太多的空行来分隔
+  代码中的逻辑段。例如::&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;def hello(name):
+    print &amp;#39;Hello %s!&amp;#39; % name
+
+
+def goodbye(name):
+    print &amp;#39;See you %s.&amp;#39; % name
+
+
+class MyClass(object):
+    &amp;quot;&amp;quot;&amp;quot;This is a simple docstring&amp;quot;&amp;quot;&amp;quot;
+
+    def __init__(self, name):
+        self.name = name
+
+    def get_annoying_name(self):
+        return self.name.upper() + &amp;#39;!!!!111&amp;#39;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;表达式和语句&lt;/h2&gt;
+&lt;h3&gt;常规空格规则&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;不对不是单词的一元运算符使用空格（例如 &lt;code&gt;-&lt;/code&gt; 、 &lt;code&gt;~&lt;/code&gt; 等等），
+    在圆括号内同样&lt;/li&gt;
+&lt;li&gt;在二元运算符见使用空格&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Good &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    exp = -1.05
+    value = (item_value / item_count) * offset / exp
+    value = my_list[index]
+    value = my_dict[&amp;#39;key&amp;#39;]
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Bad&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    exp = - 1.05
+    value = ( item_value / item_count ) * offset / exp
+    value = (item_value/item_count)*offset/exp
+    value=( item_value/item_count ) * offset/exp
+    value = my_list[ index ]
+    value = my_dict [&amp;#39;key&amp;#39;]
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;不能使用 Yoda 语句&lt;/h3&gt;
+&lt;p&gt;永远不要用常量与变量做比较，而是把变量与常量做比较&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Good&lt;/em&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    if method == &amp;#39;md5&amp;#39;:
+        pass
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;em&gt;Bad&lt;/em&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    if &amp;#39;md5&amp;#39; == method:
+        pass
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;比较&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;跟任意类型: &lt;code&gt;==&lt;/code&gt; 和 &lt;code&gt;!=&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;跟单例，使用 &lt;code&gt;is&lt;/code&gt; 和 &lt;code&gt;is not&lt;/code&gt; （例如 &lt;code&gt;foo is not
+    None&lt;/code&gt; ）&lt;/li&gt;
+&lt;li&gt;永远不要与 &lt;code&gt;True&lt;/code&gt; 或 &lt;code&gt;False&lt;/code&gt; 做比较（比如永远不要
+    写 &lt;code&gt;foo == False&lt;/code&gt; ，而是 &lt;code&gt;not foo&lt;/code&gt; ）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;否定包含检查&lt;/h3&gt;
+&lt;p&gt;使用 &lt;code&gt;foo not in bar&lt;/code&gt; 而不是 &lt;code&gt;not foo in bar&lt;/code&gt;&lt;/p&gt;
+&lt;h3&gt;实例检查&lt;/h3&gt;
+&lt;p&gt;用 &lt;code&gt;isinstance(a, C)&lt;/code&gt; 而不是 &lt;code&gt;type(A) is C&lt;/code&gt; ， 但通常试图避免
+  实例检查，请对特性检查。&lt;/p&gt;
+&lt;h2&gt;命名约定&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;类名: &lt;code&gt;CamelCase&lt;/code&gt; ，缩写词大写 （ &lt;code&gt;HTTPWriter&lt;/code&gt; 而非 &lt;code&gt;HttpWriter&lt;/code&gt; ）&lt;/li&gt;
+&lt;li&gt;变量名: &lt;code&gt;lowercase_with_underscores&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;方法和函数名: &lt;code&gt;lowercase_with_underscores&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;常量: &lt;code&gt;UPPERCASE_WITH_UNDERSCORES&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;预编译正则表达式: &lt;code&gt;name_re&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;被保护的成员以单个下划线作为前缀，双下划线为混合类保留。&lt;/p&gt;
+&lt;p&gt;在带有关键字的类上，会添加结尾的下划线。与内置构件冲突是允许的，并且
+&lt;strong&gt;一定不要&lt;/strong&gt; 在用在变量名后添加下划线的方式解决。如果函数需要访问一个隐蔽
+的内置构件，重绑定内置构件到一个不同的名字作为替代。&lt;/p&gt;
+&lt;p&gt;函数和方法参数&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;类方法: &lt;code&gt;cls&lt;/code&gt; 作为第一个参数&lt;/li&gt;
+&lt;li&gt;实例方法: &lt;code&gt;self&lt;/code&gt; 作为第一个参数&lt;/li&gt;
+&lt;li&gt;属性的 lambda 表达式应该把第一个参数替换为 &lt;code&gt;x&lt;/code&gt; ，像 &lt;code&gt;display_name = 
+    property(lambda x: x.real_name or x.username)&lt;/code&gt; 中一样&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;文档字符串&lt;/h2&gt;
+&lt;h3&gt;文档字符串约定&lt;/h3&gt;
+&lt;p&gt;所有的文档字符串为 Sphinx 可理解的 reStructuredText 格式。它们的形态
+  因行数不同而迥异。如果只有一行，闭合的三引号和开头的三引号在同一行，
+  否则开头的三引号与文本在同一行，而闭合的三引号另起一行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    def foo():
+        &amp;quot;&amp;quot;&amp;quot;This is a simple docstring&amp;quot;&amp;quot;&amp;quot;
+
+
+    def bar():
+        &amp;quot;&amp;quot;&amp;quot;This is a longer docstring with so much information in there
+        that it spans three lines.  In this case the closing triple quote
+        is on its own line.
+        &amp;quot;&amp;quot;&amp;quot;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;模块标头&lt;/h3&gt;
+&lt;p&gt;模块标头包含一个 utf-8 编码声明（即使没有使用非 ASCII 字符，也始终推
+  荐这么做）和一个标准的文档字符串&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    # -*- coding: utf-8 -*-
+    &amp;quot;&amp;quot;&amp;quot;
+        package.module
+        ~~~~~~~~~~~~~~
+
+        A brief description goes here.
+
+        :copyright: (c) YEAR by AUTHOR.
+        :license: LICENSE_NAME, see LICENSE_FILE for more details.
+    &amp;quot;&amp;quot;&amp;quot;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;请留意何时的版权和许可证文件对于通过审核的 Flask 扩展是必须的。&lt;/p&gt;
+&lt;h2&gt;注释&lt;/h2&gt;
+&lt;p&gt;注释的规则和文档字符串类似。两者都使用 reStructuredText 格式。如果一个
+注释被用于一个属性的文档，在起始的井号（ &lt;code&gt;#&lt;/code&gt; ）后加一个冒号&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="n"&gt;User&lt;/span&gt;(&lt;span class="n"&gt;object&lt;/span&gt;):
+        &lt;span class="c-Singleline"&gt;#: the name of the user as unicode string&lt;/span&gt;
+        &lt;span class="nb"&gt;name&lt;/span&gt; = &lt;span class="n"&gt;Column&lt;/span&gt;(&lt;span class="n"&gt;String&lt;/span&gt;)
+        &lt;span class="c-Singleline"&gt;#: the sha1 hash of the password + inline salt&lt;/span&gt;
+        &lt;span class="n"&gt;pw_hash&lt;/span&gt; = &lt;span class="n"&gt;Column&lt;/span&gt;(&lt;span class="n"&gt;String&lt;/span&gt;)
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="python"></category><category term="PEP8"></category></entry></feed>

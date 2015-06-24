@@ -20,14 +20,17 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 # Blogroll
-LINKS = (('Pelican', 'http://getpelican.com/'),
-         ('Python.org', 'http://python.org/'),
-         ('Jinja2', 'http://jinja.pocoo.org/'),
-         ('You can modify those links in your config file', '#'),)
+LINKS = (('Python.org', 'http://python.org/'),
+         ('PyChina', 'http://pychina.org'),
+         ('PyWeekly', 'http://weekly.pychina.org'),
+         ('PyConChina', 'http://cn.pycon.org'),)
 
 # Social widget
 SOCIAL = (('Github','https://github.com/chencoyote'),
-          ('Google+', 'https://plus.google.com/u/0/104542842241928417898/posts'),)
+          ('Google+', 'https://plus.google.com/u/0/104542842241928417898/posts'),
+          ('Twitter', 'https://twitter.com/Coyote_chen'),
+          ('Weibo', 'http://weibo.com/coytoe'),
+          ('V2EX', 'http://v2ex.com/member/Coyote'),)
 
 DEFAULT_PAGINATION = 10
 

@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>leetcode刷算法开坑 - Coyote's Blog</title>	
+	<meta name="author" content="coyote">
+	
+
+  <meta name="description" content="前言 LeetCode OJ 我的git库 背景 由于最近被鄙视竟然不会算法就敢写代码, 算法-数据结构-面向对象全都不懂, 你敢说你是程序员? 被打倒终究要爬起来! 通过学习, 来刷LeetCode的算法 正文 PS: 我是倒序做的.... 内容有参考网络, 但是自己是经过思考的 No. 191 Number of 1 Bits 数出1 bits 有多少个 Write a function that takes an unsigned integer and returns the number of ’1' bits it has (also known as the Hamming weight). For ...">
+
+
+
+	<link rel="stylesheet" href="http://chencoyote.github.io/theme/css/main.css" type="text/css" />
+		
+
+
+    <link href="http://chencoyote.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Coyote's Blog Atom Feed" />
+</head>
+	
+<body>
+
+    <div class="container">
+	  
+	  <header role="banner">
+	    <div class="feeds">
+	      <a href="http://chencoyote.github.io/feeds/all.atom.xml" rel="alternate"><img src="http://chencoyote.github.io/theme/images/icons/feed-32px.png" alt="atom feed"/></a>
+	    </div>
+	      <nav class="pages">
+			  <a href="http://chencoyote.github.io/archives">Archives</a>
+-			  <a href="http://chencoyote.github.io/tags">Tags</a>
+-			  <a href="http://chencoyote.github.io/pages/personal-awesome.html">Personal Awesome</a>
+-			  <a href="http://chencoyote.github.io/pages/about-me.html">About Me</a>
+	      </nav>
+		<a href="http://chencoyote.github.io" class="title">Coyote's Blog</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+	<article class="full">
+		
+		<h1>leetcode刷算法开坑</h1>
+		
+<div class="metadata">
+  <time datetime="2015-03-24T15:34:36+08:00" pubdate>Tue 24 March 2015</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://chencoyote.github.io/author/coyote.html">coyote</a>
+    </address>
+  in <a href="http://chencoyote.github.io/category/xue-xi-bi-ji.html">学习笔记</a>
+<p class="tags">tagged <a href="http://chencoyote.github.io/tag/python.html">python</a>, <a href="http://chencoyote.github.io/tag/algorithms.html">algorithms</a></p></div>		
+		<h2>前言</h2>
+<p><a href="https://leetcode.com/problemset/algorithms/">LeetCode OJ</a></p>
+<p><a href="https://github.com/chencoyote/pyleetcode">我的git库</a></p>
+<h2>背景</h2>
+<p>由于最近被鄙视竟然不会算法就敢写代码, 算法-数据结构-面向对象全都不懂, 你敢说你是程序员?</p>
+<p>被打倒终究要爬起来!</p>
+<p>通过学习,  来刷LeetCode的算法</p>
+<h2>正文</h2>
+<p>PS: 我是倒序做的.... 内容有参考网络, 但是自己是经过思考的</p>
+<h3>No. 191 Number of 1 Bits</h3>
+<p>数出<code>1 bits</code> 有多少个</p>
+<blockquote>
+<p>Write a function that takes an unsigned integer and returns the number of ’1' bits it has (also known as the <a href="http://en.wikipedia.org/wiki/Hamming_weight">Hamming weight</a>).</p>
+</blockquote>
+<p>For example, the 32-bit integer ’11' has binary representation 00000000000000000000000000001011, so the function should return 3.</p>
+<ul>
+<li>数出一个2进制数中的1的个数, 也叫<code>汉明权重</code></li>
+<li>例如:</li>
+<li>32位的2进制整数<code>11</code> 的二进制表示为<code>00000000000000000000000000001011</code></li>
+<li>应当返回值为3</li>
+</ul>
+<p>读懂题之后, 看原文中给的维基百科连接, 仔细读了一下, 给出了很多种解法, </p>
+<p>先说我的解法:
+简单粗暴, 用<code>% 2</code>的做法来验证每一位是不是1</p>
+<div class="highlight"><pre> <span class="k">def</span> <span class="nf">hammingWeight</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>                                                           
+     <span class="n">s</span> <span class="o">=</span> <span class="mi">0</span>                                                                       
+     <span class="k">while</span> <span class="n">n</span> <span class="ow">is</span> <span class="ow">not</span> <span class="mi">0</span><span class="p">:</span>                                                           
+         <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>                                                          
+            <span class="n">s</span> <span class="o">+=</span> <span class="mi">1</span>                                                               
+         <span class="k">print</span> <span class="s">&quot;n: &quot;</span><span class="p">,</span> <span class="n">n</span>                                                          
+         <span class="n">n</span> <span class="o">/=</span> <span class="mi">2</span>                                                                  
+         <span class="c"># n = n &gt;&gt; 1                                                            </span>
+     <span class="k">return</span> <span class="n">s</span>                                                                    
+ <span class="n">q</span> <span class="o">=</span> <span class="mh">0x10111011011</span> <span class="c"># count 8 1-bits</span>
+ <span class="n">hammingWeight</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+</pre></div>
+
+
+<p>其中<code>n /= 2</code> 和 <code>n = n &gt;&gt; 1</code>的效果是一样的
+用时<code>45 ms</code></p>
+<p>再来看看wiki中的版本</p>
+<blockquote>
+<p>其做法是采用这样的思想，类似归并的做法。对于相邻的两位，先计算这两位的1的个数(最大是2)，比如对于32位的数来说，分成 16组，<strong>每组计算的是相邻两位的1的个数和</strong>，并且将这个和用新得到的数的两位表示(2位可以最大表示4，所以可以存得下这个和，和此时最大为2)；然后对相邻四位进行操作，计算每两位两位的和（这样操作后其实是计算了原来32位数的相邻四位的1的个数）；这样依次类推，对于32位的数来说，只要操作到将其相邻16位的1的个数相加就可以得到其包含的1的个数了。</p>
+</blockquote>
+<p>我的理解就是说, 
+1. 先分成16组, 那么在与操作<code>0x3333333333333333</code>的时候, 就相当于统计出这16组中的第一位是<code>1</code>的个数, 然后用<code>&gt;&gt;</code>操作来位移之后, 统计出16组中第二位是<code>1</code>的个数
+2. 两次之和就是16组中1的个数, 但是现在这16组并不能直接统计出结果, <em>但是你要是自己数的话, 已经知道了, 要这样做一开始就自己数了, 现在不是让计算机数嘛</em>
+3. 然后把统计出的结果二分为8组, </p>	
+
+	</article>
+
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
+
+
+		  </div>	
+		  
+		  <div class="sidebar">
+		    <div class="sidebar-container" >
+
+
+  	          <nav>
+	            <h2>Categories</h2>
+	            <ul>
+	                <li ><a href="http://chencoyote.github.io/category/ce-shi.html">测试</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/ewen-fan-yi.html">E文翻译</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/ji-zhu.html">技术</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/linux.html">Linux</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/python.html">Python</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/qi-ta.html">其他</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/sublime-text.html">Sublime Text</a></li>
+	                <li class="active"><a href="http://chencoyote.github.io/category/xue-xi-bi-ji.html">学习笔记</a></li>
+	            </ul>
+	          </nav>
+
+	            <aside>
+	            <h2>Social</h2>
+			      <ul class="social">
+				    <li><a href="https://github.com/chencoyote">Github</a><i></i></li>
+				    <li><a href="https://plus.google.com/u/0/104542842241928417898/posts">Google+</a><i></i></li>
+				    <li><a href="https://twitter.com/Coyote_chen">Twitter</a><i></i></li>
+				    <li><a href="http://weibo.com/coytoe">Weibo</a><i></i></li>
+				    <li><a href="http://v2ex.com/member/Coyote">V2EX</a><i></i></li>
+			      </ul>
+			    </aside>
+
+	            <aside>
+	              <h2>Blogroll</h2>
+	              <ul>
+	                  <li><a href="http://python.org/">Python.org</a></li>
+	                  <li><a href="http://pychina.org">PyChina</a></li>
+	                  <li><a href="http://weekly.pychina.org">PyWeekly</a></li>
+	                  <li><a href="http://cn.pycon.org">PyConChina</a></li>
+	              </ul>
+	            </aside>
+	        </div>
+		  </div>
+
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+		  coyote - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-sober">pelican-sober</a>.
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>

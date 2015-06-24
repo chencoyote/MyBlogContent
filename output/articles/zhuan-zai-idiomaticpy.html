@@ -1,0 +1,702 @@
+<!doctype html>
+<html lang="">	
+<head>
+	<meta charset="utf-8"/>
+	<title>转载: idiomatic.py - Coyote's Blog</title>	
+	<meta name="author" content="coyote">
+	
+
+  <meta name="description" content="背景 新年第一篇~ 写在正月十五元宵节! 新年快乐, 过了十五就过了年, 开始进入状态工作啦~ PyConChina2014在北京没看到干货, 但是杭州 @施远敏 分享了一个适合于有些基础, 但是觉得不够Pythonnic的学者 原文PPT 在google doc上 自己把这个PPT转成文章,记录下来 最后像作者致敬! Let's Go idiomatic python 顾名思义, 符合语言使用习惯的python代码 在我看来 idiomatic python == pythonnic 目录 Idioms (风格, 所谓Python方言呗) Data Manipulation (数据操作) Control Flow (控制流) ‘itertools’ (python中的迭代器) Functional Python (python的功能) 彩蛋 打开python的CLI, 或者IPython, 输入import this 这就是Python的信仰啦 ...">
+
+
+
+	<link rel="stylesheet" href="http://chencoyote.github.io/theme/css/main.css" type="text/css" />
+		
+
+
+    <link href="http://chencoyote.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Coyote's Blog Atom Feed" />
+</head>
+	
+<body>
+
+    <div class="container">
+	  
+	  <header role="banner">
+	    <div class="feeds">
+	      <a href="http://chencoyote.github.io/feeds/all.atom.xml" rel="alternate"><img src="http://chencoyote.github.io/theme/images/icons/feed-32px.png" alt="atom feed"/></a>
+	    </div>
+	      <nav class="pages">
+			  <a href="http://chencoyote.github.io/archives">Archives</a>
+-			  <a href="http://chencoyote.github.io/tags">Tags</a>
+-			  <a href="http://chencoyote.github.io/pages/personal-awesome.html">Personal Awesome</a>
+-			  <a href="http://chencoyote.github.io/pages/about-me.html">About Me</a>
+	      </nav>
+		<a href="http://chencoyote.github.io" class="title">Coyote's Blog</a>
+      </header>
+	
+	  <div class="wrapper">
+
+		  <div role="main" class="content">
+	<article class="full">
+		
+		<h1>转载: idiomatic.py</h1>
+		
+<div class="metadata">
+  <time datetime="2015-03-05T10:54:30+08:00" pubdate>Thu 05 March 2015</time>
+    <address class="vcard author">
+      by <a class="url fn" href="http://chencoyote.github.io/author/coyote.html">coyote</a>
+    </address>
+  in <a href="http://chencoyote.github.io/category/python.html">Python</a>
+<p class="tags">tagged <a href="http://chencoyote.github.io/tag/pythonnic.html">pythonnic</a></p></div>		
+		<h2>背景</h2>
+<ul>
+<li>新年第一篇~ 写在正月十五元宵节! 新年快乐, 过了十五就过了年, 开始进入状态工作啦~</li>
+<li>PyConChina2014在北京没看到干货, 但是杭州 @施远敏 分享了一个适合于有些基础, 但是觉得不够Pythonnic的学者</li>
+<li><a href="https://docs.google.com/presentation/d/1Mer-SFLtELLtmS_QxLWbW1aEDX997JSN6eD3mCyV81k/edit?pli=1#slide=id.g475844c86_0369">原文PPT</a> 在google doc上</li>
+<li>自己把这个PPT转成文章,记录下来</li>
+<li>最后像作者致敬!</li>
+</ul>
+<h2>Let's Go</h2>
+<h3>idiomatic python</h3>
+<p>顾名思义, 符合语言使用习惯的python代码
+在我看来 idiomatic python == pythonnic</p>
+<p><strong>目录</strong></p>
+<ul>
+<li>Idioms (风格, 所谓Python方言呗)</li>
+<li>Data Manipulation (数据操作)</li>
+<li>Control Flow (控制流)</li>
+<li>‘itertools’ (python中的迭代器)</li>
+<li>Functional Python (python的功能)</li>
+</ul>
+<p><strong>彩蛋</strong></p>
+<p>打开python的CLI, 或者IPython, 输入<code>import this</code>
+这就是Python的信仰啦~
+The Zen of Python, by Tim Peters</p>
+<div class="highlight"><pre><span class="c"># python</span>
+<span class="n">Python</span> <span class="mf">2.7</span><span class="o">.</span><span class="mi">6</span> <span class="p">(</span><span class="n">default</span><span class="p">,</span> <span class="n">Nov</span> <span class="mi">21</span> <span class="mi">2013</span><span class="p">,</span> <span class="mi">15</span><span class="p">:</span><span class="mi">55</span><span class="p">:</span><span class="mi">38</span><span class="p">)</span> <span class="p">[</span><span class="n">GCC</span><span class="p">]</span> <span class="n">on</span> <span class="n">linux2</span>
+<span class="n">Type</span> <span class="s">&quot;help&quot;</span><span class="p">,</span> <span class="s">&quot;copyright&quot;</span><span class="p">,</span> <span class="s">&quot;credits&quot;</span> <span class="ow">or</span> <span class="s">&quot;license&quot;</span> <span class="k">for</span> <span class="n">more</span> <span class="n">information</span><span class="o">.</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">this</span>
+<span class="n">The</span> <span class="n">Zen</span> <span class="n">of</span> <span class="n">Python</span><span class="p">,</span> <span class="n">by</span> <span class="n">Tim</span> <span class="n">Peters</span>
+
+<span class="n">Beautiful</span> <span class="ow">is</span> <span class="n">better</span> <span class="n">than</span> <span class="n">ugly</span><span class="o">.</span>
+<span class="n">Explicit</span> <span class="ow">is</span> <span class="n">better</span> <span class="n">than</span> <span class="n">implicit</span><span class="o">.</span>
+<span class="n">Simple</span> <span class="ow">is</span> <span class="n">better</span> <span class="n">than</span> <span class="nb">complex</span><span class="o">.</span>
+<span class="n">Complex</span> <span class="ow">is</span> <span class="n">better</span> <span class="n">than</span> <span class="n">complicated</span><span class="o">.</span>
+<span class="n">Flat</span> <span class="ow">is</span> <span class="n">better</span> <span class="n">than</span> <span class="n">nested</span><span class="o">.</span>
+<span class="n">Sparse</span> <span class="ow">is</span> <span class="n">better</span> <span class="n">than</span> <span class="n">dense</span><span class="o">.</span>
+<span class="n">Readability</span> <span class="n">counts</span><span class="o">.</span>
+<span class="n">Special</span> <span class="n">cases</span> <span class="n">aren</span><span class="s">&#39;t special enough to break the rules.</span>
+<span class="n">Although</span> <span class="n">practicality</span> <span class="n">beats</span> <span class="n">purity</span><span class="o">.</span>
+<span class="n">Errors</span> <span class="n">should</span> <span class="n">never</span> <span class="k">pass</span> <span class="n">silently</span><span class="o">.</span>
+<span class="n">Unless</span> <span class="n">explicitly</span> <span class="n">silenced</span><span class="o">.</span>
+<span class="n">In</span> <span class="n">the</span> <span class="n">face</span> <span class="n">of</span> <span class="n">ambiguity</span><span class="p">,</span> <span class="n">refuse</span> <span class="n">the</span> <span class="n">temptation</span> <span class="n">to</span> <span class="n">guess</span><span class="o">.</span>
+<span class="n">There</span> <span class="n">should</span> <span class="n">be</span> <span class="n">one</span><span class="o">--</span> <span class="ow">and</span> <span class="n">preferably</span> <span class="n">only</span> <span class="n">one</span> <span class="o">--</span><span class="n">obvious</span> <span class="n">way</span> <span class="n">to</span> <span class="n">do</span> <span class="n">it</span><span class="o">.</span>
+<span class="n">Although</span> <span class="n">that</span> <span class="n">way</span> <span class="n">may</span> <span class="ow">not</span> <span class="n">be</span> <span class="n">obvious</span> <span class="n">at</span> <span class="n">first</span> <span class="n">unless</span> <span class="n">you</span><span class="s">&#39;re Dutch.</span>
+<span class="n">Now</span> <span class="ow">is</span> <span class="n">better</span> <span class="n">than</span> <span class="n">never</span><span class="o">.</span>
+<span class="n">Although</span> <span class="n">never</span> <span class="ow">is</span> <span class="n">often</span> <span class="n">better</span> <span class="n">than</span> <span class="o">*</span><span class="n">right</span><span class="o">*</span> <span class="n">now</span><span class="o">.</span>
+<span class="n">If</span> <span class="n">the</span> <span class="n">implementation</span> <span class="ow">is</span> <span class="n">hard</span> <span class="n">to</span> <span class="n">explain</span><span class="p">,</span> <span class="n">it</span><span class="s">&#39;s a bad idea.</span>
+<span class="n">If</span> <span class="n">the</span> <span class="n">implementation</span> <span class="ow">is</span> <span class="n">easy</span> <span class="n">to</span> <span class="n">explain</span><span class="p">,</span> <span class="n">it</span> <span class="n">may</span> <span class="n">be</span> <span class="n">a</span> <span class="n">good</span> <span class="n">idea</span><span class="o">.</span>
+<span class="n">Namespaces</span> <span class="n">are</span> <span class="n">one</span> <span class="n">honking</span> <span class="n">great</span> <span class="n">idea</span> <span class="o">--</span> <span class="n">let</span><span class="s">&#39;s do more of those!</span>
+<span class="o">&gt;&gt;&gt;</span> 
+</pre></div>
+
+
+<h2>No.1 Idioms</h2>
+<p>不在杭州现场....不知道speaker share了什么...粗略翻译了一下...orz</p>
+<ul>
+<li>An unwritten rule (不成文的约定)</li>
+<li>A common use-case (常见的用例)</li>
+<li>Usually make the code better in: (优化代码在以下方面)</li>
+<li>Readability (可读性)</li>
+<li>Speed (运行速度)</li>
+<li>Resource usage (资源利用率)</li>
+</ul>
+<h2>数据操作</h2>
+<h3>Unpacking</h3>
+<p>可以理解为把多个值付给一个变量, 在用这个变量赋给多个变量</p>
+<div class="highlight"><pre>s = (&#39;simon&#39;, &#39;shi&#39;, 066, &#39;simonshi@gmail.com&#39;)
+
+# 一般青年
+firstname = s[0]
+lastname = s[1]
+weight = s[2]
+email = s[3]
+
+# Python青年
+firstname, lastname, weight, email = s
+</pre></div>
+
+
+<h3>swap value</h3>
+<p>记得谭浩强的C语言书上有这样一道题, 将a和b的值进行互换</p>
+<div class="highlight"><pre># 一般青年
+temp = a
+a = b 
+b = temp
+
+# python青年
+a,b = b,a
+
+# 可能有些C青年看着不爽, 所以
+a,b = (a,b)
+</pre></div>
+
+
+<h3>Don’t Underestimate</h3>
+<p>没看懂啥意思.....略....</p>
+<h3>Concatenating Strings</h3>
+<p>初学的时候经常会选择笨的办法实现需求, 但是有时候有更好的写法, 看起来更简单</p>
+<div class="highlight"><pre>fruits = [&#39;cherry&#39;, &#39;coconut&#39;, &#39;blueberry&#39;, &#39;kiwi&#39;]
+
+# 普通青年
+# PS: 尼玛我一开始学习的时候经常这样做啊....
+s = fruits[0]
+for i in fruits[1:]:
+    s += &#39;, &#39; + f
+
+# Python青年
+print &#39;, &#39;.join(fruits)
+</pre></div>
+
+
+<h3>Looping over a collection</h3>
+<p>遍历的时候, 由于C语言的思想, for循环的时候经常使用数字标明当前元素是第几个</p>
+<div class="highlight"><pre>colors = [&#39;red&#39;, &#39;green&#39;, &#39;blue&#39;, &#39;yellow&#39;]
+
+# 一般青年
+for i in range(len(colors)):
+    print colors[i]
+
+# Python青年
+for color in colors:
+    print color
+</pre></div>
+
+
+<h3>Looping backwards</h3>
+<p>反向遍历的时候, 初学会非常痛苦.</p>
+<div class="highlight"><pre><span class="c1"># 一般青年</span>
+<span class="s-Atom">for</span> <span class="s-Atom">color</span> <span class="s-Atom">in</span> <span class="nf">reversed</span><span class="p">(</span><span class="s-Atom">colors</span><span class="p">)</span><span class="s-Atom">:</span>
+    <span class="s-Atom">print</span> <span class="s-Atom">color</span>
+
+<span class="c1"># Python青年</span>
+<span class="s-Atom">for</span> <span class="s-Atom">color</span> <span class="s-Atom">in</span> <span class="s-Atom">colors</span><span class="p">[</span><span class="s-Atom">::-</span><span class="mi">1</span><span class="p">]</span><span class="s-Atom">:</span>
+    <span class="s-Atom">print</span> <span class="s-Atom">color</span>
+</pre></div>
+
+
+<h3>Looping with indices</h3>
+<p>遍历列表的索引</p>
+<div class="highlight"><pre>colors = [&#39;red&#39;, &#39;green&#39;, &#39;blue&#39;, &#39;yellow&#39;]
+
+# 一般青年
+for i in range(len(colors)):
+    print i, &#39;--&gt;&#39;, colors[i]
+
+# python青年
+for i, color in enumerate(colors):
+    print i, &#39;--&gt;&#39;, color
+</pre></div>
+
+
+<h3>looping over a dictionary</h3>
+<p>遍历字典的key, value</p>
+<div class="highlight"><pre>codes = {&#39;Xian&#39;: &#39;29&#39;, &#39;Beijing&#39;:&#39;10&#39;, &#39;Shanghai&#39;:&#39;21&#39;}
+# 一般青年
+for k in codes:
+    print k, &#39;--&gt;&#39;, codes[k]
+
+# Python 青年
+for k, v in codes.items():
+    print k, &#39;--&gt;&#39;, v
+
+for k, v in codes.iteritems():
+    print k, &#39;--&gt;&#39;, v
+</pre></div>
+
+
+<h3>‘defaultdict’</h3>
+<p>如何使用 'defaultdict'</p>
+<div class="highlight"><pre>names = [&#39;james&#39;, &#39;peter&#39;, &#39;simon&#39;, &#39;jack&#39;, &#39;john&#39;, &#39;lawrence&#39;]
+# 期望得到
+{8: [&#39;lawrence&#39;], 4: [&#39;jack&#39;, &#39;john&#39;], 5: [&#39;james&#39;, &#39;peter&#39;, &#39;simon&#39;]}
+</pre></div>
+
+
+<p><strong>一般青年</strong>
+思考了很久写出了</p>
+<div class="highlight"><pre>groups = {}
+for name in names:
+    key = len(name)
+    if key not in groups:
+        groups[key] = []
+    groups[key].append(name)
+</pre></div>
+
+
+<p><strong>Python 青年</strong></p>
+<div class="highlight"><pre><span class="c"># 先用 ‘setdefault’ 来给字典赋默认值</span>
+<span class="n">groups</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+    <span class="n">groups</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+<span class="c"># 用‘defaultdict’生成结果</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="n">groups</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+    <span class="n">groups</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+
+
+<h3>Comprehensions</h3>
+<p>列表解析</p>
+<p>题目:<em>判断一个列表中的所有数字是否为奇数, 并且生成一个新的列表用True或False来标明</em></p>
+<p><strong>一般青年</strong></p>
+<div class="highlight"><pre>A, odd_or_even = [1, 1, 2, 3, 5, 8, 13, 21], []
+for number in A:
+    odd_or_even.append(isOdd(number))
+
+# 结果
+[True, True, False, True, True, False, True, True]
+</pre></div>
+
+
+<p><strong>Python 青年</strong></p>
+<div class="highlight"><pre>A = [1, 1, 2, 3, 5, 8, 13, 21]
+
+[isOdd(a) for a in A]
+[True, True, False, True, True, False, True, True]
+
+# Or
+
+[a for a in A if a%2 != 0]
+[1, 1, 3, 5, 13, 21]
+</pre></div>
+
+
+<p>扩充理解</p>
+<div class="highlight"><pre>List: [a**2 for a in A]
+[1, 1, 4, 9, 25, 64, 169, 441]
+
+Set: {int(sqrt(a)) for a in A}
+set([1, 2, 3, 4])
+
+Dict: {a:a%3 for a in A if a%3}
+{8: 2, 1: 1, 2: 2, 5: 2, 13: 1}
+</pre></div>
+
+
+<h2>控制流</h2>
+<h3>Truthiness</h3>
+<p>判断真假, 也就是True 或 False</p>
+<div class="highlight"><pre># 一般青年
+if names != []:
+…
+if foo == True:
+…
+
+# Python 青年
+if names:
+…
+if foo:
+</pre></div>
+
+
+<p>这里作者列了一些判断的时候都是False的常见形式
+也就是说 用 <code>if ... : ....</code> 的时候判断都是False</p>
+<ul>
+<li>None</li>
+<li>False</li>
+<li>zero for numeric types  <em>数字0</em></li>
+<li>empty sequence, e.g. [], tuple() <em>空序列,如:<code>[]</code>和<code>()</code></em></li>
+<li>empty dictionaries  <em>空字典</em></li>
+<li>a value of 0 or False returned when either <code>__len__</code> or <code>__non_zero__</code> is called <em>当一些返回值为0或者False的方法或者类</em>
+这里<code>__len__</code> 返回0 应该很好理解
+不好理解的是<code>_non_zero__</code>
+举个栗子:</li>
+</ul>
+<div class="highlight"><pre><span class="k">class</span> <span class="n">A:</span>
+  <span class="n">def</span> <span class="n">__non_zero__</span>(<span class="k">self</span>):  <span class="c-Singleline"># 这里有一点是错误, 不知道是Py3还是啥, 我在py2.7版本中叫__nonzero__</span>
+    <span class="k">return</span> <span class="nb">False</span>
+
+<span class="k">if</span> <span class="n">A</span>():
+   <span class="nb">print</span> <span class="s">&quot;A is True&quot;</span>
+<span class="n">else:</span>
+   <span class="nb">print</span> <span class="s">&quot;A is False&quot;</span>
+</pre></div>
+
+
+<p>这里的意思是说, 判断A的这个类的布尔值, 可以通过<code>__nonzero__</code> 这个方法来改变</p>
+<h3>if-in</h3>
+<p>判断某个值是否在某个集合当中</p>
+<div class="highlight"><pre># 一般青年
+is_generic_color = False
+if color == &#39;red&#39; or color == &#39;green&#39; or color == &#39;blue&#39;:
+    is_generic_color = True
+
+
+
+# Python青年
+is_generic_color = color in (&#39;red&#39;, &#39;green&#39;, &#39;blue&#39;)
+</pre></div>
+
+
+<h3>for-else</h3>
+<p>谁也没想到还有 <code>for-else</code> 的用法吧</p>
+<div class="highlight"><pre>ages = [42, 21, 18, 33, 19]
+
+# 一般青年
+are_all_adult = True
+for age in ages:
+    if age &lt; 18:
+        are_all_adult = False
+        break
+
+if are_all_adult:
+    print &#39;All are adults!&#39;
+</pre></div>
+
+
+<p>Python青年要来喽</p>
+<div class="highlight"><pre>ages = [42, 21, 18, 33, 19]
+
+# Python青年
+for age in ages:
+    if age &lt; 18:
+        break
+else: # 如果循环没有跳出则执行
+    print &#39;All are adults!&#39;
+</pre></div>
+
+
+<h3>Context Manager</h3>
+<p>上下文管理器</p>
+<div class="highlight"><pre># 一般青年
+f = open(&#39;data.csv&#39;)
+try:
+    data = f.read()
+finally:
+    f.close()
+
+# Python 青年
+with open(&#39;data.csv&#39;) as f:
+    data = f.read()
+</pre></div>
+
+
+<h2>import itertools</h2>
+<p>这章讲的都是itertools的库中的方法, 所以默认前提是</p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+
+
+<h3>Looping with two collections</h3>
+<p>遍历两个集合
+示例中想要吧两个列表中的元素进行一一对应, 但是长度不同, 需要进行处理</p>
+<div class="highlight"><pre><span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;red&#39;</span><span class="p">,</span> <span class="s">&#39;blue&#39;</span><span class="p">,</span> <span class="s">&#39;green&#39;</span><span class="p">,</span> <span class="s">&#39;yellow&#39;</span><span class="p">]</span>
+<span class="n">fruits</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;cherry&#39;</span><span class="p">,</span> <span class="s">&#39;blueberry&#39;</span><span class="p">,</span> <span class="s">&#39;kiwi&#39;</span><span class="p">]</span>
+
+<span class="c"># 一般青年</span>
+<span class="n">min_len</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">colors</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">fruits</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">min_len</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">fruits</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="s">&#39;--&gt;&#39;</span><span class="p">,</span> <span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+<span class="c"># Python 青年</span>
+<span class="k">for</span> <span class="n">fruit</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="n">izip</span><span class="p">(</span><span class="n">fruits</span><span class="p">,</span> <span class="n">colors</span><span class="p">):</span>  <span class="c"># 此处的izip 是from itertools import izip</span>
+    <span class="k">print</span> <span class="n">fruit</span><span class="p">,</span> <span class="s">&#39;--&gt;&#39;</span><span class="p">,</span> <span class="n">color</span>
+</pre></div>
+
+
+<h3>Building Dictionaries</h3>
+<p>合并成为字典</p>
+<div class="highlight"><pre># 要求
+fruits = [&#39;cherry&#39;, &#39;blueberry&#39;, &#39;kiwi&#39;, &#39;mango&#39;]
+colors = [&#39;red&#39;, &#39;blue&#39;, &#39;green&#39;, &#39;yellow&#39;]
+
+# 合并成为
+{&#39;kiwi&#39;: &#39;green&#39;, &#39;cherry&#39;: &#39;red&#39;, &#39;mango&#39;: &#39;yellow&#39;, &#39;blueberry&#39;: &#39;blue&#39;}
+
+# 一般青年
+pairs = {}
+for fruit, color in izip(fruits, colors):
+    pairs[fruit] = color
+
+# PS:尼玛明明是刚才就是这么教的! 怎么变成一般青年了
+
+# Python青年
+pairs = dict(izip(fruits, colors))
+# 草泥马奔腾....Python 就是总能用极简方式做事
+</pre></div>
+
+
+<h3>groupby</h3>
+<p>根据字母的多少进行分类</p>
+<div class="highlight"><pre># 要求
+names = [&#39;james&#39;, &#39;peter&#39;, &#39;simon&#39;, &#39;jack&#39;, &#39;john&#39;, &#39;lawrence&#39;]
+# 实现
+{8: [&#39;lawrence&#39;], 4: [&#39;jack&#39;, &#39;john&#39;], 5: [&#39;james&#39;, &#39;peter&#39;, &#39;simon&#39;]}
+
+# 使用 itertools
+{k:list(v) for k, v in groupby(names, len)}
+
+# PS: 尼玛上面说的方法又被简化了....
+</pre></div>
+
+
+<h3>More</h3>
+<ul>
+<li>chain([1,2,3], ['a','b'], [4]) ==&gt; 1,2,3,'a','b',4</li>
+<li>repeat('A', 3) ==&gt; 'A' 'A' 'A'</li>
+<li>cycle('ABCD') ==&gt; A B C D A B C D ...</li>
+<li>compress('ABCDEF', [1,0,1,0,1,1]) ==&gt; A C E F</li>
+<li>combinations/permutations/product
+...</li>
+</ul>
+<h2>Functional Python</h2>
+<p>说到这里就有些高大上了, 前面目录翻译的时候,没有想到那么多, 就翻译成了Python的功能,
+到这里为止就看明白了, 原来是代表函数式编程的Python, 前面的也就不改了.</p>
+<ul>
+<li>Imperative programming (命令式编程: C/C++, Java)</li>
+<li>Declarative programming (声明式编程)</li>
+<li>Functional programming (函数式编程: Lisp, Haskell, OCaml)</li>
+<li>Logic programming (逻辑式编程: Prolog, Clojure)</li>
+</ul>
+<blockquote>
+<p>Functions are data, too. Can be passed through and manipulated like data.
+函数也是数据. 它也可以像数据一样被传递和操纵</p>
+</blockquote>
+<h3>partial</h3>
+<p>偏函数?! 这玩意是啥啊....</p>
+<div class="highlight"><pre><span class="c"># 一般青年</span>
+<span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;[{level}]: {msg}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">level</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="n">message</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">log_debug</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="n">log</span><span class="p">(</span><span class="s">&#39;debug&#39;</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">log_warn</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="n">log</span><span class="p">(</span><span class="s">&#39;warn&#39;</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">create_log_with_level</span><span class="p">(</span><span class="n">level</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">log_with_level</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+        <span class="n">log</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">log_with_level</span>
+
+<span class="c"># construct functions like data</span>
+<span class="n">log_debug</span> <span class="o">=</span> <span class="n">create_log_with_level</span><span class="p">(</span><span class="s">&#39;debug&#39;</span><span class="p">)</span>
+<span class="n">log_warn</span> <span class="o">=</span> <span class="n">create_log_with_level</span><span class="p">(</span><span class="s">&#39;warn&#39;</span><span class="p">)</span>
+
+<span class="c"># 意思就是说</span>
+<span class="c"># 函数在执行时，要带上所有必要的参数进行调用。但是，有时参数可以在函数被调用之前提前获知。这种情况下，一个函数有一个或多个参数预先就能用上，以便函数能用更少的参数进行调用。</span>
+
+<span class="c"># Python青年</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="c"># log 为上面定义过的那个函数</span>
+<span class="n">log_debug</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">log</span><span class="p">,</span> <span class="s">&#39;debug&#39;</span><span class="p">)</span>
+<span class="n">log_warn</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">log</span><span class="p">,</span> <span class="s">&#39;warn&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<h3>Decorator</h3>
+<p>装饰器, 个人认为装饰器是Python中一个比较华丽的东西了, 如果用好了事半功倍, 如果用不好事倍功半</p>
+<div class="highlight"><pre><span class="c"># 混合了业务逻辑和管理逻辑</span>
+<span class="k">def</span> <span class="nf">web_lookup</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="p">{}):</span>
+    <span class="k">if</span> <span class="n">url</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cache</span><span class="p">:</span>
+        <span class="n">cache</span><span class="p">[</span><span class="n">url</span><span class="p">]</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">cache</span><span class="p">[</span><span class="n">url</span><span class="p">]</span>
+
+<span class="c"># 使用装饰器</span>
+
+<span class="nd">@cache</span>
+<span class="k">def</span> <span class="nf">web_lookup</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+
+<span class="k">def</span> <span class="nf">cache</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="n">saved</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="nd">@wraps</span>
+    <span class="k">def</span> <span class="nf">new_func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">args</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">saved</span><span class="p">:</span>
+            <span class="n">saved</span><span class="p">[</span><span class="n">args</span><span class="p">]</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">saved</span><span class="p">[</span><span class="n">args</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">new_func</span>
+</pre></div>
+
+
+<h3>Combine</h3>
+<div class="highlight"><pre><span class="err">#</span> <span class="nx">imperative</span> <span class="nx">way</span>
+<span class="nx">expr</span><span class="p">,</span> <span class="nx">res</span> <span class="o">=</span> <span class="s1">&#39;28++32+++32+39&#39;</span><span class="p">,</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="nx">token</span> <span class="k">in</span> <span class="nx">expr</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;+&#39;</span><span class="p">)</span><span class="o">:</span>
+    <span class="k">if</span> <span class="nx">token</span><span class="o">:</span>
+        <span class="nx">res</span> <span class="o">+=</span> <span class="kr">int</span><span class="p">(</span><span class="nx">token</span><span class="p">)</span>
+
+<span class="err">#</span> <span class="nx">result</span> <span class="nx">of</span> <span class="nx">split</span>
+<span class="cp">[</span><span class="s2">&quot;28&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;32&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;32&quot;</span><span class="p">,</span> <span class="s2">&quot;39&quot;</span><span class="cp">]</span>
+
+<span class="err">#</span> <span class="nx">functional</span> <span class="nx">way</span>
+<span class="nx">res</span> <span class="o">=</span> <span class="nx">sum</span><span class="p">(</span><span class="nx">map</span><span class="p">(</span><span class="kr">int</span><span class="p">,</span> <span class="nx">filter</span><span class="p">(</span><span class="nx">bool</span><span class="p">,</span> <span class="nx">expr</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;+&#39;</span><span class="p">))))</span>
+
+<span class="err">#</span> <span class="nx">step</span> <span class="nx">by</span> <span class="nx">step</span>
+<span class="cp">[</span><span class="s2">&quot;28&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;32&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;32&quot;</span><span class="p">,</span> <span class="s2">&quot;39&quot;</span><span class="cp">]</span>
+
+<span class="nx">filter</span><span class="p">(</span><span class="nx">pred</span><span class="p">,</span> <span class="nx">seq</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="cp">[</span><span class="nx">t</span> <span class="nx">for</span> <span class="n">t</span> <span class="k">in</span> <span class="nx">seq</span> <span class="k">if</span> <span class="nx">pred</span><span class="p">(</span><span class="nx">t</span><span class="p">)</span><span class="cp">]</span>
+<span class="cp">[</span><span class="s2">&quot;28&quot;</span><span class="p">,</span> <span class="s2">&quot;32&quot;</span><span class="p">,</span> <span class="s2">&quot;32&quot;</span><span class="p">,</span> <span class="s2">&quot;39&quot;</span><span class="cp">]</span>
+
+<span class="nx">map</span><span class="p">(</span><span class="nx">func</span><span class="p">,</span> <span class="nx">seq</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="cp">[</span><span class="nx">func</span><span class="p">(</span><span class="nx">t</span><span class="p">)</span> <span class="nx">for</span> <span class="n">t</span> <span class="k">in</span> <span class="nx">seq</span><span class="cp">]</span>
+<span class="cp">[</span><span class="mi">28</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">39</span><span class="cp">]</span>
+</pre></div>
+
+
+<p>这一节大概意思能看懂, 但是不能理解的非常透彻. 望请高手指点
+主要核心思想体现在</p>
+<div class="highlight"><pre>res = sum(map(int, filter(bool, expr.split(&#39;+&#39;))))
+</pre></div>
+
+
+<h3>Map</h3>
+<p>呐呐呐...这里开始解释上面用到的map啦</p>
+<div class="highlight"><pre>B = map(func, A)
+┌───────┐     ┌─────────┐
+│  a1   │ --&gt; │ func(a1)│
+│  a2   │ --&gt; │ func(a2)│
+│  a3   │ --&gt; │ func(a3)│
+│  an   │ --&gt; │ func(an)│
+└───────┘     └─────────┘
+    A             B
+</pre></div>
+
+
+<p>也就是说 map的功能就是将A当做参数, 把A中的a1,a2,a3....an传递给func
+结果集返回给B</p>
+<h3>all</h3>
+<p>比for-else更加的传神, 23333</p>
+<div class="highlight"><pre>ages = [42, 21, 18, 33, 19]
+
+# more expressive than using ‘for-else’
+if all(map(lambda a:a&gt;=18, ages)):
+    print &#39;All are adults!&#39;
+</pre></div>
+
+
+<h3>Fluent Interface</h3>
+<p>啥意思捏? O.O  上码</p>
+<div class="highlight"><pre>expr = &#39;28++32+++32+39&#39;
+IterHelper(expr.split(&#39;+&#39;)).filter(bool).map(int).sum()
+ages = [42, 21, 18, 33, 19]
+IterHelper(ages).map(lambda x:x&gt;=18).all()
+</pre></div>
+
+
+<p>还是不懂啊.....</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="n">IterHelper</span>(<span class="n">object</span>):
+    <span class="n">def</span> <span class="n">__init__</span>(<span class="k">self</span>, <span class="n">iterable</span> = []):
+        <span class="k">self</span>.<span class="n">iterable</span> = <span class="n">iterable</span>
+
+    <span class="n">def</span> <span class="n">dump</span>(<span class="k">self</span>):
+        <span class="k">return</span> <span class="n">list</span>(<span class="k">self</span>.<span class="n">iterable</span>)
+
+    <span class="n">def</span> <span class="nb">map</span>(<span class="k">self</span>, <span class="n">func</span>):
+        <span class="k">return</span> <span class="n">IterHelper</span>(<span class="n">itertools</span>.<span class="n">imap</span>(<span class="n">func</span>, <span class="k">self</span>.<span class="n">iterable</span>))
+
+    <span class="n">def</span> <span class="n">filter</span>(<span class="k">self</span>, <span class="n">predicate</span>):
+        <span class="k">return</span> <span class="n">IterHelper</span>(<span class="n">itertools</span>.<span class="n">ifilter</span>(<span class="n">predicate</span>, <span class="k">self</span>.<span class="n">iterable</span>))
+
+    <span class="n">def</span> <span class="nb">sum</span>(<span class="k">self</span>):
+        <span class="k">return</span> <span class="nb">sum</span>(<span class="k">self</span>.<span class="n">iterable</span>)
+
+    <span class="n">def</span> <span class="nb">all</span>(<span class="k">self</span>):
+        <span class="k">return</span> <span class="nb">all</span>(<span class="k">self</span>.<span class="n">iterable</span>)
+</pre></div>
+
+
+<p>哦哦, 原来如此, 作者是说可以写成<code>IterHelper(expr.split('+')).filter(bool).map(int).sum()</code>
+这种形式的接口应该怎么写</p>
+<h2>结束语</h2>
+<blockquote>
+<p>I have made this longer than usual because I have not had time to make it shorter.
+-- Blaise Pascal (1623-1662)</p>
+<p>之所以写了这么长, 是因为我没有时间简化他
+-- 布莱士.帕斯卡</p>
+</blockquote>
+<h2>Bigger than Bigger</h2>
+<p>把作者的这个玩意扔进ipython里</p>
+<div class="highlight"><pre>In [22]: &#39; &#39;.join(&#39;{0:08b}&#39;.format(ord(x)) for x in &#39;Bigger Than Bigger!&#39;)
+Out[22]: &#39;01000010 01101001 01100111 01100111 01100101 01110010 00100000 01010100 01101000 01100001 01101110 00100000 01000010 01101001 01100111 01100111 01100101 01110010 00100001&#39;
+</pre></div>
+
+
+<p>哈哈, 是在说逼格儿嘛</p>
+<h2>References</h2>
+<p><a href="http://python.net/~goodger/projects/pycon/2007/idiomatic/handout.html">code like a pythonista</a>
+<a href="https://docs.python.org/2/library/itertools.html">itertools</a>
+<a href="http://ua.pycon.org/static/talks/kachayev">functional python</a>
+<a href="https://docs.python.org/2/library/functools.html">functools</a>
+<a href="http://pydash.readthedocs.org/en/latest/">pydash</a></p>
+<h2>感谢作者!!!</h2>	
+
+	</article>
+
+    <p>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-via="" data-lang="en" data-size="large" data-related="">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</p>
+
+
+		  </div>	
+		  
+		  <div class="sidebar">
+		    <div class="sidebar-container" >
+
+
+  	          <nav>
+	            <h2>Categories</h2>
+	            <ul>
+	                <li ><a href="http://chencoyote.github.io/category/ce-shi.html">测试</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/ewen-fan-yi.html">E文翻译</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/ji-zhu.html">技术</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/linux.html">Linux</a></li>
+	                <li class="active"><a href="http://chencoyote.github.io/category/python.html">Python</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/qi-ta.html">其他</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/sublime-text.html">Sublime Text</a></li>
+	                <li ><a href="http://chencoyote.github.io/category/xue-xi-bi-ji.html">学习笔记</a></li>
+	            </ul>
+	          </nav>
+
+	            <aside>
+	            <h2>Social</h2>
+			      <ul class="social">
+				    <li><a href="https://github.com/chencoyote">Github</a><i></i></li>
+				    <li><a href="https://plus.google.com/u/0/104542842241928417898/posts">Google+</a><i></i></li>
+				    <li><a href="https://twitter.com/Coyote_chen">Twitter</a><i></i></li>
+				    <li><a href="http://weibo.com/coytoe">Weibo</a><i></i></li>
+				    <li><a href="http://v2ex.com/member/Coyote">V2EX</a><i></i></li>
+			      </ul>
+			    </aside>
+
+	            <aside>
+	              <h2>Blogroll</h2>
+	              <ul>
+	                  <li><a href="http://python.org/">Python.org</a></li>
+	                  <li><a href="http://pychina.org">PyChina</a></li>
+	                  <li><a href="http://weekly.pychina.org">PyWeekly</a></li>
+	                  <li><a href="http://cn.pycon.org">PyConChina</a></li>
+	              </ul>
+	            </aside>
+	        </div>
+		  </div>
+
+	  </div>
+
+      <footer>
+		<p role="contentinfo">
+		  coyote - Proudly powered by <a href="http://alexis.notmyidea.org/pelican/">pelican</a>. Theme <a href="https://github.com/fle/pelican-sober">pelican-sober</a>.
+    	</p>
+
+	  </footer>	
+
+	</div>
+	
+
+</body>
+</html>
